@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Mi Sitio {% endblock %}</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+   
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="{% static 'img/logo.png' %}" alt="">
+            <h2>Chok Dog</h2>
+        </div>
+        <nav class="menu">
+            <a href="{% url 'home' %}">Inicio</a>
+            <a href="{% url 'nosotros' %}">Nosotros</a>
+            <a href="{% url 'servicios' %}">Servicios</a>
+            <a href="{% url 'contactenos' %}">Contactenos</a>
+
+        </nav>
+        <div class="redes">
+            <a href="https://www.facebook.com/chok.dog"><i class='bx bxl-facebook-circle' ></i></a>
+            <a href="#"><i class='bx bxl-instagram' ></i></a>
+            <a href="#"><i class='bx bxl-whatsapp' ></i></a>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}
+
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-contact">
+            <div class="footer-info">
+                <p>Abrimos:</p>
+                <p>Lunes a sábado</p>
+                <p>12:00-23:00</p>
+            </div>
+            <div class="footer-info">
+                <p>Dirección:</p>
+                <p>Cl. 6 # 9-10, Pital, Huila</p>
+            </div>
+            <div class="footer-info">
+                <p>Teléfono: </p>
+                <p>311285185</p>
+                </div>
+            </div>
+            <div class="footer-info">
+                <p>Dueños: </p>
+                <p></p>
+                </div>
+            </div>
+    </footer>
+    
+    
+</body>
+</html>

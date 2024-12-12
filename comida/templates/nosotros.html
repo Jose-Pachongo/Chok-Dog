@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} nosotros {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'nosotros.css' %}"> 
+
+<section class="about-section" id="sobre-nosotros">
+    <div class="about-container">
+        <div class="about-grid">
+
+            <div class="about-item">
+                <div class="about-content">
+                    <h2 class="about-title">Presentacion del video</h2>
+                    <p class="about-description">Te invitamos a venir y disfrutar de todos nuestros pltos con la mejor calidad y servicio.</p>
+                </div>
+                <div class="about-overlay">
+                    <video class="video" src="{% static 'videos/AQNbyHxm7jGaafsAKsWIwSYmkywKtDtF-KSWTOr690nH0bfI3IVoqyNWBrRdI4rasdpcHyHVGRZr66XBJNLVCo_V.mp4' %}" controls autoplay muted ></video>
+                </div>
+            </div>
+
+
+            <div class="about-item">
+                <div class="about-content">
+                    <h2 class="about-title">Nuestra Visión</h2>
+                    <p class="about-description">Ser el restaurante líder en comidas rápidas, bebidas y raspados en El Pital, Huila, reconocido por ofrecer experiencias únicas a nuestros clientes a través de sabores innovadores, calidad excepcional y un servicio cálido, contribuyendo al desarrollo gastronómico y turístico de nuestra región.</p>
+                </div>
+                <div class="about-overlay">
+                    <img src="{% static 'img/cok.jpg' %}" alt="Historia del restaurante" class="about-image">
+                </div>
+            </div>
+
+            <div class="about-item">
+                <div class="about-overlay">
+                    <img src="{% static 'img/cok_2.jpg' %}" alt="Nuestra cocina" class="about-image">
+                </div>
+                <div class="about-content">
+                    <h2 class="about-title">Nuestra Misión</h2>
+                    <p class="about-description">Brindar a nuestros clientes una oferta deliciosa y variada de comidas rápidas, bebidas y raspados, elaborados con ingredientes frescos y locales. Nos comprometemos a ofrecer un servicio amable y eficiente, creando un espacio acogedor que fomente momentos inolvidables y fortalezca el vínculo con nuestra comunidad en El Pital, Huila.</p>
+                </div>
+            </div>
+
+            <div class="about-item">
+                <div class="about-content">
+                    <h2 class="about-title">Nuestro Local</h2>
+                    <p class="about-description">Un espacio acogedor y elegante diseñado para crear la atmósfera perfecta para disfrutar de una experiencia gastronómica única.</p>
+                </div>
+                <div class="about-overlay">
+                    <img src="{% static 'img/cok_3.jpg' %}" alt="Nuestro local" class="about-image">
+                </div>
+            </div>
+
+            <div class="about-item">
+                <div class="about-overlay">
+                    <img src="{% static 'img/cok_4.jpg' %}" alt="Nuestro equipo" class="about-image">
+                </div>
+                <div class="about-content">
+                    <h2 class="about-title">Equipo de Trabajo</h2>
+                    <p class="about-description">Un equipo apasionado y profesional dedicado a crear experiencias memorables para nuestros clientes en cada visita.</p>
+                </div>
+            </div>
+
+            <div class="about-item">
+                <div class="about-content">
+                    <h2 class="about-title">Puerta está abierta</h2>
+                    <p class="about-description">Te invitamos a ser parte de nuestra historia y disfrutar de una experiencia culinaria excepcional en un ambiente acogedor.</p>
+                </div>
+                <div class="about-overlay">
+                    <img src="{% static 'img/cok_3.jpg' %}" alt="Nuestra puerta" class="about-image">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}
