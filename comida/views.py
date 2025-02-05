@@ -9,7 +9,7 @@ def servicios(request):
     return render(request,'servicios.html')
 def contactenos(request):
     return render(request,'contactenos.html')
-def login(request):
+def iniciar(request):
     return render(request,'iniciar.html')
-def login(request):
+def regis(request):
     return render(request,'regis.html')
