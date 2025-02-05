@@ -1,22 +1,11 @@
-:root{
-    --text_4: rgba(0, 0, 0, 0.3);
-    --text_sha: 5px 20px 5px #000000;
-    --blanco: #FFFFFF;
-    --negro-profundo: #1A1A1A;
-    --dorado: #D4AF37;
-    --gris-industrial: #333D41;
-    --negro-carbon: #121212;
-    --gris-acero: #95A5A6;
-}
+@import url('/static/barra.css ');
 body {
-    font-family: Arial, sans-serif;
     background-color: var(--gris-industrial);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+   
+}
+.iniciar-section{
+    
+    background-color: #B89E2A;
 }
 .container {
     background-color: var(--blanco);

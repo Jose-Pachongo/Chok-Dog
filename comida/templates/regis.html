@@ -10,7 +10,7 @@
 
 <div class="container">
     <h2>Registrarse</h2>
-    <form action="/register" method="post">
+    <form action="/regis" method="post">
         <label for="username">Usuario:</label>
         <input type="text" id="username" name="username" required>
         <label for="email">Correo Electrónico:</label>
@@ -19,7 +19,7 @@
         <input type="password" id="password" name="password" required>
         <input type="submit" value="Registrarse">
         <p>Para unirte a nuestra comunidad por favor Inicia Sesión con tus datos</p>
-            <input type="button" value="Registrarse" id="sign-up" onclick="window.location.href='ses.html'">
+            <input type="button" value="Registrarse" id="sign-up" onclick=location.href="{% url 'iniciar' %}">
     </form>
 </div>
 

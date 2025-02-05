@@ -3,20 +3,22 @@
 
 {% block content %}
 
-{% load static %}
 
 <link rel="stylesheet" href="{% static 'login.css' %}">
-
-<div class="container">
-    <h2>Iniciar Sesión</h2>
-    <form action="/iniciar" method="post">
-        <label for="username">Usuario:</label>
-        <input type="text" id="username" name="username" required>
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required>
-        <input type="submit" value="Iniciar Sesión">
-        <br>
-        <p>Si no cuenta con una cuenta por favor registese</p>
-            <input type="button" value="Registrarse" id="sign-in" onclick="window.location.href='regis.html'">
+<section class="iniciar-section">
+    <div class="container">
+        <h2>Iniciar Sesión</h2>
+        <form action="/iniciar" method="post">
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required>
+            <input type="submit" value="Iniciar Sesión">
+            <br>
+            <p>Si no cuenta con una cuenta por favor registese</p>
+                <input type="button" value="Registrarse" id="sign-in" onclick=location.href="{% url 'regis' %}">
+        </form>
+    </div>
+</section>
 
 {% endblock %}
