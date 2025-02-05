@@ -10,4 +10,6 @@ def servicios(request):
 def contactenos(request):
     return render(request,'contactenos.html')
 def login(request):
-    return render(request,'login.html')
+    return render(request,'iniciar.html')
+def login(request):
+    return render(request,'regis.html')
