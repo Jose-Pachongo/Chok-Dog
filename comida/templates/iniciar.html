@@ -11,6 +11,7 @@
     <div class="login-cont">
         <h2>Iniciar Sesión</h2>
         <form action="/iniciar" method="post">
+            {% csrf_token %}
             <label for="username">Usuario:</label>
             <input type="text" placeholder="Ingrese su usuario" id="username" name="username" required>
             <label for="password">Contraseña:</label>
