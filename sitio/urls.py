@@ -26,6 +26,6 @@ urlpatterns = [
     path('contactenos',views.contactenos,name='contactenos'),
     path('iniciar',views.iniciar,name='iniciar'),
     path('regis',views.regis,name='regis'),
-    # path('pagina/', pagina, name='pagina'),
+    path('pagina/', views.regis, name='pagina'),
 ]
 
