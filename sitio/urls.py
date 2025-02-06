@@ -26,13 +26,6 @@ urlpatterns = [
     path('contactenos',views.contactenos,name='contactenos'),
     path('iniciar',views.iniciar,name='iniciar'),
     path('regis',views.regis,name='regis'),
+    path('pagina/', pagina, name='pagina'),
 ]
 
-from django.urls import path
-from . import views
-
-urlpatterns = [
-    path('iniciar/', views.iniciar_sesion, name='iniciar'),
-    path('regis/', views.registrar, name='regis'),  # Asegúrate de tener esta vista
-    path('pagina_deseada/', views.pagina_deseada, name='pagina_deseada'),  # Asegúrate de tener esta vista
-]
