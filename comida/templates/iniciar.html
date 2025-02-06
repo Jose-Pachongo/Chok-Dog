@@ -6,7 +6,8 @@
 
 
 <link rel="stylesheet" href="{% static 'login.css' %}">
-<section class="iniciar-section">
+
+<main class="main">
     <div class="container">
         <h2>Iniciar Sesión</h2>
         <form action="/iniciar" method="post">
@@ -20,6 +21,6 @@
                 <input type="button" value="Registrarse" id="sign-in" onclick=location.href="{% url 'regis' %}">
         </form>
     </div>
-</section>
+</main>
 
 {% endblock %}

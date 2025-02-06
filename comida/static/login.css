@@ -1,13 +1,7 @@
 @import url('/static/barra.css ');
-body {
-    background-color: var(--gris-industrial);
-   
-}
-.iniciar-section{
-    background-color: #9cb82a;
-}
+
 .container {
-   
+    margin: 100px;
     background-color: var(--blanco);
     padding: 20px;
     border-radius: 8px;
