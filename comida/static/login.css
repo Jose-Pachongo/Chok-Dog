@@ -1,8 +1,8 @@
 @import url('/static/barra.css ');
 
-.container {
-    margin: 100px;
-    background-color: var(--blanco);
+.iniciar-container {
+    margin-top: 80px; 
+    background-color: var(--dorado);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px var(--text_sha);

@@ -26,6 +26,7 @@
     align-items: center;
     padding: 1rem;
     z-index: 100;
+    top: 0; 
 }
 .logo {
     display: flex;
