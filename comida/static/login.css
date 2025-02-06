@@ -4,10 +4,10 @@ body {
    
 }
 .iniciar-section{
-    
-    background-color: #B89E2A;
+    background-color: #9cb82a;
 }
 .container {
+   
     background-color: var(--blanco);
     padding: 20px;
     border-radius: 8px;
