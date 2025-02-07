@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %} inicio {% endblock %}
+{% block title %} Registro{% endblock %}
 
 {% block content %}
 
@@ -11,6 +11,7 @@
     <div class="login-cont">
         <h2>Registrarse</h2>
         <form action="/regis" method="post">
+            {% csrf_token %}
             <label for="username">Usuario:</label>
             <input type="text" id="username" name="username" required>
             <label for="email">Correo Electrónico:</label>
@@ -18,9 +19,8 @@
             <label for="password">Contraseña:</label>
             <input type="password" id="password" name="password" required>
             <input type="submit" value="Registrarse">
-            <p>Para unirte a nuestra comunidad por favor Inicia Sesión con tus datos</p>
-                <input type="button" value="Registrarse" id="sign-up" onclick=location.href="{% url 'iniciar' %}">
         </form>
+        <p>¿Ya tienes una cuenta? <a href="{% url 'iniciar' %}">Inicia sesión aquí</a></p>
     </div>
 </div>
 

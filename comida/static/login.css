@@ -54,6 +54,29 @@ h2 {
     color: var(--negro-profundo);
     text-align: center;
 }
+password-container {
+    position: relative;
+    width: 100%;
+}
+
+#clave {
+    width: 100%;
+    padding: 8px;
+    padding-right: 40px; /* Deja espacio para el ícono */
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#togglePassword {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #f90404;
+}
 
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
