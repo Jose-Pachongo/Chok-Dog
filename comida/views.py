@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-
+from django.views.decorators.csrf import csrf_protect
 
 
 def home(request):
@@ -15,7 +15,7 @@ def servicios(request):
 
 def contactenos(request):
     return render(request, 'contactenos.html')
-
+@csrf_protect
 def regis(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -39,6 +39,7 @@ def regis(request):
             return redirect('pagina')  
     return render(request, 'regis.html')
 
+@csrf_protect
 def iniciar(request):
     if request.method == 'POST':
         username = request.POST['username']

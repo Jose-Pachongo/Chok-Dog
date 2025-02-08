@@ -19,6 +19,9 @@
     max-width: 90%;
     margin: 10px auto;
 }
+.login-cont p{
+    text-align: center;
+}
 
 label {
     display: block;
