@@ -20,8 +20,14 @@
             <input type="password" id="password" name="password" required>
             <input type="submit" value="Registrarse">
         </form>
-        <p>¿Ya tienes una cuenta? <a href="{% url 'iniciar' %}">Inicia sesión aquí</a></p>
+
+        
     </div>
 </div>
+{% if error %}
+    <script type="text/javascript">
+        alert("{{ error }}");  // Muestra el mensaje de error en un alert() de JavaScript
+    </script>
+{% endif %}
 
 {% endblock %}
