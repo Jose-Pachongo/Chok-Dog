@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+
 
 # Create your models here.
 
@@ -21,14 +21,5 @@ class menu(models.Model):
         return self.nombre
 
 
-from django.db import models
-from django.contrib.auth.models import AbstractUser
 
-class CustomUser(AbstractUser):
-    email = models.EmailField(unique=True)  # Asegurar que el email sea único
 
-    USERNAME_FIELD = 'email'  # Usar el email en lugar del username
-    REQUIRED_FIELDS = ['username']  # Username sigue siendo requerido, pero no para login
-
-    def __str__(self):
-        return self.email

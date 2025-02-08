@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from django.contrib.auth import get_user_model
+
 
 
 def home(request):
@@ -23,10 +23,10 @@ def regis(request):
         password = request.POST['password']
 
         if User.objects.filter(username=username).exists():
-            return render(request, 'iniciar.html', {'error': 'El nombre de usuario ya está en uso. Prueba con otro.'})
+            return render(request, 'regis.html', {'error': 'El nombre de usuario ya está en uso. Prueba con otro.'})
 
         if User.objects.filter(email=email).exists():
-            return render(request, 'iniciar.html', {'error': 'el gmail ya está en uso. Prueba con otro.'})
+            return render(request, 'regis.html', {'error': 'el gmail ya está en uso. Prueba con otro.'})
         
         user = User.objects.create_user(username=username, email=email, password=password )
         user.save()
@@ -41,18 +41,12 @@ def regis(request):
 
 def iniciar(request):
     if request.method == 'POST':
-        email = request.POST['email']
+        username = request.POST['username']
         password = request.POST['password']
         
-        User = get_user_model()
-        try:
-            user = User.objects.get(email=email)
-            username = user.username  # Obtener el username real
-        except User.DoesNotExist:
-            return render(request, 'iniciar.html', {'error': 'Usuario o contraseña incorrectos'})
-
+        
         # Autenticación con Django
-        user = authenticate(request, username=email, password=password)
+        user = authenticate(request,  username=username, password=password)
         
         if user is not None:
             login(request, user)
