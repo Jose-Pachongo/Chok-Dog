@@ -23,7 +23,7 @@ body{
     color: white;
     position: relative;
     padding-bottom: 6rem;
-    min-height: 100vh;
+    min-height: 90vh;
 
 }
 .header{
@@ -39,7 +39,7 @@ body{
     top: 0; 
 }
 .main{
-    margin-top: 90px;
+    margin-top: 80px;
 }
 .logo {
     display: flex;
@@ -47,7 +47,7 @@ body{
     font-size: 25px;
 }
 
-.logo a h2{
+.logo a{
     text-decoration: none;
     color: var(--dorado);
     font-size: 25px;

@@ -1,6 +1,6 @@
 @import url('/static/barra.css ');
 
-.main {
+.loginn{
     min-height: 78vh;
     display: flex;
     flex-direction: column;
