@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_protect
+from django.contrib import messages
 
 
 def home(request):
@@ -60,3 +61,17 @@ def iniciar(request):
 
 def pagina(request):
     return render(request, 'pagina.html')
+
+def productos(request):
+    return render(request, 'productos.html')
+
+def carrito(request):
+    return render(request, 'carrito.html')
+
+def perfil(request):
+    return render(request, 'perfil.html')
+
+def logout_request(request):
+    logout(request)
+    messages.info(request, "tu sesión se ha cerrado correctamente")
+    return redirect("home")

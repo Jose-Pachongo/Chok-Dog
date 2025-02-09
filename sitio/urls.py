@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from comida import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name='home'),
@@ -26,6 +27,10 @@ urlpatterns = [
     path('contactenos',views.contactenos,name='contactenos'),
     path('iniciar',views.iniciar,name='iniciar'),
     path('regis',views.regis,name='regis'),
-    path('pagina.html', views.pagina, name='pagina'),
+    path('pagina', views.pagina, name='pagina'),
+    path('productos', views.productos, name='productos'),
+    path('carrito', views.carrito, name='carrito'),
+    path('perfil', views.perfil, name='perfil'),
+    path('logout', views.logout_request, name='logout'),
 ]
 
