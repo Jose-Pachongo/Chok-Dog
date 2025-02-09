@@ -19,6 +19,9 @@
             <a href="{% url 'nosotros' %}">Nosotros</a>
             <a href="{% url 'servicios' %}">Servicios</a>
             <a href="{% url 'contactenos' %}">Contactenos</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}">Cerrar sesión</a>
+            {% endif %}
 
         </nav>
         <div class="redes">
