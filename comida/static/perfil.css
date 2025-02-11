@@ -1,0 +1,45 @@
+@import url('/static/barra.css ');
+
+.profile-container {
+    max-width: 600px;
+    margin: auto;
+    background: #333D41;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+.profile-picture img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: auto;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+    background: #95A5A6;
+    color: black;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background: #D4AF37;
+    color: black;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #b89630;
+}

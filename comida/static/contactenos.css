@@ -1,8 +1,8 @@
 @import url('/static/barra.css ');
 
 .contact-section {
-    padding: 4.5rem 2rem;
-    background-color: #f8f1ea;
+    padding: 4.5rem  2rem 1rem;
+    background-color: var(--gris-acero);
 }
 
 .contact-container {
@@ -19,12 +19,12 @@
 
 .contact-form {
     padding: 2rem;
-    background-color: #fbe5d1;
+    background-color: var(--dorado);
 }
 
 .form-title {
     font-size: 1.5rem;
-    color: #4a3626;
+    color: #212121;
     margin-bottom: 1.5rem;
 }
 

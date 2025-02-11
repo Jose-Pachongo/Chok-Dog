@@ -4,6 +4,41 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'pagina.css' %}">
+<header class="hero">
+    <div class="hero-content">
+        <h1><span class="resaltado">Bienvenido a</span> Chok Dog</h1>
+        <p>Descubre los mejores platillos y cócteles en un ambiente único.</p>
+    </div>
+    <div class="hero-img">
+        <img src="{% static 'img/cok_2.jpg' %}" alt="Plato de comida">
+    </div>
+</header>
 
-<h1>hola mundo</h1>
+<section class="menu-of">
+    <h2>Nuestros Platos y Cócteles</h2>
+    <div class="menu-grid">
+        <div class="menu-item">
+            <img src="{% static 'img/hamburguesa.jpg' %}" alt="Hamburguesa">
+            <h3>Hamburguesa Especial</h3>
+            <p>Carne jugosa con ingredientes frescos.</p>
+        </div>
+        <div class="menu-item">
+            <img src="{% static 'img/cocktail.jpg' %}" alt="Cóctel">
+            <h3>Cóctel de la Casa</h3>
+            <p>Una combinación perfecta de sabores.</p>
+        </div>
+        <div class="menu-item">
+            <img src="{% static 'img/pizza.jpg' %}" alt="Pizza">
+            <h3>Pizza Artesanal</h3>
+            <p>Ingredientes premium y masa crujiente.</p>
+        </div>
+        <div class="menu-item">
+            <img src="{% static 'img/batido.jpg' %}" alt="Batido">
+            <h3>Batido Refrescante</h3>
+            <p>El equilibrio perfecto entre dulzura y frescura.</p>
+        </div>
+    </div>
+</section>
+        
+    
 {% endblock %}

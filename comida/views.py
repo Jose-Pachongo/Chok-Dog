@@ -6,6 +6,8 @@ from django.contrib import messages
 
 
 def home(request):
+    if request.user.is_authenticated:
+        return redirect('pagina')
     return render(request, 'home.html')
 
 def nosotros(request):
@@ -32,12 +34,14 @@ def regis(request):
         user = User.objects.create_user(username=username, email=email, password=password )
         user.save()
         
+        user.profile_picture = 'profiles/default.jpg'
+        user.save()
         
-        # Iniciar sesión automáticamente
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
             return redirect('pagina')  
+            
     return render(request, 'regis.html')
 
 @csrf_protect
