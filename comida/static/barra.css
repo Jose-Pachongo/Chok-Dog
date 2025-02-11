@@ -37,7 +37,7 @@ body{
     top: 0; 
 }
 .main{
-    margin: 80px 0 0 10px;
+    margin-top: 80px;
 
 }
 .logo {
@@ -230,6 +230,10 @@ body{
 
     .footer-contact {
         text-align: center;
+    }
+    .main{
+        margin-top: 150px;
+    
     }
 }
 

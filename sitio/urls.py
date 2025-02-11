@@ -17,7 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from comida import views
-from comida.views import perfil
 
 
 urlpatterns = [
@@ -31,7 +30,7 @@ urlpatterns = [
     path('pagina', views.pagina, name='pagina'),
     path('productos', views.productos, name='productos'),
     path('carrito', views.carrito, name='carrito'),
-    path('perfil', views.perfil, name='perfil'), 
+    path('perfil', views.perfil, name='perfil'),
     path('logout', views.logout_request, name='logout'),
 ]
 

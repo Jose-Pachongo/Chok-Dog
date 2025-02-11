@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .models import CustomUser
 
 
 def home(request):
@@ -21,27 +23,37 @@ def contactenos(request):
 @csrf_protect
 def regis(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
+        first_name = request.POST.get('first_name', '')
+        last_name = request.POST.get('last_name', '')
+        username = request.POST.get('username', '')
+        email = request.POST.get('email', '')
+        password = request.POST.get('password', '')
+        phone = request.POST.get('phone', '')
+        address = request.POST.get('address', '')
 
-        if User.objects.filter(username=username).exists():
+        if CustomUser.objects.filter(username=username).exists():
             return render(request, 'regis.html', {'error': 'El nombre de usuario ya está en uso. Prueba con otro.'})
 
-        if User.objects.filter(email=email).exists():
-            return render(request, 'regis.html', {'error': 'el gmail ya está en uso. Prueba con otro.'})
-        
-        user = User.objects.create_user(username=username, email=email, password=password )
+        if CustomUser.objects.filter(email=email).exists():
+            return render(request, 'regis.html', {'error': 'El correo electrónico ya está en uso. Prueba con otro.'})
+
+        # Crear usuario con CustomUser en lugar de User
+        user = CustomUser.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name
+        )
+        user.phone_number = phone  # Asignar el teléfono al campo correcto
+        user.address = address  # Asignar la dirección al campo correcto
         user.save()
-        
-        user.profile_picture = 'profiles/default.jpg'
-        user.save()
-        
+
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
             return redirect('pagina')  
-            
+
     return render(request, 'regis.html')
 
 @csrf_protect
@@ -51,14 +63,13 @@ def iniciar(request):
         password = request.POST['password']
         
         
-        # Autenticación con Django
         user = authenticate(request,  username=username, password=password)
         
         if user is not None:
             login(request, user)
-            return redirect('pagina')  # Redirige a la página
+            return redirect('pagina') 
         else:
-            # Si las credenciales son incorrectas
+            
             return render(request, 'iniciar.html', {'error': 'Usuario o contraseña incorrectos'})
     
     return render(request, 'iniciar.html')
@@ -79,3 +90,19 @@ def logout_request(request):
     logout(request)
     messages.info(request, "tu sesión se ha cerrado correctamente")
     return redirect("home")
+
+@login_required
+def perfil_view(request):
+    if request.method == 'POST':
+        user = request.user
+        user.username = request.POST.get('username')
+        user.email = request.POST.get('email')
+        user.bio = request.POST.get('bio')
+
+        if 'profile_picture' in request.FILES:
+            user.profile_picture = request.FILES['profile_picture']
+
+        user.save()
+        return redirect('perfil') 
+
+    return render(request, 'perfil.html')

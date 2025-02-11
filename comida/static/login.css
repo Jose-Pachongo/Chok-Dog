@@ -1,13 +1,14 @@
 @import url('/static/barra.css ');
 
-.loginn{
-    min-height: 78vh;
+.loginn {
+    min-height: 85vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
     padding: 10px;
+    margin-bottom: 20px;
 }
 
 .login-cont {
@@ -15,11 +16,12 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px var(--text_sha);
-    width: 300px;
+    width: 400px;
     max-width: 90%;
     margin: 10px auto;
 }
-.login-cont p{
+
+.login-cont p {
     text-align: center;
 }
 
@@ -29,24 +31,39 @@ label {
     color: var(--negro-profundo);
 }
 
+
+.name-container {
+    display: flex;
+    gap: 10px;
+}
+
+.name-container input {
+    flex: 1;
+}
+
 input[type="text"],
 input[type="email"],
 input[type="password"] {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     margin-bottom: 12px;
     border: 1px solid var(--gris-acero);
-    border-radius: 4px;
+    border-radius: 6px;
+    font-size: 14px;
 }
+
 
 input[type="submit"] {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     background-color: var(--dorado);
-    color: var(--blanco);
+    color: #FFFFFF;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s;
 }
 
 input[type="submit"]:hover {
@@ -57,6 +74,19 @@ h2 {
     color: var(--negro-profundo);
     text-align: center;
 }
+.address {
+    width: 100%;
+    background-color: black;
+}
+
+.address input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid var(--gris-acero);
+    border-radius: 6px;
+    font-size: 14px;
+}
 .password-container {
     position: relative;
     width: 100%;
@@ -64,26 +94,19 @@ h2 {
 
 #togglePassword {
     position: absolute;
-    top: 40%;
-    right: 10px;
+    top: 50%;
+    right: 12px;
     transform: translateY(-50%);
     cursor: pointer;
     font-size: 18px;
-    color: #333;
+    color: var(--gris-acero);
 }
 
 
-/* Media queries for responsiveness */
 @media (max-width: 768px) {
-    
-    .main {
-        top: 70px;
-    }
     .login-cont {
         padding: 15px;
-        width: 80%;
-        max-width: 50%;
+        width: 90%;
+        max-width: 400px;
     }
-
-
 }

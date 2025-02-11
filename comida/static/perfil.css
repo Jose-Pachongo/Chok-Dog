@@ -1,22 +1,41 @@
 @import url('/static/barra.css ');
 
+.name-container {
+    display: flex;
+    gap: 10px;
+}
+
+.name-container div {
+    flex: 1;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: none;
+    background: #95A5A6;
+    color: black;
+}
+
+.profile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .profile-container {
     max-width: 600px;
-    margin: auto;
+    margin: 50px 0 50px 0;
     background: #333D41;
     padding: 20px;
     border-radius: 10px;
     color: white;
+    text-align: center;
+   
 }
 
-.profile-picture img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    display: block;
-    margin: auto;
-}
+
 
 input, textarea {
     width: 100%;
@@ -28,18 +47,3 @@ input, textarea {
     color: black;
 }
 
-button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 20px;
-    background: #D4AF37;
-    color: black;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #b89630;
-}
