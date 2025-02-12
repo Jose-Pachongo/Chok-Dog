@@ -37,7 +37,7 @@ body{
     top: 0; 
 }
 .main{
-    margin-top: 80px;
+    margin: 80px 0 30px 0;
 
 }
 .logo {
@@ -81,20 +81,7 @@ body{
 
 }
 
-.redes {
-    display: flex;
-    gap: 2rem;
-    font-size: 30px;
-    text-decoration: none;
 
-}
-.redes a{
-	color: white;
-    padding: 5px;
-}
-.redes a:hover{
-    color: var(--dorado);
-}
 
 
 .text {
@@ -199,6 +186,23 @@ body{
 .footer-contact {
     display: flex;
     justify-content: space-around;
+}
+.redes {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    font-size: 30px;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+
+}
+.redes a{
+	color: white;
+    padding: 5px;
+}
+.redes a:hover{
+    color: var(--dorado);
 }
 
 @media (max-width: 768px) {

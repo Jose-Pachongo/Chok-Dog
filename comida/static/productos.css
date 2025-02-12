@@ -3,8 +3,7 @@
 .menu-con {
     text-align: center;
     padding: 20px;
-    margin: 0 100px 20px 100px;
-    
+    margin-bottom: 50px;
 }
 
 h1 {
@@ -58,3 +57,13 @@ h1 {
     cursor: pointer;
 }
 
+@media (max-width: 768px) {
+    .menu-con {
+        padding-top: 50px;
+        
+    }
+    .food-item {
+        width: 180px;
+    }
+    
+}

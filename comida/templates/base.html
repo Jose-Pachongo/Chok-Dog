@@ -34,12 +34,9 @@
 
         <div class="menu-icons">
             {% if user.is_authenticated %}
-                <!-- Ícono del carrito de compras -->
                 <a href="{% url 'carrito' %}" title="Carrito">
                     <i class='bx bx-cart'></i>
                 </a>
-
-                <!-- Menú de perfil con desplegable -->
                 <div class="profile-menu">
                     <button id="profileBtn" class="profile-btn">
                         <i class='bx bx-user-circle'></i>
@@ -54,11 +51,7 @@
         </div>
 
         </nav>
-        <div class="redes">
-            <a href="https://www.facebook.com/chok.dog"><i class='bx bxl-facebook-circle' ></i></a>
-            <a href="#"><i class='bx bxl-instagram' ></i></a>
-            <a href="#"><i class='bx bxl-whatsapp' ></i></a>
-        </div>
+        
     </header>
 
     <main class="main">
@@ -69,25 +62,34 @@
 
     <footer class="footer">
         <div class="footer-contact">
+            
+            <div class="footer-info">
+                <p>Dirección:</p>
+                <p>Cl. 6 # 9-10, Pital, Huila</p>
+                <div class="footer-info">
+                    <p>Teléfono: </p>
+                    <p>311285185</p>
+                </div>
+            </div>
             <div class="footer-info">
                 <p>Abrimos:</p>
                 <p>Lunes a sábado</p>
                 <p>12:00-23:00</p>
             </div>
             <div class="footer-info">
-                <p>Dirección:</p>
-                <p>Cl. 6 # 9-10, Pital, Huila</p>
-            </div>
-            <div class="footer-info">
-                <p>Teléfono: </p>
-                <p>311285185</p>
-                </div>
-            </div>
-            <div class="footer-info">
                 <p>Dueños: </p>
                 <p></p>
+            </div>
+            <div class="redes">
+                <p>Redes Sociales</p>
+                <div>
+                    <a href="https://www.facebook.com/chok.dog"><i      class='bx bxl-facebook-circle' ></i></a>
+                    <a href="#"><i class='bx bxl-instagram' ></i></a>
+                    <a href="#"><i class='bx bxl-whatsapp' ></i></a>
                 </div>
             </div>
+            
+        </div>
     </footer>
     <script src="{% static 'js/script.js' %}"></script>
     
