@@ -47,8 +47,13 @@
 </div>
 {% if error %}
     <script type="text/javascript">
-        alert("{{ error }}");  // Muestra el mensaje de error en un alert() de JavaScript
+        alert("{{ error }}"); 
     </script>
+{% endif %}
+{% if success %}
+<script type="text/javascript">
+    alert("{{ success }}");  
+</script>
 {% endif %}
 
 {% endblock %}

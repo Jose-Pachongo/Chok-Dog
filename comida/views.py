@@ -37,7 +37,7 @@ def regis(request):
         if CustomUser.objects.filter(email=email).exists():
             return render(request, 'regis.html', {'error': 'El correo electrónico ya está en uso. Prueba con otro.'})
 
-        # Crear usuario con CustomUser en lugar de User
+       
         user = CustomUser.objects.create_user(
             username=username,
             email=email,
@@ -45,14 +45,14 @@ def regis(request):
             first_name=first_name,
             last_name=last_name
         )
-        user.phone_number = phone  # Asignar el teléfono al campo correcto
-        user.address = address  # Asignar la dirección al campo correcto
+        user.phone_number = phone 
+        user.address = address 
         user.save()
 
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('pagina')  
+            return render(request, 'pagina.html', {'success': f'Bienvenido a Chock Dog, {user.first_name}! Tu cuenta ha sido creada correctamente.'})  
 
     return render(request, 'regis.html')
 
