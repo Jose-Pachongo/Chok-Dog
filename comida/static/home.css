@@ -1,0 +1,136 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative; 
+    padding-bottom: 50px;
+    
+}
+
+.main::before {
+    content: '';
+    background-image: url('/static/img/cok_4.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+}
+
+.contenido {
+    width: 100%;
+    max-width: 1700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    z-index: 1;
+    flex-grow: 1;
+    margin-bottom: 20px;
+}
+
+.cont-ini {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 480px;
+    padding: 0 1rem;
+}
+
+.cont-ini h2 {
+    text-align: center;
+    font-size: 6.5em;
+    font-weight: 900;
+    margin: 0;
+    color: white;
+    text-shadow: var(--text_sha);
+}
+
+.cont-ini .descripcion {
+    background-color: var(--fondo);
+    text-align: justify;
+    padding: 5%;
+    width: 100%;
+    max-width: 450px;
+    margin: 1rem 0;
+    color: white;
+    border-radius: 8px;
+}
+
+.cont-ini .botones {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.botones .boton {
+    width: 180px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    margin: 3px;
+    font-size: 1.1em;
+    font-weight: 700;
+    transition: .3s all;
+    background-color: var(--fondo);
+    color: white;
+}
+
+.boton:hover {
+    background-color: #888;
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.imagen {
+    width: 650px; 
+    height: 450px; 
+    padding: 20px;
+}
+
+.imagen-1 {
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+    object-fit: cover; 
+}
+
+
+@media (max-width: 1024px) {
+    .contenido {
+        padding: 0;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 900px) {ç
+    .main{
+        margin-top: 10px;
+        padding-bottom: 10px;
+    }
+    .contenido {
+        flex-direction: column;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 620px) {
+    .imagen {
+        width: 450px;
+        height: 450px;
+    }
+    
+}
+
+

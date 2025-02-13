@@ -2,8 +2,9 @@ from pyexpat import model
 from django.contrib import admin
 from .models import productos
 from .models import menu
+from django.contrib.auth.admin import UserAdmin
+from .models import CustomUser
 
-# Register your models here.
 
 class productosAdmin(admin.ModelAdmin):
     model = productos
@@ -16,3 +17,21 @@ class menuAdmin(admin.ModelAdmin):
     list_display = ('nombre','imagen','precio',)
     list_display_links = ('nombre',)
 admin.site.register(menu, menuAdmin)
+
+
+
+@admin.register(CustomUser)
+class CustomUserAdmin(UserAdmin):
+    list_display = ('username', 'email', 'first_name', 'last_name', 'phone_number', 'is_staff')
+    search_fields = ('username', 'email', 'first_name', 'last_name')
+    list_filter = ('is_staff', 'is_superuser', 'is_active')
+    
+    fieldsets = UserAdmin.fieldsets + (
+        ('Información adicional', {'fields': ('phone_number', 'address')}),
+    )
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        ('Información adicional', {
+            'classes': ('wide',),
+            'fields': ('email', 'first_name', 'last_name', 'phone_number', 'address'),
+        }),
+    )

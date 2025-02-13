@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} Mi Sitio {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'barra.css' %}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
    
 </head>
@@ -61,36 +62,43 @@
     </main>
 
     <footer class="footer">
-        <div class="footer-contact">
-            
-            <div class="footer-info">
-                <p>Dirección:</p>
-                <p>Cl. 6 # 9-10, Pital, Huila</p>
-                <div class="footer-info">
-                    <p>Teléfono: </p>
-                    <p>311285185</p>
+        <div class="footer-cont">
+            <div class="row">
+                <div class="footer-col">
+                    <h4>Información</h4>
+                    <ul>
+                        <li><a href="#">Dirección: <br> Cl. 6 # 9-10, Pital, Huila</a></li>
+                        <li><a href="#">Telefono: <br> 311285185</a></li>
+                        
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Horarios</h4>
+                    <ul>
+                        <li><a href="#">Lunes a sábado: <br> 12:00-23:00</a></li>
+                        
+                        
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Propietario</h4>
+                    <ul>
+                        <li><a href="#">Andrea Julieth Villaquira Escobar</a></li>
+                        <li><a href="#">Arley Ríos Rivera</a></li>
+                        
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Redes Sociales</h4>
+                    <div class="social-links">
+                        <a class="fa" href="https://www.facebook.com/chok.dog"><i      class='bx bxl-facebook-circle' ></i></a>
+                        <a class="ig" href="https://www.instagram.com/chok.dog?utm_source=qr&igsh=c2ZjdnRnNmFyMjYy"><i class='bx bxl-instagram' ></i></a>
+                        <a class="wp"href="https://wa.me/3014429452?text=comun%C3%ADcate%20con%20nosotros"><i class='bx bxl-whatsapp' ></i></a>
+                    </div>
                 </div>
             </div>
-            <div class="footer-info">
-                <p>Abrimos:</p>
-                <p>Lunes a sábado</p>
-                <p>12:00-23:00</p>
-            </div>
-            <div class="footer-info">
-                <p>Dueños: </p>
-                <p></p>
-            </div>
-            <div class="redes">
-                <p>Redes Sociales</p>
-                <div>
-                    <a href="https://www.facebook.com/chok.dog"><i      class='bx bxl-facebook-circle' ></i></a>
-                    <a href="#"><i class='bx bxl-instagram' ></i></a>
-                    <a href="#"><i class='bx bxl-whatsapp' ></i></a>
-                </div>
-            </div>
-            
         </div>
-    </footer>
+   </footer>
     <script src="{% static 'js/script.js' %}"></script>
     
 </body>

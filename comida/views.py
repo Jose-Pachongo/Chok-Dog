@@ -5,6 +5,9 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser
+from django.core.mail import send_mail
+from django.conf import settings
+from django.http import JsonResponse
 
 
 def home(request):
@@ -94,15 +97,19 @@ def logout_request(request):
 @login_required
 def perfil_view(request):
     if request.method == 'POST':
-        user = request.user
-        user.username = request.POST.get('username')
-        user.email = request.POST.get('email')
-        user.bio = request.POST.get('bio')
+        try:
+            user = request.user
+            user.username = request.POST.get('username')
+            user.email = request.POST.get('email')
+            user.bio = request.POST.get('bio')
 
-        if 'profile_picture' in request.FILES:
-            user.profile_picture = request.FILES['profile_picture']
+            if 'profile_picture' in request.FILES:
+                user.profile_picture = request.FILES['profile_picture']
 
-        user.save()
-        return redirect('perfil') 
+            user.save()
+            messages.success(request, 'Perfil actualizado correctamente.')
+            return redirect('perfil')
+        except Exception as e:
+            messages.error(request, 'Error al actualizar el perfil.')
 
     return render(request, 'perfil.html')
