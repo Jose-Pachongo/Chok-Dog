@@ -29,7 +29,7 @@
 </div>
 {% if error %}
     <script type="text/javascript">
-        alert("{{ error }}");  // Muestra el mensaje de error en un alert() de JavaScript
+        alert("{{ error }}");
     </script>
 {% endif %}
 
@@ -42,17 +42,16 @@
         // Cambiar entre 'password' y 'text'
         if (passwordType === 'password') {
             passwordField.type = 'text';  // Mostrar la contraseña
-            toggleIcon.classList.remove('fa-eye');
-            toggleIcon.classList.add('fa-eye-slash');  // Cambiar ícono
-        } else {
-            passwordField.type = 'password';  // Ocultar la contraseña
             toggleIcon.classList.remove('fa-eye-slash');
             toggleIcon.classList.add('fa-eye');  // Cambiar ícono
+        } else {
+            passwordField.type = 'password';  // Ocultar la contraseña
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');  // Cambiar ícono
         }
     }
 </script>
 
-<!-- Asegúrate de tener Font Awesome para los íconos -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 

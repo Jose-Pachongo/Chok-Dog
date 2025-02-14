@@ -55,7 +55,8 @@ def regis(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return render(request, 'pagina.html', {'success': f'Bienvenido a Chock Dog, {user.first_name}! Tu cuenta ha sido creada correctamente.'})  
+            messages.success(request,"{user.first_name} Bienvenido a Chock Dog, Tu cuenta ha sido creada correctamente." )
+            return render(request, 'pagina.html')  
 
     return render(request, 'regis.html')
 
@@ -65,16 +66,17 @@ def iniciar(request):
         username = request.POST['username']
         password = request.POST['password']
         
-        
+    
         user = authenticate(request,  username=username, password=password)
         
         if user is not None:
             login(request, user)
+            messages.success(request,"{user.first_name} Bienvenido a Chock Dog,  has iniciado correctamente." )
             return redirect('pagina') 
         else:
             
             return render(request, 'iniciar.html', {'error': 'Usuario o contraseña incorrectos'})
-    
+        
     return render(request, 'iniciar.html')
 
 def pagina(request):
