@@ -92,12 +92,12 @@ h2 {
 
 #togglePassword {
     position: absolute;
-    top: 50%;
+    top: 40%;
     right: 12px;
     transform: translateY(-50%);
     cursor: pointer;
     font-size: 18px;
-    color: var(--gris-acero);
+    color: var(--negro-profundo);
 }
 
 

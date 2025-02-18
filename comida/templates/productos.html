@@ -7,141 +7,178 @@
 
 <div class="menu-con">
     <h1>Productos</h1>
-    <div class="food-item">
-        <img src="imagen1.jpg" alt="">
-        <div class="details">
-            <p>Producto</p>
-            <p>Precio: 10.000</p>
-            
-        </div>
-        <div class="boton">
-            <button>Agregar al Carrito</button>
-        </div>
-    </div>
-    <div class="food-item">
-        <img src="imagen1.jpg" alt="">
-        <div class="details">
-            <p>Producto</p>
-            <p>Precio: 10.000</p>
-            
-        </div>
-        <div class="boton">
-            <button>Agregar al Carrito</button>
-        </div>
-    </div>
-    <div class="food-item">
-        <img src="imagen1.jpg" alt="">
-        <div class="details">
-            <p>Producto</p>
-            <p>Precio: 10.000</p>
-            
-        </div>
-        <div class="boton">
-            <button>Agregar al Carrito</button>
-        </div>
-    </div>
-    <div class="food-item">
-        <img src="imagen1.jpg" alt="">
-        <div class="details">
-            <p>Producto</p>
-            <p>Precio: 10.000</p>
-            
-        </div>
-        <div class="boton">
-            <button>Agregar al Carrito</button>
-        </div>
-    </div>
-    <div class="food-item">
-        <img src="imagen1.jpg" alt="">
-        <div class="details">
-            <p>Producto</p>
-            <p>Precio: 10.000</p>
-            
-        </div>
-        <div class="boton">
-            <button>Agregar al Carrito</button>
-        </div>
-    </div>
-    <div class="food-item">
-        <img src="imagen1.jpg" alt="">
-        <div class="details">
-            <p>Producto</p>
-            <p>Precio: 10.000</p>
-            
-        </div>
-        <div class="boton">
-            <button>Agregar al Carrito</button>
-        </div>
-    </div>
-    <div class="food-item">
-        <img src="imagen1.jpg" alt="">
-        <div class="details">
-            <p>Producto</p>
-            <p>Precio: 10.000</p>
-            
-        </div>
-        <div class="boton">
-            <button>Agregar al Carrito</button>
-        </div>
-    </div>
-    <div class="food-item">
-        <img src="imagen1.jpg" alt="">
-        <div class="details">
-            <p>Producto</p>
-            <p>Precio: 10.000</p>
-            
-        </div>
-        <div class="boton">
-            <button>Agregar al Carrito</button>
-        </div>
-    </div>
-    <div class="food-item">
-        <img src="imagen1.jpg" alt="">
-        <div class="details">
-            <p>Producto</p>
-            <p>Precio: 10.000</p>
-            
-        </div>
-        <div class="boton">
-            <button>Agregar al Carrito</button>
-        </div>
-    </div>
-    <div class="food-item">
-        <img src="imagen1.jpg" alt="">
-        <div class="details">
-            <p>Producto</p>
-            <p>Precio: 10.000</p>
-            
-        </div>
-        <div class="boton">
-            <button>Agregar al Carrito</button>
-        </div>
-    </div>
-    <div class="food-item">
-        <img src="imagen1.jpg" alt="">
-        <div class="details">
-            <p>Producto</p>
-            <p>Precio: 10.000</p>
-            
-        </div>
-        <div class="boton">
-            <button>Agregar al Carrito</button>
-        </div>
-    </div>
-    <div class="food-item">
-        <img src="imagen1.jpg" alt="">
-        <div class="details">
-            <p>Producto</p>
-            <p>Precio: 10.000</p>
-            
-        </div>
-        <div class="boton">
-            <button>Agregar al Carrito</button>
-        </div>
-    </div>
-    
-    
 
+    <div class="food-item">
+        <img src="{% static 'img/hot_dog.jpg' %}" alt="">
+        <div class="details">
+            <p>Hot-Dog</p>
+            <p>Precio: 12.000</p>
+        </div>
+        <div class="boton">
+            <button class="btn-custom" onclick="openModal('modalHotDog')">Ármalo a tu gusto</button>
+        </div>
+    </div>
+
+    <div class="food-item">
+        <img src="{% static 'img/pla1.jpg' %}" alt="">
+        <div class="details">
+            <p>Hamburguesa</p>
+            <p>Precio: 14.000</p>
+        </div>
+        <div class="boton">
+            <button class="btn-custom" onclick="openModal('modalBurger')">Ármalo a tu gusto</button>
+        </div>
+    </div>
+
+    <div class="food-item">
+        <img src="{% static 'img/pla1.jpg' %}" alt="">
+        <div class="details">
+            <p>Soda Italiana</p>
+            <p>Precio: 8.000</p>
+        </div>
+        <div class="boton">
+            <button class="btn-custom" onclick="openModal('modalSoda')">Ármalo a tu gusto</button>
+        </div>
+    </div>
+
+    <div class="food-item">
+        <img src="{% static 'img/pla1.jpg' %}" alt="">
+        <div class="details">
+            <p>Cholado</p>
+            <p>Precio: 10.000</p>
+        </div>
+        <div class="boton">
+            <button class="btn-custom">Agregar al Carrito</button>
+        </div>
+    </div>
+
+    <div class="food-item">
+        <img src="{% static 'img/pla1.jpg' %}" alt="">
+        <div class="details">
+            <p>Michelada</p>
+            <p>Precio: 10.000</p>
+        </div>
+        <div class="boton">
+            <button class="btn-custom" onclick="openModal('modalMichelada')">Ármalo a tu gusto</button>
+        </div>
+    </div>
+
+    <div class="food-item">
+        <img src="{% static 'img/pla1.jpg' %}" alt="">
+        <div class="details">
+            <p>Crema de fruta</p>
+            <p>Precio: 6.000</p>
+        </div>
+        <div class="boton">
+            <button class="btn-custom" onclick="openModal('modalCrema')">Ármalo a tu gusto</button>
+        </div>
+    </div>
 </div>
+
+<!-- Modal: Hot-Dog -->
+<div id="modalHotDog" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modalHotDog')">&times;</span>
+        <h2>Personaliza tu Hot-Dog</h2>
+        <p class="desc">Elige los ingredientes extra para hacer tu hot-dog único.</p>
+        
+        <div class="ingredient-grid">
+            <label><input type="checkbox" name="ingrediente"> Queso</label>
+            <label><input type="checkbox" name="ingrediente"> Maíz</label>
+            <label><input type="checkbox" name="ingrediente"> Piña</label>
+            <label><input type="checkbox" name="ingrediente"> Doritos</label>
+            <label><input type="checkbox" name="ingrediente"> Jalapeños</label>
+            <label><input type="checkbox" name="ingrediente"> Pico de Gallo</label>
+            <label><input type="checkbox" name="ingrediente"> Papa Ripo</label>
+            <label><input type="checkbox" name="ingrediente"> Cebolla Caramelizada</label>
+        </div>
+
+        <button class="btn-cart">Agregar al Carrito</button>
+    </div>
+</div>
+
+<!-- MODAL: Hamburguesa -->
+<div id="modalBurger" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modalBurger')">&times;</span>
+        <h2>Personaliza tu Hamburguesa</h2>
+        <p class="desc">Agrega ingredientes extra y disfruta de una hamburguesa única.</p>
+        <div class="ingredient-grid">
+            <label><input type="checkbox" name="ingrediente"> Queso</label>
+            <label><input type="checkbox" name="ingrediente"> Maíz</label>
+            <label><input type="checkbox" name="ingrediente"> Piña</label>
+            <label><input type="checkbox" name="ingrediente"> Doritos</label>
+            <label><input type="checkbox" name="ingrediente"> Jalapeños</label>
+            <label><input type="checkbox" name="ingrediente"> Pico de Gallo</label>
+            <label><input type="checkbox" name="ingrediente"> Papa Ripo</label>
+            <label><input type="checkbox" name="ingrediente"> Cebolla Caramelizada</label>
+        </div>
+        <button class="btn-cart">Agregar al Carrito</button>
+    </div>
+</div>
+
+<div id="modalSoda" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modalSoda')">&times;</span>
+        <h2>Personaliza tu Hot-Dog</h2>
+        <p class="desc">Elige los ingredientes extra para hacer tu hot-dog único.</p>
+        
+        <div class="ingredient-grid">
+            <label><input type="checkbox" name="ingrediente"> Maracuya</label>
+            <label><input type="checkbox" name="ingrediente"> Curacao</label>
+            <label><input type="checkbox" name="ingrediente"> Mango Biche</label>
+            <label><input type="checkbox" name="ingrediente"> Blueberry</label>
+            <label><input type="checkbox" name="ingrediente"> Granadilla</label>
+            <label><input type="checkbox" name="ingrediente"> Manzana</label>
+        </div>
+
+        <button class="btn-cart">Agregar al Carrito</button>
+    </div>
+</div>
+
+<div id="modalMichelada" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modalMichelada')">&times;</span>
+        <h2>Elige con que quieres tu Michelada</h2>
+        <p class="desc">Elige los ingredientes extra para hacer tu hot-dog único.</p>
+        
+        <div class="ingredient-grid">
+            <label><input type="checkbox" name="ingrediente"> Con Cerveza</label>
+            <label><input type="checkbox" name="ingrediente"> con soda</label>
+            
+        </div>
+
+        <button class="btn-cart">Agregar al Carrito</button>
+    </div>
+</div>
+<div id="modalCrema" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('modalCrema')">&times;</span>
+        <h2>Elige el sabor de tu preferencia</h2>
+        <p class="desc">Elige los ingredientes extra para hacer tu hot-dog único.</p>
+        
+        <div class="ingredient-grid">
+            <label><input type="checkbox" name="ingrediente"> Mora</label>
+            <label><input type="checkbox" name="ingrediente"> Mango</label>
+            <label><input type="checkbox" name="ingrediente"> Guanabana</label>
+            <label><input type="checkbox" name="ingrediente"> Maracuya</label>
+            <label><input type="checkbox" name="ingrediente"> Lulo</label>
+            <label><input type="checkbox" name="ingrediente"> Fresa</label>
+        </div>
+
+        <button class="btn-cart">Agregar al Carrito</button>
+    </div>
+</div>
+
+<script>
+function openModal(id) {
+    document.getElementById(id).style.display = "flex";
+}
+
+function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+}
+
+</script>
 
 {% endblock %}

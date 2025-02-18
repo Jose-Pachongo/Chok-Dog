@@ -34,6 +34,14 @@
 {% endif %}
 
 <script type="text/javascript">
+    window.onload = function() {
+            var passwordField = document.getElementById('password');
+            var toggleIcon = document.getElementById('togglePassword');
+            
+            // Asegurarse de que el campo de la contraseña esté oculto por defecto
+            passwordField.type = 'password';  // La contraseña está oculta por defecto
+            toggleIcon.classList.add('fa-eye-slash');  // Añadir el ícono con la raya
+        }
     function togglePassword() {
         var passwordField = document.getElementById('password');
         var passwordType = passwordField.type;

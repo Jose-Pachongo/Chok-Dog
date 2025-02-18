@@ -26,3 +26,13 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
 
+
+class MensajeContacto(models.Model):
+    nombre = models.CharField(max_length=100)
+    correo = models.EmailField()
+    telefono = models.CharField(max_length=15)
+    mensaje = models.TextField()
+
+    def __str__(self):
+        return f"Mensaje de {self.nombre} ({self.correo})"
+

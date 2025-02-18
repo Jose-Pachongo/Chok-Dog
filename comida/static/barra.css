@@ -10,6 +10,7 @@
 :root{
     --text_4: rgba(0, 0, 0, 0.3);
     --text_sha: 5px 20px 5px #000000;
+    --box: 0px 4px 10px rgb(0, 0, 0);
     --blanco: #FFFFFF;
     --negro-profundo: #1a1a1a;
     --fondo: #0000007b;

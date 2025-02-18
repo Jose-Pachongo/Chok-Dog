@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .models import CustomUser
 from django.core.mail import send_mail
 from django.conf import settings
-from django.http import JsonResponse
+from .forms import MensajeContactoForm
 
 
 def home(request):
@@ -20,9 +20,43 @@ def nosotros(request):
 
 def servicios(request):
     return render(request, 'servicios.html')
+    
 
 def contactenos(request):
-    return render(request, 'contactenos.html')
+    if request.method == "POST":
+        form = MensajeContactoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            nombre = form.cleaned_data['nombre']
+            correo = form.cleaned_data['correo']
+            telefono = form.cleaned_data['telefono']
+            mensaje = form.cleaned_data['mensaje']
+
+            subject = "Nuevo mensaje de contacto"
+            message = f"""
+            Nombre: {nombre}
+            Correo: {correo}
+            Teléfono: {telefono}
+
+            Mensaje:
+            {mensaje}
+            """
+            
+            try:
+                send_mail(subject, message, settings.EMAIL_HOST_USER, ['pjoseedier@gmail.com'])
+                messages.success(request, "Mensaje enviado con éxito.")
+            except Exception as e:
+                messages.error(request, f"Error al enviar el correo: {e}")
+                print(f"Error de correo: {e}")
+
+            return redirect('contactenos')
+    else:
+        form = MensajeContactoForm()
+
+    return render(request, "contactenos.html", {"form": form})
+
+
+    
 @csrf_protect
 def regis(request):
     if request.method == 'POST':
@@ -55,7 +89,7 @@ def regis(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            messages.success(request,"{user.first_name} Bienvenido a Chock Dog, Tu cuenta ha sido creada correctamente." )
+            messages.success(request, f"{user.first_name} Bienvenido a Chock Dog, Tu cuenta ha sido creada correctamente.")
             return render(request, 'pagina.html')  
 
     return render(request, 'regis.html')
@@ -71,7 +105,7 @@ def iniciar(request):
         
         if user is not None:
             login(request, user)
-            messages.success(request,"{user.first_name} Bienvenido a Chock Dog,  has iniciado correctamente." )
+            messages.success(request, f"{user.username} Bienvenido a Chock Dog,  has iniciado correctamente." )
             return redirect('pagina') 
         else:
             
@@ -93,7 +127,43 @@ def perfil(request):
 
 def logout_request(request):
     logout(request)
-    messages.info(request, "tu sesión se ha cerrado correctamente")
+    return redirect("home")
+
+@login_required
+def perfil_view(request):
+    if request.method == 'POST':
+        try:
+            user = request.user
+            user.username = request.POST.get('username')
+            user.email = request.POST.get('email')
+            user.bio = request.POST.get('bio')
+
+            if 'profile_picture' in request.FILES:
+                user.profile_picture = request.FILES['profile_picture']
+
+            user.save()
+            messages.success(request, 'Perfil actualizado correctamente.')
+            return redirect('perfil')
+        except Exception as e:
+            messages.error(request, 'Error al actualizar el perfil.')
+
+    return render(request, 'perfil.html')
+
+
+def pagina(request):
+    return render(request, 'pagina.html')
+
+def productos(request):
+    return render(request, 'productos.html')
+
+def carrito(request):
+    return render(request, 'carrito.html')
+
+def perfil(request):
+    return render(request, 'perfil.html')
+
+def logout_request(request):
+    logout(request)
     return redirect("home")
 
 @login_required

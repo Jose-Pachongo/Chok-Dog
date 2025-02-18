@@ -10,9 +10,15 @@
 
 <section class="contact-section" id="contacto">
     <div class="contact-container">
+        {% if error %}
+                <script type="text/javascript">
+                    alert("{{ error }}");
+                </script>
+            {% endif %}
         <div class="contact-form">
             <h2 class="form-title">Contáctanos</h2>
-            <form id="contact-form">
+            <form method="POST" action="{% url 'contactenos' %}">
+                {% csrf_token %}
                 <div class="form-group">
                     <label for="nombre">Nombre y Apellido</label>
                     <input type="text" id="nombre" name="nombre" required>
@@ -31,12 +37,26 @@
                 </div>
                 <button type="submit" class="submit-btn">Enviar</button>
             </form>
+            
+            
+            
         </div>
         <div class="map-container">
             <iframe src="https://www.google.com/maps/d/embed?mid=1R_OQ9ozCLAXFPL07Th384_TGCCPiMm4&hl=es-419&ehbc=2E312F" width="640" height="480"></iframe>
         </div>
     </div>
 </section>
+{% if messages %}
+        {% for m in messages %}
+            <script>
+                Swal.fire({
+                    title: "Felicitaciones",
+                    text: "{{ m }}",
+                    icon: "success"
+                })
+            </script>
+        {% endfor %}
+    {% endif %}
 
 
 {% endblock %}

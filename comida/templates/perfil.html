@@ -5,33 +5,38 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'perfil.css' %}">
- <div class="profile">
+<div class="profile">
     <div class="profile-container">
-        <h2>Perfil de {{ user.username }}</h2>
-    
-        <form method="POST">
-            {% csrf_token %}
+        <div class="profile-header">
+            <img src="{% static 'img/perfil.webp' %}" alt="Foto de perfil" class="profile-pic">
+            <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+            <p class="username">@{{ user.username }}</p>
+            <p class="location">📍 {{ user.address }}</p>
+        </div>
+
+        <div class="profile-info">
             <div class="input">
-                <label>Nombre:</label>
-                <input type="text" name="first_name" value="{{ user.first_name }}  {{ user.last_name }}" required>
+                <label>Nombre completo:</label>
+                <p>{{ user.first_name }} {{ user.last_name }}</p>
             </div>
             <div class="input">
                 <label>Nombre de usuario:</label>
-                <input type="text" name="username" value="{{ user.username }}" required>
+                <p>@{{ user.username }}</p>
             </div>
             <div class="input">
                 <label>Correo electrónico:</label>
-                <input type="email" name="email" value="{{ user.email }}" required>
+                <p>{{ user.email }}</p>
             </div>
             <div class="input">
                 <label>Teléfono:</label>
-                <input type="text" name="phone" value="{{ user.phone }}" required>
+                <p>{{ user.phone }}</p>
             </div>
-            <div class="input">                <label>Dirección:</label>
-                <input type="address" name="address" value="{{ user.address}}" required>
+            <div class="input">
+                <label>Dirección:</label>
+                <p>{{ user.address }}</p>
             </div>
-
-        </form>
+        </div>
     </div>
 </div>
+
 {% endblock %}

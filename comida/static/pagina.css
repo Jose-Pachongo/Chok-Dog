@@ -8,6 +8,9 @@
 }
 
 .hero-content h1 {
+    margin: 10px;
+}
+.hero-content h1 {
     font-size: 3rem;
     color: var(--blanco);
 }
@@ -47,7 +50,7 @@
 }
 
 .hero-img img {
-    margin-top: 5px;
+    margin: 10px;
     width: 500px;
     height: 500px;
     border-radius: 15px;
@@ -99,4 +102,20 @@
 .menu-item p {
     color: var(--blanco);
     font-size: 1rem;
+}
+
+@media (max-width: 900px) {
+    .hero {
+        flex-direction: column;
+        padding: 3rem 10%;
+        text-align: center;
+    }
+
+}
+
+@media (max-width: 550px) {
+    .hero img{
+        width: 400px;
+        height: 500px;
+    }
 }

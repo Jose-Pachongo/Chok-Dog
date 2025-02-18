@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser
+from .models import MensajeContacto
 
 class CustomUserCreationForm(UserCreationForm):
     phone_number = forms.CharField(
@@ -13,3 +14,9 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ['first_name', 'last_name', 'username', 'email', 'phone_number', 'address', 'password1', 'password2']
+
+
+class MensajeContactoForm(forms.ModelForm):
+    class Meta:
+        model = MensajeContacto
+        fields = ['nombre', 'correo', 'telefono', 'mensaje']

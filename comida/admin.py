@@ -1,9 +1,11 @@
-from pyexpat import model
+
+from django import forms
 from django.contrib import admin
 from .models import productos
 from .models import menu
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
+from .models import MensajeContacto
 
 
 class productosAdmin(admin.ModelAdmin):
@@ -35,3 +37,10 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('email', 'first_name', 'last_name', 'phone_number', 'address'),
         }),
     )
+
+
+@admin.register(MensajeContacto)
+class MensajeContactoAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'correo', 'telefono', 'mensaje')
+    search_fields = ('nombre', 'correo')
+   
