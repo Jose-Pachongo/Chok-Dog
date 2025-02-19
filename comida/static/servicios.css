@@ -1,7 +1,10 @@
 .services-section {
+    display: flex;
+    align-items: center;
     background-color: var(--negro-profundo);
     color: #fff;
     padding: 4rem 2rem;
+    min-height: 450px;
 }
 
 .services-container {

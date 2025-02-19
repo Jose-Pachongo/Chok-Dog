@@ -131,7 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/pagina/' 
 LOGOUT_REDIRECT_URL = '/'
 
-AUTH_USER_MODEL = 'comida.CustomUser'
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

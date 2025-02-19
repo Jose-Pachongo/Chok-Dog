@@ -6,14 +6,30 @@
     justify-content: center;
     position: relative;
     padding: 10px;
-    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.loginn::before {
+    content: '';
+    background-image: url('/static/img/cok_4.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
 }
 
 .login-cont {
-    background-color: var(--dorado);
+    background-color: var(--blanco);
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px var(--text_sha);
+    box-shadow:  var(--box);
     width: 400px;
     max-width: 90%;
     margin: 10px auto;
@@ -46,6 +62,7 @@ input[type="password"] {
     padding: 10px;
     margin-bottom: 12px;
     border: 1px solid var(--gris-acero);
+  
     border-radius: 6px;
     font-size: 14px;
 }

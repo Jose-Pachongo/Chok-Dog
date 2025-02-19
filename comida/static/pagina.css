@@ -60,8 +60,8 @@
 
 .menu-of{
     text-align: center;
-    padding: 4rem 10%;
-    background-color: var(--negro-profundo);
+    padding: 1rem 10% 4rem 10% ;
+    background-color: var(--negro-carbon);
 }
 
 .menu-of h2 {
