@@ -43,6 +43,25 @@
     font-size: 1rem;
     line-height: 1.6;
 }
+.bton{
+    display: flex;
+    justify-content: center;
+}
+.service-button{
+    background-color:var(--dorado);
+    color: black;
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 25px;
+    font-weight: bold;
+    margin-top: 30px;
+    text-decoration: none;
+    width:200px;  
+}
+.service-button:hover{
+    background-color: #fff;
+}
 
 @media (max-width: 768px) {
     .services-container {

@@ -11,7 +11,7 @@
             <img src="{% static 'img/perfil.webp' %}" alt="Foto de perfil" class="profile-pic">
             <h2>{{ user.first_name }} {{ user.last_name }}</h2>
             <p class="username">@{{ user.username }}</p>
-            <p class="location">📍 {{ user.address }}</p>
+            <p class="location">📍 {{ user.profile.address|default:"None" }}</p>
         </div>
 
         <div class="profile-info">
@@ -29,11 +29,11 @@
             </div>
             <div class="input">
                 <label>Teléfono:</label>
-                <p>{{ user.phone_number  }}</p>
+                <p>{{ user.profile.phone_number|default:"None" }}</p>
             </div>
             <div class="input">
                 <label>Dirección:</label>
-                <p>{{ user.address }}</p>
+                <p>{{ user.profile.address|default:"None" }}</p>
             </div>
         </div>
     </div>

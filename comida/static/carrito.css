@@ -1,0 +1,68 @@
+.carrito-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #121212;
+    color: #D4AF37;
+    border-radius: 10px;
+}
+
+.carrito-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.carrito-tabla th, .carrito-tabla td {
+    padding: 10px;
+    border-bottom: 1px solid #95A5A6;
+    text-align: center;
+}
+
+.carrito-tabla th {
+    background: #333D41;
+    color: white;
+}
+
+.carrito-vacio {
+    text-align: center;
+    font-size: 18px;
+}
+
+input[type="number"] {
+    width: 50px;
+    text-align: center;
+    background: #333D41;
+    color: white;
+    border: none;
+    padding: 5px;
+}
+
+button {
+    background: #D4AF37;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.btn-eliminar {
+    color: red;
+    text-decoration: none;
+}
+
+.total {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.btn-seguir {
+    display: block;
+    text-align: center;
+    background: #D4AF37;
+    color: black;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 5px;
+}

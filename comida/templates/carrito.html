@@ -5,5 +5,43 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'carrito.css' %}">
+<div class="carrito-container">
+    <h1>Tu Carrito</h1>
 
+    {% if items %}
+        <table class="carrito-tabla">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.producto.nombre }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'actualizar_cantidad' item.id %}">
+                                {% csrf_token %}
+                                <input type="number" name="cantidad" value="{{ item.cantidad }}" min="1">
+                                <button type="submit">Actualizar</button>
+                            </form>
+                        </td>
+                        <td>${{ item.producto.precio }}</td>
+                        <td>${{ item.producto.precio|floatformat:2 }}</td>
+                        <td><a href="{% url 'eliminar_del_carrito' item.id %}" class="btn-eliminar">Eliminar</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p class="total">Total: ${{ total }}</p>
+    {% else %}
+        <p class="carrito-vacio">Tu carrito está vacío.</p>
+    {% endif %}
+
+    <a href="{% url 'productos' %}" class="btn-seguir">Seguir comprando</a>
+</div>
 {% endblock %}

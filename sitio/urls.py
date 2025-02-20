@@ -17,6 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from comida import views
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 
 
 urlpatterns = [
@@ -32,5 +36,8 @@ urlpatterns = [
     path('carrito', views.carrito, name='carrito'),
     path('perfil', views.perfil, name='perfil'),
     path('logout', views.logout_request, name='logout'),
-]
+    path('reservas/', views.reservas, name='reservas'),
+    path('reservar/', views.procesar_reserva, name='procesar_reserva'),
+    
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

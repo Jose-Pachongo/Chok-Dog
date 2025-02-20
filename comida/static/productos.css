@@ -1,8 +1,14 @@
+.prod{ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .menu-con {
     text-align: center;
     padding: 20px;
     margin-bottom: 20px;
     max-width: 1200px;
+   
 
 }
 
@@ -58,7 +64,7 @@
 
 
 .ingredient-grid input {
-    accent-color: #D4AF37; /* Color dorado para los checkboxes */
+    accent-color: #D4AF37; 
     transform: scale(1.2);
 }
 
@@ -91,6 +97,7 @@
     cursor: pointer;
     border-radius: 5px;
     font-weight: bold;
+    
 }
 
 .btn-cart {

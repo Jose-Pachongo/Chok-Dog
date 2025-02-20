@@ -1,7 +1,18 @@
 from django.db import models
 
 
-class Productos(models.Model):
+from django.contrib.auth.models import User
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username
+
+class Product(models.Model):
+    imagen = models.ImageField(upload_to='productos')
     nombre = models.CharField(max_length=200)
     descripcion = models.TextField()
     precio = models.DecimalField(max_digits=10, decimal_places=2)
@@ -28,3 +39,13 @@ class MensajeContacto(models.Model):
     def __str__(self):
         return f"Mensaje de {self.nombre} ({self.correo})"
 
+class Reserva(models.Model):
+    nombre = models.CharField(max_length=100)
+    email = models.EmailField()
+    telefono = models.CharField(max_length=15)
+    fecha = models.DateField()
+    hora = models.TimeField()
+    personas = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.nombre} - {self.fecha} {self.hora}"

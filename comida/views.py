@@ -5,7 +5,12 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import MensajeContacto
+from .models import Product
 from .forms import MensajeContactoForm, CustomUserCreationForm
+from django.core.mail import send_mail
+from django.conf import settings
+from .models import Profile  # Agrega esta línea
+
 
 def home(request):
     if request.user.is_authenticated:
@@ -58,13 +63,15 @@ def regis(request):
         last_name = request.POST.get('last_name', '')
         username = request.POST.get('username', '')
         email = request.POST.get('email', '')
+        phone_number = request.POST.get('phone', '')  # Agregado
+        address = request.POST.get('address', '')  # Agregado
         password = request.POST.get('password', '')
 
         if User.objects.filter(username=username).exists():
-            return render(request, 'regis.html', {'error': 'El nombre de usuario ya está en uso. Prueba con otro.'})
+            return render(request, 'regis.html', {'error': 'El nombre de usuario ya está en uso.'})
 
         if User.objects.filter(email=email).exists():
-            return render(request, 'regis.html', {'error': 'El correo electrónico ya está en uso. Prueba con otro.'})
+            return render(request, 'regis.html', {'error': 'El correo electrónico ya está en uso.'})
 
         user = User.objects.create_user(
             username=username,
@@ -75,10 +82,13 @@ def regis(request):
         )
         user.save()
 
+        # Crear un perfil vinculado al usuario
+        Profile.objects.create(user=user, phone_number=phone_number, address=address)
+
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            messages.success(request, f"{user.first_name} Bienvenido a Chock Dog, tu cuenta ha sido creada correctamente.")
+            messages.success(request, f"{user.first_name} Bienvenido a Chock Dog.")
             return render(request, 'pagina.html')
 
     return render(request, 'regis.html')
@@ -104,7 +114,9 @@ def pagina(request):
     return render(request, 'pagina.html')
 
 def productos(request):
-    return render(request, 'productos.html')
+    products = Product.objects.all()
+    return render(request, 'productos.html', {'products': products})
+    
 
 def carrito(request):
     return render(request, 'carrito.html')
@@ -133,3 +145,36 @@ def perfil_view(request):
             messages.error(request, 'Error al actualizar el perfil.')
 
     return render(request, 'perfil.html')
+
+
+
+from .models import Reserva
+
+def reservas(request):
+    return render(request, 'reservas.html')
+
+def procesar_reserva(request):
+    if request.method == "POST":
+        nombre = request.POST.get('nombre')
+        email = request.POST.get('email')
+        telefono = request.POST.get('telefono')
+        fecha = request.POST.get('fecha')
+        hora = request.POST.get('hora')
+        personas = request.POST.get('personas')
+
+        if not (nombre and email and telefono and fecha and hora and personas):
+            messages.error(request, "Todos los campos son obligatorios.")
+            return redirect('reservas')
+
+        Reserva.objects.create(
+            nombre=nombre, email=email, telefono=telefono,
+            fecha=fecha, hora=hora, personas=personas
+        )
+        
+        messages.success(request, "Reserva realizada con éxito.")
+        return redirect('reservas')
+
+    return redirect('reservas')
+
+    
+
