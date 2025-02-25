@@ -6,7 +6,7 @@
 .menu-con {
     text-align: center;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     max-width: 1200px;
    
 
@@ -26,8 +26,8 @@
 }
 
 .food-item img {
-    width: 90%;
-    height: 100px;
+    width: 95%;
+    height: 160px;
     border: solid 2px var(--dorado);
     margin-bottom: 10px;
     
@@ -156,7 +156,7 @@
 
 @media (max-width: 768px) {
     .menu-con {
-        padding-top: 50px;
+        padding-top: 60px;
         
     }
     .food-item {

@@ -38,6 +38,8 @@ urlpatterns = [
     path('logout', views.logout_request, name='logout'),
     path('reservas/', views.reservas, name='reservas'),
     path('reservar/', views.procesar_reserva, name='procesar_reserva'),
+     path('obtener_mesas_disponibles/', views.obtener_mesas_disponibles, name='obtener_mesas_disponibles'),
+    path('reservar/', views.procesar_reserva, name='procesar_reserva'),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

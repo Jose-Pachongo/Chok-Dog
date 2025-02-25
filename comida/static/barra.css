@@ -251,8 +251,14 @@ ul{
     background: linear-gradient(to right, #833AB4, #FD1D1D, #FDCB82);
     border-radius: 10px;
 }
+
 .footer-col .social-links .wp i{
     color: #25D366;
+    font-size: 40px;   
+}
+.footer-col .social-links .tt img{
+    height: 35px;
+    width: 35px;
     font-size: 40px;
     
 }
@@ -272,6 +278,9 @@ ul{
         margin-top: 10px;
         font-size: 15px;
     }
+    .menu-icons {
+        margin-top: 10px;
+    }
     .footer-col{
         width: 50%;
         margin-bottom: 30px;
@@ -279,10 +288,17 @@ ul{
     .main{
         margin-top: 110px; 
     }
+    
 }
 
 @media (max-width: 568px) {
     .footer-col{
         width: 50%;
+    }
+    .footer-col .social-links{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        
     }
 }

@@ -9,7 +9,10 @@ from .models import Product
 from .forms import MensajeContactoForm, CustomUserCreationForm
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import Profile  # Agrega esta línea
+from .models import Profile  
+from datetime import datetime
+from .models import Reserva, Mesa
+from django.http import JsonResponse
 
 
 def home(request):
@@ -148,33 +151,186 @@ def perfil_view(request):
 
 
 
-from .models import Reserva
+#reservas
+
 
 def reservas(request):
-    return render(request, 'reservas.html')
-
-def procesar_reserva(request):
-    if request.method == "POST":
+    mesas = Mesa.objects.all()
+    if request.method == 'POST':
         nombre = request.POST.get('nombre')
         email = request.POST.get('email')
         telefono = request.POST.get('telefono')
         fecha = request.POST.get('fecha')
         hora = request.POST.get('hora')
         personas = request.POST.get('personas')
+        mesa_id = request.POST.get('mesa')
 
-        if not (nombre and email and telefono and fecha and hora and personas):
-            messages.error(request, "Todos los campos son obligatorios.")
+        try:
+            fecha_reserva = datetime.strptime(fecha, '%Y-%m-%d').date()
+        except ValueError:
+            messages.error(request, "Formato de fecha incorrecto.")
             return redirect('reservas')
 
-        Reserva.objects.create(
-            nombre=nombre, email=email, telefono=telefono,
-            fecha=fecha, hora=hora, personas=personas
+        if fecha_reserva < datetime.now().date():
+            messages.error(request, "No puedes seleccionar una fecha pasada.")
+            return redirect('reservas')
+
+        try:
+            hora_reserva = datetime.strptime(hora, '%H:%M').time()
+        except ValueError:
+            messages.error(request, "Formato de hora incorrecto.")
+            return redirect('reservas')
+
+        if not (datetime.strptime('17:00', '%H:%M').time() <= hora_reserva <= datetime.strptime('23:00', '%H:%M').time()):
+            messages.error(request, "La hora debe estar entre las 17:00 y las 23:00.")
+            return redirect('reservas')
+
+        if Reserva.objects.filter(fecha=fecha, hora=hora, mesa_id=mesa_id).exists():
+            messages.error(request, "La mesa seleccionada ya está reservada para esa fecha y hora.")
+            return redirect('reservas')
+
+        try:
+            mesa = Mesa.objects.get(id=mesa_id)
+        except Mesa.DoesNotExist:
+            messages.error(request, "La mesa seleccionada no existe.")
+            return redirect('reservas')
+
+        reserva = Reserva.objects.create(
+            nombre=nombre,
+            email=email,
+            telefono=telefono,
+            fecha=fecha_reserva,
+            hora=hora_reserva,
+            personas=personas,
+            mesa=mesa
         )
-        
-        messages.success(request, "Reserva realizada con éxito.")
+        print("Reserva creada:", reserva)
+
+      
+        subject = "Nueva reserva de mesa"
+        message = (
+            f"Se ha realizado una nueva reserva:\n\n"
+            f"Nombre: {nombre}\n"
+            f"Correo: {email}\n"
+            f"Teléfono: {telefono}\n"
+            f"Fecha: {fecha}\n"
+            f"Hora: {hora}\n"
+            f"Mesa: {mesa.numero}\n"
+            f"Número de personas: {personas}\n"
+        )
+
+        try:
+            send_mail(
+                subject,
+                message,
+                settings.EMAIL_HOST_USER,
+                ['pjoseedier@gmail.com'],
+                fail_silently=False,
+            )
+            messages.success(request, "Reserva realizada y correo enviado con éxito.")
+        except Exception as e:
+            messages.error(request, f"Reserva realizada, pero hubo un error al enviar el correo: {e}")
+
         return redirect('reservas')
 
-    return redirect('reservas')
+    return render(request, 'reservas.html', {'mesas': mesas})
+
+
+def procesar_reserva(request):
+    mesas = Mesa.objects.all()
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        email = request.POST.get('email')
+        telefono = request.POST.get('telefono')
+        fecha = request.POST.get('fecha')
+        hora = request.POST.get('hora')
+        personas = request.POST.get('personas')
+        mesa_id = request.POST.get('mesa')
+
+        try:
+            fecha_reserva = datetime.strptime(fecha, '%Y-%m-%d').date()
+        except ValueError:
+            messages.error(request, "Formato de fecha incorrecto.")
+            return redirect('procesar_reserva')
+
+        if fecha_reserva < datetime.now().date():
+            messages.error(request, "No puedes seleccionar una fecha pasada.")
+            return redirect('procesar_reserva')
+
+        try:
+            hora_reserva = datetime.strptime(hora, '%H:%M').time()
+        except ValueError:
+            messages.error(request, "Formato de hora incorrecto.")
+            return redirect('procesar_reserva')
+
+        if not (datetime.strptime('17:00', '%H:%M').time() <= hora_reserva <= datetime.strptime('23:00', '%H:%M').time()):
+            messages.error(request, "La hora debe estar entre las 17:00 y las 23:00.")
+            return redirect('procesar_reserva')
+
+        if Reserva.objects.filter(fecha=fecha, hora=hora, mesa_id=mesa_id).exists():
+            messages.error(request, "La mesa seleccionada ya está reservada para esa fecha y hora.")
+            return redirect('procesar_reserva')
+
+        try:
+            mesa = Mesa.objects.get(id=mesa_id)
+        except Mesa.DoesNotExist:
+            messages.error(request, "La mesa seleccionada no existe.")
+            return redirect('procesar_reserva')
+
+        reserva = Reserva.objects.create(
+            nombre=nombre,
+            email=email,
+            telefono=telefono,
+            fecha=fecha_reserva,
+            hora=hora_reserva,
+            personas=personas,
+            mesa=mesa
+        )
+
+        subject = "Nueva reserva de mesa"
+        message = (
+            f"Se ha realizado una nueva reserva:\n\n"
+            f"Nombre: {nombre}\n"
+            f"Correo: {email}\n"
+            f"Teléfono: {telefono}\n"
+            f"Fecha: {fecha}\n"
+            f"Hora: {hora}\n"
+            f"Mesa: {mesa.numero}\n"
+            f"Número de personas: {personas}\n"
+        )
+
+        try:
+            send_mail(
+                subject,
+                message,
+                settings.EMAIL_HOST_USER,
+                ['pjoseedier@gmail.com'],
+                fail_silently=False,
+            )
+            messages.success(request, "Reserva realizada y correo enviado con éxito.")
+        except Exception as e:
+            messages.error(request, f"Reserva realizada, pero hubo un error al enviar el correo: {e}")
+
+        return redirect('procesar_reserva')  # O redirigir a 'reservas'
+
+    return render(request, 'reservas.html', {'mesas': mesas})
+
+
+def obtener_mesas_disponibles(request):
+    fecha = request.GET.get('fecha')
+    hora = request.GET.get('hora')
+    reservas = Reserva.objects.filter(fecha=fecha, hora=hora)
+    mesas_reservadas = reservas.values_list('mesa_id', flat=True)
+    mesas = Mesa.objects.all()
+    mesas_disponibles = []
+    for mesa in mesas:
+        mesas_disponibles.append({
+            'id': mesa.id,
+            'numero': mesa.numero,
+            'disponible': mesa.id not in mesas_reservadas
+        })
+    return JsonResponse({'mesas_disponibles': mesas_disponibles})
+
 
     
 

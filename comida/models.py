@@ -39,6 +39,16 @@ class MensajeContacto(models.Model):
     def __str__(self):
         return f"Mensaje de {self.nombre} ({self.correo})"
 
+from django.db import models
+
+class Mesa(models.Model):
+    numero = models.IntegerField(unique=True)
+    capacidad = models.IntegerField()
+
+    def __str__(self):
+        return f"Mesa {self.numero} - Capacidad: {self.capacidad}"
+
+
 class Reserva(models.Model):
     nombre = models.CharField(max_length=100)
     email = models.EmailField()
@@ -46,6 +56,17 @@ class Reserva(models.Model):
     fecha = models.DateField()
     hora = models.TimeField()
     personas = models.IntegerField()
+    mesa = models.ForeignKey('Mesa', on_delete=models.CASCADE, null=True, blank=True)
+
+  # Referencia a Mesa
 
     def __str__(self):
         return f"{self.nombre} - {self.fecha} {self.hora}"
+
+
+
+
+
+
+
+ 

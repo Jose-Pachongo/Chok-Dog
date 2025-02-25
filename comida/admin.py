@@ -43,3 +43,11 @@ class MensajeContactoAdmin(admin.ModelAdmin):
     search_fields = ('nombre', 'correo')
 
 
+
+from .models import Mesa
+
+admin.site.register(Mesa)
+
+from .models import Reserva
+
+admin.site.register(Reserva)
