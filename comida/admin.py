@@ -2,8 +2,13 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
 from .models import Product, Menu, MensajeContacto
-
+from .models import Reserva
 from .models import Profile
+from .models import Mesa
+
+admin.site.register(Mesa)
+
+admin.site.register(Reserva)
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'phone_number', 'address')
@@ -32,10 +37,6 @@ class UserAdmin(UserAdmin):
     )
 
 
-@admin.register(Menu)
-class MenuAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'imagen', 'precio')
-    list_display_links = ('nombre',)
 
 @admin.register(MensajeContacto)
 class MensajeContactoAdmin(admin.ModelAdmin):
@@ -44,10 +45,3 @@ class MensajeContactoAdmin(admin.ModelAdmin):
 
 
 
-from .models import Mesa
-
-admin.site.register(Mesa)
-
-from .models import Reserva
-
-admin.site.register(Reserva)
