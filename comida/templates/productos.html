@@ -9,30 +9,30 @@
         <h1>Productos</h1>
 
         {% for product in products %}
-        <div class="food-item">
-            <img src="{{ product.imagen.url }}" alt="{{ product.nombre }}">
-            <div class="details">
-                <h3>{{ product.nombre }}</h3>
-                <p>{{ product.descripcion }}</p>
-                <span class="price">${{ product.precio }}</span>
+            <div class="food-item">
+                <img src="{{ product.imagen.url }}" alt="{{ product.nombre }}">
+                <div class="details">
+                    <h3>{{ product.nombre }}</h3>
+                    <p>{{ product.descripcion }}</p>
+                    <span class="price">${{ product.precio }}</span>
+                </div>
+                <div class="boton">
+                    <button class="btn-custom" onclick="openModal('modal{{ product.id }}')">Ármalo a tu gusto</button>
+                </div>
+                <div class="boton">
+                    <button class="btn-custom agregar-carrito" 
+                        data-id="{{ product.id }}" 
+                        data-nombre="{{ product.nombre }}" 
+                        data-precio="{{ product.precio }}">
+                        Agregar al carrito
+                    </button>
+                </div>
             </div>
-            <div class="boton">
-                <button class="btn-custom" onclick="openModal('modal{{ product.id }}')">Ármalo a tu gusto</button>
-            </div>
-        </div>
-
         {% endfor %}
+
 
     </div>
 </div>
-<script>
-function openModal(id) {
-    document.getElementById(id).style.display = "flex";
-}
 
-function closeModal(id) {
-    document.getElementById(id).style.display = "none";
-}
-</script>
 
 {% endblock %}

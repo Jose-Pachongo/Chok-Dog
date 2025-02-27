@@ -1,6 +1,24 @@
+
+
+.main::before {
+    content: '';
+    background-image: url('/static/img/cok_4.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+}
+
 .contact-section {
     padding: 1rem  2rem 4rem 2rem;
-    background-color: var(--gris-acero);
+
 }
 
 .contact-container {
@@ -17,12 +35,12 @@
 
 .contact-form {
     padding: 2rem;
-    background-color: var(--dorado);
+    background: var(--negro-profundo, #222);
 }
 
 .form-title {
     font-size: 1.5rem;
-    color: #212121;
+    color: var(--dorado, #d4af37);
     margin-bottom: 1.5rem;
 }
 
@@ -33,7 +51,7 @@
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #4a3626;
+    color: var(--dorado);
     font-weight: bold;
 }
 
@@ -52,7 +70,7 @@
 }
 
 .submit-btn {
-    background-color: #4a3626;
+    background-color: var(--dorado);
     color: white;
     padding: 0.8rem 2rem;
     border: none;
@@ -63,7 +81,7 @@
 }
 
 .submit-btn:hover {
-    background-color: #5d473a;
+    background-color: #000000;
 }
 
 .map-container {

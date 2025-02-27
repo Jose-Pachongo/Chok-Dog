@@ -24,6 +24,12 @@
                 <p class="error">{{ error }}</p>
             {% endif %}
         </form>
+
+        
+        <a href="{% url 'restablecer' %}" >¿Olvidaste tu contraseña?</a>
+
+       
+
         <p>¿No tienes cuenta? <a href="{% url 'regis' %}">Regístrate aquí</a></p>
     </div>
 </div>
@@ -33,7 +39,63 @@
     </script>
 {% endif %}
 
-
+<script type="text/javascript">
+    function abrirRecuperacion() {
+        Swal.fire({
+            title: 'Recuperar Contraseña',
+            html: `
+                <p>Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.</p>
+                <input type="email" id="emailRecuperacion" class="swal2-input" placeholder="correo@example.com">
+            `,
+            confirmButtonText: 'Enviar',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            preConfirm: () => {
+                const email = document.getElementById('emailRecuperacion').value;
+                if (!email) {
+                    Swal.showValidationMessage('Debes ingresar un correo válido');
+                    return false;
+                }
+                return fetch('/recuperar-contrasena-ajax/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCSRFToken()
+                    },
+                    body: JSON.stringify({ email: email })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        Swal.fire('¡Correo enviado!', data.message, 'success');
+                    } else {
+                        Swal.fire('Error', data.message, 'error');
+                    }
+                })
+                .catch(() => {
+                    Swal.fire('Error', 'Ocurrió un problema, intenta de nuevo.', 'error');
+                });
+            }
+        });
+    }
+  
+    // Función para obtener el CSRF token desde las cookies
+    function getCSRFToken() {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith('csrftoken=')) {
+                    cookieValue = cookie.substring('csrftoken='.length);
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+  </script>
+  
 <script type="text/javascript">
     window.onload = function() {
             var passwordField = document.getElementById('password');

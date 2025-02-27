@@ -62,7 +62,33 @@ body{
     border-radius: 70%;
     margin-right: 10px;
 }
+.carrito-icon {
+    position: relative;
+    font-size: 24px;
+    text-decoration: none;
+    color: white;
+}
 
+#cart-counter {
+    position: absolute;
+    top: -4px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    font-size: 8px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    line-height: 20px;
+    font-weight: bold;
+    
+}
+
+  
 
 .menu {
     display: flex;
