@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block style %}
-<link rel="stylesheet" href="{% static 'css/login.css' %}">
-{% endblock %}
+
 {% block content %}
 
+<link rel="stylesheet" href="{% static 'contraseña.css' %}">
 <div class="section">
     <div class="container">
         {% if messages %} <!--Solo se usa si hay mensajes de parte del views-->
@@ -28,20 +27,16 @@
             <form method="POST" action="{% url 'restablecer' %}">
                 {% csrf_token %}
                 <div class="input-box">
-                    <input type="email" class="input-field" id="log-email" name="email" required>
-                    <label for="log-email" class="label">Correo Registrado:</label>
                     <i class='bx bx-envelope icon'></i>
+                    <input type="email" placeholder="Correo Registrado" class="input-field" id="log-email" name="email" required>
+                    
                 </div>
-                <div class="input-box">
-                    <button type="submit" class="btn-submit" id="SignInBtn">Enviar enlace <i
-                            class='bx bx-log-in'></i></button>
-                </div>
-                <div class="switch-form">
-                    <span>¿Ya tienes una cuenta? <a href="{% url 'iniciar' %}">Inicia sesión</a></span>
+                <div class="env">
+                    <button type="submit" class="btn-submit" id="SignInBtn">Enviar enlace </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-{% endblock %}
+{% endblock %}

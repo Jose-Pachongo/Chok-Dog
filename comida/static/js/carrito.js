@@ -57,7 +57,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
     localStorage.setItem('carrito', JSON.stringify(carrito));
     actualizarContadorCarrito();
-    alert("Producto agregado al carrito.");
+    Swal.fire({
+      title: "¡Producto agregado!",
+      text: productName + " ha sido añadido al carrito.",
+      icon: "success",
+      showConfirmButton: false,
+      timer: 1000, // Se cierra automáticamente en 2 segundos
+      toast: true, // Modo notificación
+      position: "top-end" // Aparece en la esquina superior derecha
+  });
 }
 
   // Función para renderizar el carrito

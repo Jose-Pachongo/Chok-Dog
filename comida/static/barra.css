@@ -7,6 +7,8 @@
     font-family: "Kotta One", serif;
     box-sizing: border-box;
 }
+
+
 :root{
     --text_4: rgba(0, 0, 0, 0.3);
     --text_sha: 5px 20px 5px #000000;
@@ -289,7 +291,35 @@ ul{
     
 }
 
-
+/* seetalert */
+.swal2-success-line-tip,
+    .swal2-success-line-long {
+        background-color: #D4AF37 !important; /* Cambia el color del check */
+    }
+    .swal2-success-ring {
+        border-color: #D4AF37 !important; /* Cambia el color del círculo */
+    }
+.custom-alert .swal2-success {
+    display: none; /* Oculta el icono verde */
+}
+.custom-alert::before {
+    content: "✔"; /* Puedes cambiarlo por otro símbolo */
+    font-size: 50px;
+    color: #D4AF37; /* Color dorado */
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.btn-custom {
+    background-color: #D4AF37 !important;  /* Cambia al color dorado */
+    color: white !important;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+.btn-custom:hover {
+    background-color: #b28e2c !important; /* Color más oscuro al pasar el mouse */
+}
 
 @media (max-width: 768px) {
     .header{
@@ -313,6 +343,14 @@ ul{
     }
     .main{
         margin-top: 110px; 
+    }
+    .logo {
+      
+        margin-left: -65%;
+    }
+    .menu-icons {
+        margin-right: -80%;
+        position: absolute;
     }
     
 }

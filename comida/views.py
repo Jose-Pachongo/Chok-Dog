@@ -377,10 +377,11 @@ def cambiar_contrasena(request, uidb64, token):
             
             user.set_password(nueva_contrasena)
             user.save()
-            
-            return redirect('confirmacion_contrasena')
-        
+            messages.success(request, "Tu contraseña se ha cambiado con éxito.")
+            return redirect("cambiar_contrasena", uidb64=uidb64, token=token)  # Recargar la misma página
+
         return render(request, "email_contrasena.html")
+    
     return redirect("iniciar")
 
 def confirmacion_contrasena(request):

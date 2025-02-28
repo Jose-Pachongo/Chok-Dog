@@ -25,11 +25,16 @@
             <input type="email" placeholder="Correo Electronico"  id="email" name="email" required>
             <input type="text" placeholder="Telefono"  id="phone" name="phone">
             <input type="text" placeholder="Direrccción"  name="address">
-            <input type="password" placeholder="Contraseña"  id="password" name="password" required>
+            <div class="password-container">
+                <input type="password" placeholder="Contraseña"  id="password" name="password" required>
+                <i id="togglePassword" class="fa fa-eye" onclick="togglePassword()"></i>
+            </div>
+            
             <input type="submit" value="Registrarse">
         </form>
-
-        <p>¿Ya tienes cuenta? <a href="{% url 'iniciar' %}">Iniciar sesión aquí</a></p>
+        <!-- <div class="enl">
+            <p>¿Ya tienes cuenta? <a href="{% url 'iniciar' %}">Iniciar sesión aquí</a></p>
+        </div> -->
     </div>
 </div>
 {% if error %}
@@ -39,6 +44,33 @@
 {% endif %}
 
 
+<script type="text/javascript">
+    window.onload = function() {
+            var passwordField = document.getElementById('password');
+            var toggleIcon = document.getElementById('togglePassword');
+            
+            // Asegurarse de que el campo de la contraseña esté oculto por defecto
+            passwordField.type = 'password';  // La contraseña está oculta por defecto
+            toggleIcon.classList.add('fa-eye-slash');  // Añadir el ícono con la raya
+        }
+    function togglePassword() {
+        var passwordField = document.getElementById('password');
+        var passwordType = passwordField.type;
+        var toggleIcon = document.getElementById('togglePassword');
 
+        // Cambiar entre 'password' y 'text'
+        if (passwordType === 'password') {
+            passwordField.type = 'text';  // Mostrar la contraseña
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');  // Cambiar ícono
+        } else {
+            passwordField.type = 'password';  // Ocultar la contraseña
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');  // Cambiar ícono
+        }
+    }
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 {% endblock %}

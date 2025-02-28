@@ -1,0 +1,90 @@
+.main::before {
+    content: '';
+    background-image: url('/static/img/cok_4.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+}
+.section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+}
+.container{
+    background-color: #00000089;
+    box-shadow: var(--box);
+    color: #ccc;
+    padding: 60px;
+    border-radius: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+.title-login{
+    text-align: center;
+    font-size: 25px;
+}
+.input-box{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.input-field{
+    width: 100%;
+    height: 35px;
+    border-radius: 10px;
+    padding-left: 10px;
+    background-color: aliceblue;
+    border: 1px solid #000000;
+    
+}
+.input-box i{
+    font-size: 25px;
+    
+}
+.env{
+    padding: 10px;
+    
+}
+.btn-submit{
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: var(--dorado);
+    
+}
+
+/* hola */
+
+
+
+
+
+
+.login-button {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: var(--dorado);
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #987724;
+}
