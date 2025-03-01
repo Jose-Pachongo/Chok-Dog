@@ -43,6 +43,7 @@ urlpatterns = [
     path('reservar/', views.procesar_reserva, name='procesar_reserva'),
     path('restablecer/', views.restablecer, name='restablecer'),
     path('cambiar_contrasena/<uidb64>/<token>/', views.cambiar_contrasena, name='cambiar_contrasena'),
+    path('pago', views.pago, name='pago'),
     # path('confirmacion_contrasena/', views.confirmacion_contrasena, name='confirmacion_contrasena'),
     
 

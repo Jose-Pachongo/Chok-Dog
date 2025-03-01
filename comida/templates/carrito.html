@@ -22,7 +22,10 @@
     </tbody>
   </table>
   <p id="total">Total: $0.00</p>
-  <button id="btn-pagar">Proceder al Pago</button>
+  <div class="bott">
+    <a  class="bot" href="{% url 'pago' %}">Proceder al Pago</a>
+    <a  class="bot" href="{% url 'productos' %}">seguir comprando</a>
+  </div>
 </div>
   
 {% endblock %}

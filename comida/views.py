@@ -47,7 +47,7 @@ def contactenos(request):
             """
             
             try:
-                send_mail(subject, message, settings.EMAIL_HOST_USER, ['pjoseedier@gmail.com'])
+                send_mail(subject, message, settings.EMAIL_HOST_USER, ['chokdog77@gmail.com'])
                 messages.success(request, "Mensaje enviado con éxito.")
             except Exception as e:
                 messages.error(request, f"Error al enviar el correo: {e}")
@@ -224,7 +224,7 @@ def reservas(request):
                 subject,
                 message,
                 settings.EMAIL_HOST_USER,
-                ['pjoseedier@gmail.com'],
+                ['chokdog77@gmail.com'],
                 fail_silently=False,
             )
             messages.success(request, "Reserva realizada y correo enviado con éxito.")
@@ -304,7 +304,7 @@ def procesar_reserva(request):
                 subject,
                 message,
                 settings.EMAIL_HOST_USER,
-                ['pjoseedier@gmail.com'],
+                ['chokdog77@gmail.com'],
                 fail_silently=False,
             )
             messages.success(request, "Reserva realizada y correo enviado con éxito.")
@@ -348,7 +348,7 @@ def restablecer(request):
             send_mail(
                 'Restablecer contraseña',
                 f'Haz clic en el siguiente en enlace para restablecer tu contraseña {enlace}',
-                'pjoseedier@gmail.com',
+                'chokdog77@gmail.com',
                 [email], 
                 fail_silently=False
             )
@@ -388,3 +388,5 @@ def confirmacion_contrasena(request):
     return render(request, "cambiar_contrasena.html")
 
 
+def pago(request):
+    return render(request, 'pago.html')

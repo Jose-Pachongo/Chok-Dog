@@ -28,11 +28,49 @@
                     </button>
                 </div>
             </div>
+            <div id="modal{{ product.id }}" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal{{ product.id }}')">&times;</span>
+            <h2>Personaliza tu {{ product.nombre }}</h2>
+            <p class="desc">{{ product.descripcion }}</p>
+
+            <div class="ingredient-grid">
+                {% for ingrediente in product.get_ingredientes %}
+                    <label><input type="checkbox" name="ingrediente"> {{ ingrediente }}</label>
+                {% endfor %}
+            </div>
+
+            <button class="btn-cart agregar-carrito" 
+                data-id="{{ product.id }}" 
+                data-nombre="{{ product.nombre }}" 
+                data-precio="{{ product.precio }}">
+                Agregar al Carrito
+            </button>
+        </div>
+    </div>
         {% endfor %}
 
 
-    </div>
-</div>
+<script>
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = "block";
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+    }
+
+    // Cerrar el modal si se hace clic fuera de él
+    window.onclick = function(event) {
+        let modals = document.querySelectorAll(".modal");
+        modals.forEach(function(modal) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    };
+
+</script>
 
 
 {% endblock %}

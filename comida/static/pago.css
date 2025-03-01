@@ -1,0 +1,61 @@
+.pago-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: #121212;
+    color: #D4AF37;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.metodos-pago label {
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.metodos-pago img {
+    width: 100px;
+    height: 100px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.metodos-pago input[type="radio"]:checked + img {
+    border-color: #D4AF37;
+}
+
+.subir-comprobante {
+    margin: 20px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #D4AF37;
+}
+
+#total-pago {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+button {
+    background: #D4AF37;
+    color: #121212;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #b88b2a;
+}

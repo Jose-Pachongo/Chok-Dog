@@ -20,9 +20,9 @@
     min-height: 70vh;
 }
 .container{
-    background-color: #00000089;
+    background-color: rgba(255, 255, 255, 0.812);
     box-shadow: var(--box);
-    color: #ccc;
+    color: #000000;
     padding: 60px;
     border-radius: 20px;
     font-size: 20px;
@@ -88,3 +88,5 @@
 .login-button:hover {
     background-color: #987724;
 }
+
+

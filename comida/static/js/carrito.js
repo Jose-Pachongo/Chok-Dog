@@ -36,11 +36,14 @@ document.addEventListener("DOMContentLoaded", function() {
       });
 
       carritoBody.addEventListener("click", function(e) {
-        if (e.target.classList.contains("eliminar-item")) {
-          const productId = parseInt(e.target.getAttribute("data-id"));
-          eliminarItem(productId);
+        // Verificar si el elemento clicado o su ancestro más cercano tiene la clase "eliminar-item"
+        const botonEliminar = e.target.closest(".eliminar-item");
+        if (botonEliminar) {
+            const productId = parseInt(botonEliminar.getAttribute("data-id"));
+            eliminarItem(productId);
         }
-      });
+    });
+    
     }
   });
   
@@ -92,8 +95,9 @@ document.addEventListener("DOMContentLoaded", function() {
             <td>$${precioNumerico.toFixed(2)}</td>
             <td>$${subtotal.toFixed(2)}</td>
             <td>
-                <button data-id="${item.id}" class="eliminar-item">Eliminar</button>
-            </td>
+                <button data-id="${item.id}" class="eliminar-item"><a href="#"><i class='bx bxs-trash'></i></a></button>
+            </td> 
+
         `;
         carritoBody.appendChild(row);
     });
@@ -134,3 +138,5 @@ document.addEventListener("DOMContentLoaded", function() {
     renderCarrito();
     actualizarContadorCarrito();
   }
+
+

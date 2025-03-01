@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago con QR</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="pago.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Resumen del Pedido</h1>
+        <div id="resumenPedido"></div>
+        
+        <h2>Selecciona un método de pago</h2>
+        <div class="metodos-pago">
+            <button class="pago-btn" data-metodo="nequi">Nequi</button>
+            <button class="pago-btn" data-metodo="daviplata">Daviplata</button>
+            <button class="pago-btn" data-metodo="bancolombia">Bancolombia</button>
+            <button class="pago-btn" data-metodo="ahorro">Ahorro a la Mano</button>
+        </div>
+        
+        <div id="qrPago" class="hidden">
+            <h2>Escanea el código QR</h2>
+            <img id="codigoQR" src="" alt="Código QR de pago">
+            <input type="file" id="comprobante" accept="image/*">
+            <button id="subirComprobante">Subir Comprobante</button>
+        </div>
+    </div>
+</body>
+</html>

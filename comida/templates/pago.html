@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Pago {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'pago.css' %}">
+
+<div class="pago-container">
+    <h2>Elige tu Método de Pago</h2>
+
+    <div class="metodos-pago">
+        <label>
+            <input type="radio" name="metodo_pago" value="nequi">
+            <img src="{% static 'img/qr' %}" alt="QR Nequi">
+        </label>
+        <label>
+            <input type="radio" name="metodo_pago" value="daviplata">
+            <img src="{% static 'img/qr' %}" alt="QR Daviplata">
+        </label>
+        <label>
+            <input type="radio" name="metodo_pago" value="bancolombia">
+            <img src="{% static 'img/qr' %}" alt="QR Bancolombia">
+        </label>
+    </div>
+
+    <div class="subir-comprobante">
+        <label for="comprobante">Sube el comprobante de pago:</label>
+        <input type="file" id="comprobante" accept="image/*">
+    </div>
+
+    <hr>
+
+    <h2>Factura de Compra</h2>
+    <table id="factura-table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody id="factura-body">
+            <!-- Aquí se cargarán los productos -->
+        </tbody>
+    </table>
+    <p id="total-pago">Total a Pagar: $0.00</p>
+    
+
+    <p id="total-pago">Total a Pagar: $0.00</p>
+
+    <button id="btn-confirmar-pago">Confirmar Pago</button>
+</div>
+
+<script src="{% static 'pago.js' %}"></script>
+{% endblock %}
