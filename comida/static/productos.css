@@ -1,214 +1,162 @@
-.prod{ 
+
+.main {
+    background-color: #121212;
+    color: #D4AF37;
+    font-family: "Kotta One", serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.prod {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--negro-profundo);
-    color: white;
-    
-}
-.menu-con {
-    text-align: center;
+    flex-direction: column;
     padding: 20px;
-    margin-bottom: 40px;
-    
-    width: 90%;
-   
-   
+}
 
+.menu-con {
+    width: 80%;
+    max-width: 1200px;
+    background-color: #333D41;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+    text-align: center;
+}
+
+h1 {
+    color: #D4AF37;
+    margin-bottom: 20px;
 }
 
 .food-item {
-    text-align: center;
-    border-radius: 20px;
-    margin: 20px;
-    box-shadow: 3px 3px 10px;
-    display: inline-block;
+    background: #1C1C1C;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
     align-items: center;
-    color: rgb(0, 0, 0);
-    width: 20%;
-    background-color: #ffffff;
-    
-    
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
 }
 
 .food-item img {
-    width: 100%;
-    height: 250px;
-    border-radius: 20px  20px 0 0 ;
-    margin-bottom: 10px;
-    padding: 10px;
-    
+    width: 120px;
+    height: 120px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid #D4AF37;
 }
-.details{
-    padding: 10px;
-    
-    margin-bottom: 10px;
-    text-align: start;
-}
-.details p {
-    margin: 5px 0;
-    
-}
-.ingredient-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 10px;
+
+.details {
+    flex-grow: 1;
+    padding: 0 15px;
     text-align: left;
-    margin-bottom: 15px;
 }
 
-.ingredient-grid label {
-    background: #f8f8f8;
-    padding: 8px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    width: 100%;
+.details h3 {
+    margin: 5px 0;
+    color: #D4AF37;
 }
 
-
-.ingredient-grid input {
-    accent-color: #D4AF37; 
-    transform: scale(1.2);
+.price {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #D4AF37;
 }
 
-.boton {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
-}
-.boton button{
-    background-color: var(--dorado);
-    color: white;
-    border: solid 1px var(--dorado);
-    padding: 10px;
-    border-radius: 25px;
-    
-
-}
-.boton button:hover{
-    transition: all .2s ;
-    background-color: var(--);
-    cursor: pointer;
-}
-
-.btn-custom {
+.btn-descripcion, .btn-custom, .agregar-carrito {
     background: #D4AF37;
-    color: black;
-    padding: 8px;
+    color: #121212;
+    padding: 8px 15px;
     border: none;
-    cursor: pointer;
     border-radius: 5px;
     font-weight: bold;
-    
-}
-
-.btn-cart {
-    background: #95A5A6;
-    color: black;
-    padding: 8px;
-    border: none;
     cursor: pointer;
-    border-radius: 5px;
-    font-weight: bold;
+    transition: 0.3s;
 }
 
-/* ESTILO DEL MODAL */
+.btn-descripcion:hover, .btn-custom:hover, .agregar-carrito:hover {
+    background: #b89630;
+}
+
+select {
+    background: #333D41;
+    color: #D4AF37;
+    border: 2px solid #D4AF37;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+/* Estilos del Modal */
 .modal {
     display: none;
     position: fixed;
-    z-index: 100;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    width: 400px;
-    position: relative;
-    z-index: 1000;
-}
-
-.modal-content .desc {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 15px;
-}
-
-.modal-content label {
-    display: block;
-    margin: 10px 0;
-}
-
-.close {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-
-@media (max-width: 768px) {
-    .menu-con {
-        padding-top: 60px;
-        
-    }
-    .food-item {
-        width: 180px;
-    }
-    
-}
-
-.modal {
-    display: none; 
-    position: fixed;
     z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: #1C1C1C;
+    color: #D4AF37;
     margin: 10% auto;
     padding: 20px;
     border-radius: 10px;
     width: 50%;
+    box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
     text-align: center;
 }
 
 .close {
-    color: #333;
+    color: #D4AF37;
     float: right;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
 }
 
-
-@media (max-width: 768px) {
-    .menu-con {
-        padding-top: 50px;
-        
-    }
-    .food-item {
-        width: 180px;
-    }
-    
+.close:hover {
+    color: #b89630;
 }
+
+.ingredient-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.ingredient-grid label {
+    background: #333D41;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid #D4AF37;
+}
+
+.ingredient-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.ingredient-option.selected {
+    background-color: #D4AF37 !important; /* Color dorado cuando está seleccionado */
+    border-color: #D4AF37 !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+
+.agregar-carrito{
+    margin-top: 20px; 
+}
+

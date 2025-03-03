@@ -118,7 +118,7 @@ def pagina(request):
 
 def productos(request):
     products = Product.objects.all()
-    return render(request, 'productos.html', {'products': products})
+    return render(request, 'productos.html', {'productos': productos})
     
 
 def carrito(request):
@@ -390,3 +390,13 @@ def confirmacion_contrasena(request):
 
 def pago(request):
     return render(request, 'pago.html')
+
+
+
+
+from django.shortcuts import render
+from .models import Producto
+
+def lista_productos(request):
+    productos = Producto.objects.all()  # Obtener productos
+    return render(request, "productos.html", {"productos": productos})

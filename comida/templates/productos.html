@@ -1,56 +1,118 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block title %} Productos {% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'productos.css' %}">
+
 <div class="prod">
     <div class="menu-con">
         <h1>Productos</h1>
 
-        {% for product in products %}
+        {% for product in productos %}
             <div class="food-item">
                 <img src="{{ product.imagen.url }}" alt="{{ product.nombre }}">
                 <div class="details">
                     <h3>{{ product.nombre }}</h3>
-                    <p>{{ product.descripcion }}</p>
+                    <button class="btn-descripcion" onclick="openModal('descripcion{{ product.id }}')">Ver Descripción</button>
                     <span class="price">${{ product.precio }}</span>
                 </div>
-                <div class="boton">
-                    <button class="btn-custom" onclick="openModal('modal{{ product.id }}')">Ármalo a tu gusto</button>
+
+                <!-- Modal de Descripción -->
+                <div id="descripcion{{ product.id }}" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal('descripcion{{ product.id }}')">&times;</span>
+                        <h2>{{ product.nombre }}</h2>
+                        <p>{{ product.descripcion }}</p>
+                    </div>
                 </div>
-                <div class="boton">
-                    <button class="btn-custom agregar-carrito" 
-                        data-id="{{ product.id }}" 
-                        data-nombre="{{ product.nombre }}" 
+
+                {% if product.tipo == "personalizable" %}
+                <select class="opcion-categoria" data-id="{{ product.id }}">
+                    <option value="Normal">Normal - $12,000</option>
+                    <option value="Especial">Especial - $15,000</option>
+                    <option value="Clásica">Clásica - $20,000</option>
+                    <option value="Hamburguesa">Hamburguesa - $5,000</option>
+                </select>
+                
+                <button class="agregar-carrito-personalizado"
+                    data-id="{{ product.id }}"
+                    data-nombre="{{ product.nombre }}"
+                    data-precio="{{ product.precio }}">
+                    Agregar al carrito
+                </button>
+                <button class="btn-custom" onclick="openModal('modal{{ product.id }}')">Personalizar</button>
+
+                <div id="modal{{ product.id }}" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal('modal{{ product.id }}')">&times;</span>
+                        <h2>Personaliza tu {{ product.nombre }}</h2>
+                        <p>Selecciona los ingredientes:</p>
+                        <div class="ingredient-grid">
+                            {% for ingrediente in product.ingredientes.all %}
+                                <label class="ingredient-option" onclick="toggleIngredient(this)">
+                                    <input type="checkbox" value="{{ ingrediente.nombre }}" class="ingrediente-checkbox">
+                                    {{ ingrediente.nombre }}
+                                </label>
+                            {% empty %}
+                                <p>No hay ingredientes disponibles para este producto.</p>
+                            {% endfor %}
+                        </div>
+                        
+                        <button class="agregar-carrito"
+                            data-id="{{ product.id }}"
+                            data-nombre="{{ product.nombre }}"
+                            data-precio="{{ product.precio }}">
+                            Agregar al carrito
+                        </button>
+                    </div>
+                </div>
+
+                {% elif product.tipo == "sabores" %}
+                    <select class="opcion-sabor" data-id="{{ product.id }}">
+                        {% for sabor in product.sabores.all %}
+                            <option value="{{ sabor.nombre }}">{{ sabor.nombre }} - ${{ product.precio }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="agregar-carrito"
+                        data-id="{{ product.id }}"
+                        data-nombre="{{ product.nombre }}"
                         data-precio="{{ product.precio }}">
                         Agregar al carrito
                     </button>
-                </div>
-            </div>
-            <div id="modal{{ product.id }}" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('modal{{ product.id }}')">&times;</span>
-            <h2>Personaliza tu {{ product.nombre }}</h2>
-            <p class="desc">{{ product.descripcion }}</p>
+                
+                
 
-            <div class="ingredient-grid">
-                {% for ingrediente in product.get_ingredientes %}
-                    <label><input type="checkbox" name="ingrediente"> {{ ingrediente }}</label>
-                {% endfor %}
-            </div>
+                {% elif product.tipo == "simple" %}
+                <button class="agregar-carrito"
+                    data-id="{{ product.id }}"
+                    data-nombre="{{ product.nombre }}"
+                    data-precio="{{ product.precio }}">
+                    Agregar al carrito
+                </button>
+                
 
-            <button class="btn-cart agregar-carrito" 
-                data-id="{{ product.id }}" 
-                data-nombre="{{ product.nombre }}" 
-                data-precio="{{ product.precio }}">
-                Agregar al Carrito
-            </button>
-        </div>
-    </div>
+                {% elif product.tipo == "bebida" %}
+                    <select class="opcion-bebida" data-id="{{ product.id }}">
+                        <option value="soda" data-extra="0">Con Soda - ${{ product.precio }}</option>
+                        <option value="alcohol" data-extra="2000">Con Alcohol - ${{ product.precio|add:2000 }}</option>
+                    </select>
+                    <button class="agregar-carrito-bebida"
+                        data-id="{{ product.id }}"
+                        data-nombre="{{ product.nombre }}"
+                        data-precio="{{ product.precio }}">
+                        Agregar al carrito
+                    </button>
+                
+                {% endif %}
+
+            </div>
         {% endfor %}
+    </div>
+</div>
 
-
+<!-- antes -->
 <script>
     function openModal(modalId) {
         document.getElementById(modalId).style.display = "block";
@@ -60,7 +122,7 @@
         document.getElementById(modalId).style.display = "none";
     }
 
-    // Cerrar el modal si se hace clic fuera de él
+    // Cierra el modal al hacer clic fuera de él
     window.onclick = function(event) {
         let modals = document.querySelectorAll(".modal");
         modals.forEach(function(modal) {
@@ -69,8 +131,14 @@
             }
         });
     };
+    function toggleIngredient(label) {
+    let checkbox = label.querySelector("input");
+    checkbox.checked = !checkbox.checked; // Cambia el estado del checkbox
+    label.classList.toggle("selected"); // Cambia la apariencia visual
+}
 
+    
 </script>
 
-
 {% endblock %}
+

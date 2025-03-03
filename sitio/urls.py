@@ -20,6 +20,7 @@ from comida import views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from comida.views import lista_productos
 
 
 
@@ -44,6 +45,7 @@ urlpatterns = [
     path('restablecer/', views.restablecer, name='restablecer'),
     path('cambiar_contrasena/<uidb64>/<token>/', views.cambiar_contrasena, name='cambiar_contrasena'),
     path('pago', views.pago, name='pago'),
+    path("productos/", lista_productos, name="productos"),
     # path('confirmacion_contrasena/', views.confirmacion_contrasena, name='confirmacion_contrasena'),
     
 

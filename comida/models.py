@@ -64,6 +64,43 @@ class Reserva(models.Model):
         return f"{self.nombre} - {self.fecha} {self.hora}"
 
 
+from django.db import models
+
+class Ingrediente(models.Model):
+    nombre = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre
+
+class Producto(models.Model):
+    TIPOS_PRODUCTO = [
+        ('personalizable', 'Personalizable'),
+        ('sabores', 'Con Sabores'),
+        ('simple', 'Simple'),
+        ('bebida', 'Bebida'),
+    ]
+
+    imagen = models.ImageField(upload_to='productos')
+    nombre = models.CharField(max_length=200)
+    descripcion = models.TextField()
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    fecha_creacion = models.DateField(auto_now_add=True)
+    tipo = models.CharField(max_length=20, choices=TIPOS_PRODUCTO)
+
+    # Relación con ingredientes (solo para personalizables)
+    ingredientes = models.ManyToManyField(Ingrediente, related_name="productos", blank=True)
+
+    # Relación con sabores (solo para productos con sabores)
+    sabores = models.ManyToManyField("Sabor", related_name="productos", blank=True)
+
+    def __str__(self):
+        return self.nombre
+
+class Sabor(models.Model):
+    nombre = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre
 
 
 
