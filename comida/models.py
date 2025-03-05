@@ -1,6 +1,4 @@
 from django.db import models
-
-
 from django.contrib.auth.models import User
 
 class Profile(models.Model):
@@ -15,7 +13,7 @@ class Product(models.Model):
     imagen = models.ImageField(upload_to='productos')
     nombre = models.CharField(max_length=200)
     descripcion = models.TextField()
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    precio = models.DecimalField(max_digits=10, decimal_places=0)
     fecha_creacion = models.DateField(auto_now_add=True)
 
     def __str__(self):
@@ -96,7 +94,7 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=200)
     descripcion = models.TextField()
     imagen_descripcion = models.ImageField(upload_to='productos/', blank=True, null=True)
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    precio = models.DecimalField(max_digits=10, decimal_places=0)
     fecha_creacion = models.DateField(auto_now_add=True)
     tipo = models.CharField(max_length=20, choices=TIPOS_PRODUCTO)
     

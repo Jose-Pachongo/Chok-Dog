@@ -1,8 +1,10 @@
 .carrito{
   
-    padding: 4rem 2rem;
+    padding: 2rem 2rem;
     min-height: 90vh;
     text-align: center;
+    background-color: var(--negro-carbon);
+    color: var(--dorado);
 }
 
   
@@ -11,10 +13,12 @@
     border-collapse: collapse;
     margin-bottom: 20px;
   }
-  
+  .actualizar-cantidad {
+    background-color: var(--dorado);
+  }
   th, td {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 3px solid #ccc;
     text-align: center;
   }
   

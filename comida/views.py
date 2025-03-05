@@ -477,7 +477,6 @@ def procesar_pedido(request):
                 pedido.comprobante = request.FILES["comprobante"]
             pedido.save() 
 
-            tipo_entrega = request.POST.get("tipo_entrega", "local")
             productos = json.loads(pedido.productos)
 
            
@@ -540,3 +539,5 @@ def procesar_pedido(request):
             return JsonResponse({"error": "Datos inválidos"}, status=400)
 
     return JsonResponse({"error": "Método no permitido"}, status=405)
+
+
