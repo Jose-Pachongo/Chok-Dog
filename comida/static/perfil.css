@@ -17,6 +17,7 @@
     box-shadow: var(--box);
 }
 
+
 .profile-header {
     display: flex;
     flex-direction: column;
@@ -64,3 +65,7 @@
     border: 1px solid #555;
     color: rgb(0, 0, 0);
 }
+@media (max-width: 768px) {
+    .profile  {
+        margin-bottom: 70px;
+    }}

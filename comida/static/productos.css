@@ -1,30 +1,42 @@
 
 .main {
-    background-color: #121212;
+    background-color: var(--negro-carbon);
     color: #D4AF37;
-    font-family: "Kotta One", serif;
     margin: 0;
     padding: 0;
 }
 
-
-
-.prod {
+.conten {
+    width: 100%; /* Asegúrate de que el contenedor tenga altura */
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: center; /* Centra horizontalmente */
     align-items: center;
-    flex-direction: column;
-    padding: 20px;
 }
 
+.prod {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    padding: 50px 0 10 0;
+    margin-top: 80px;
+    padding: 50 0 0 0;
+}
+
+
 .menu-con {
-    width: 80%;
-    max-width: 1200px;
-    background-color: #333D41;
+    width: 90%;
+    display: flex; /* Cambiado de grid a flex */
+    flex-wrap: wrap;
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center;
+    gap: 30px;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
-    text-align: center;
+
+
 }
 
 h1 {
@@ -33,19 +45,27 @@ h1 {
 }
 
 .food-item {
-    background: #1C1C1C;
+    min-width: 550px;
+
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+    justify-content: space-evenly;
+    box-shadow: 0 2px 8px rgb(212, 175, 55);
+}
+.desc {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 0 30px;
+    
 }
 
 .food-item img {
-    width: 120px;
-    height: 120px;
+    width: 220px;
+    height: 220px;
     border-radius: 10px;
     object-fit: cover;
     border: 2px solid #D4AF37;
@@ -55,6 +75,7 @@ h1 {
     flex-grow: 1;
     padding: 0 15px;
     text-align: left;
+    flex-direction: column;
 }
 
 .details h3 {
@@ -68,19 +89,26 @@ h1 {
     color: #D4AF37;
 }
 
-.btn-descripcion, .btn-custom, .agregar-carrito {
+.btn-descripcion, .btn-per, .agregar-carrito, .agregar-carrito-bebida {
     background: #D4AF37;
-    color: #121212;
+    color: #000000;
     padding: 8px 15px;
     border: none;
     border-radius: 5px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
+    width: 100%; /* Botones ocupan todo el ancho */
+    text-align: center;
+    
 }
 
-.btn-descripcion:hover, .btn-custom:hover, .agregar-carrito:hover {
+
+.btn-descripcion:hover, .btn-per:hover, .agregar-carrito:hover, .agregar-carrito-bebida:hover {
     background: #b89630;
+}
+.agregar-carrito-bebida{
+    margin-top: 20px;
 }
 
 select {
@@ -105,14 +133,27 @@ select {
 }
 
 .modal-content {
+    min-width: 400px;
     background-color: #1C1C1C;
     color: #D4AF37;
     margin: 10% auto;
     padding: 20px;
     border-radius: 10px;
     width: 50%;
-    box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+    box-shadow: 0 4px 10px rgb(212, 175, 55);
     text-align: center;
+    
+}
+.modal-content h2{
+    color: var(--dorado);
+    font-size: 25px;
+    margin: 10px;
+}
+
+.modal-content p{
+    color: var(--dorado);
+    font-size: 20px;
+    
 }
 
 .close {
@@ -128,10 +169,12 @@ select {
 }
 
 .ingredient-grid {
-    display: flex;
+    display: grid;
     flex-wrap: wrap;
-    gap: 10px;
+    font-size: 18px;
+    gap: 30px;
     justify-content: center;
+   color: var(--dorado);
 }
 
 .ingredient-grid label {
@@ -154,9 +197,55 @@ select {
     color: white !important;
     font-weight: bold;
 }
+.ingredient-option.selected .checkmark::after {
+    
+    color: black;
+    
+}
+
 
 
 .agregar-carrito{
     margin-top: 20px; 
 }
 
+.modal-content .img{
+    width: 300px;
+    height: 400px;
+    object-fit: cover;
+}
+
+
+/* Ajuste responsive para móviles */
+@media (max-width: 1008px) {
+    .menu-con {
+        
+        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+    }
+    
+
+
+    .details {
+        padding: 10px;
+        width: 100%;
+    }
+
+    .btn-descripcion, .btn-per, .agregar-carrito {
+        width: 100%; /* Botones ocupan todo el ancho */
+        text-align: center;
+    }
+}
+@media (max-width: 668px) {
+    
+    .food-item {
+        flex-direction: column; /* Imagen arriba, texto abajo */
+        text-align: center;
+        padding: 20px;
+        min-width: 400px;
+    }
+    .desc{
+        
+        width: 80%;
+    }
+    
+}

@@ -2,7 +2,7 @@
 
 .main::before {
     content: '';
-    background-image: url('/static/img/cok_4.jpg');
+    background-image: url('/static/img/font.jpg');
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
@@ -71,7 +71,7 @@ border: 1px solid #ccc;
 border-radius: 5px;
 }
 
-button {
+.res {
 background: var(--dorado, #d4af37);
 color: var(--negro-profundo, #222);
 cursor: pointer;
@@ -79,7 +79,7 @@ transition: background 0.3s ease;
 border: none;
 }
 
-button:hover {
+.res:hover {
 background: #b8952d;
 }
 

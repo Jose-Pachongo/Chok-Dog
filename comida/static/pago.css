@@ -1,61 +1,207 @@
-.pago-container {
-    max-width: 600px;
-    margin: auto;
+/* pago.css */
+main {
+    background-color: var(--blanco);
+    color: rgb(0, 0, 0);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    padding:10px 0 70px 0;
+}
+
+.tit h2{
+    text-align: center;
+    margin: 20px;
+    font-size: 30px ;
+}
+.pago{
+    display: flex;
+    gap: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+
+.payment-container {
+    background: var(--blanco);
     padding: 20px;
-    background: #121212;
-    color: #D4AF37;
     border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.749);
+    width: 90%;
+    max-width: 500px;
     text-align: center;
 }
 
-.metodos-pago label {
-    display: inline-block;
-    margin: 10px;
-    cursor: pointer;
+
+h2 {
+    color: #333;
 }
 
-.metodos-pago img {
-    width: 100px;
-    height: 100px;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    transition: 0.3s;
+.resumen-pedido {
+    margin-bottom: 20px;
 }
 
-.metodos-pago input[type="radio"]:checked + img {
-    border-color: #D4AF37;
-}
-
-.subir-comprobante {
-    margin: 20px 0;
-}
-
-table {
+#resumen-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
 }
 
-th, td {
-    padding: 10px;
-    border-bottom: 1px solid #D4AF37;
+#resumen-table th, #resumen-table td {
+    border: 1px solid #000000;
+    padding: 8px;
+    text-align: center;
 }
-
+.actualizar-cantidad {
+    width: 50px; 
+    text-align: center;
+    padding: 5px;
+    font-size: 20px;
+    background: var(--blanco);
+    border: none;
+    
+}
 #total-pago {
-    font-size: 18px;
+    font-size: 1.2em;
+    font-weight: bold;
     margin-top: 10px;
 }
 
-button {
-    background: #D4AF37;
-    color: #121212;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
+form {
+    display: flex;
+    flex-direction: column;
+}
+.qr{
+    display: flex;
+    justify-content: center;
+}
+.qr img {
+    margin: 20px 0;
+    width: 200px;
+    padding: 10px;
+    border: solid 2px var(--dorado);
+}
+
+.qrl{
+    background-color: var(--dorado);
+    border-radius: 15px;
+    color: white;
+}
+
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 1em;
+}
+
+label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+    font-size: 1.1em;
+}
+
+input[type="radio"] {
+    margin-right: 8px;
+}
+
+button {
+    background-color: var(--dorado);
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    cursor: pointer;
     transition: 0.3s;
 }
 
 button:hover {
-    background: #b88b2a;
+    background-color: #a69922;
+}
+
+.opcion-entrega {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.opcion-entrega label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Estilos para mejorar la vista en dispositivos pequeños */
+@media (max-width: 900px) {
+    .pago {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+@media (max-width: 600px) {
+    .pago {
+        width: 95%;
+        padding: 0;
+        margin: 0;
+        
+    }
+    .payment-container{
+        margin: 0;
+        max-width: 200px;
+        
+    }
+}
+/* Estilos para pantallas medianas (Tablets) */
+@media (max-width: 768px) {
+    .payment-container {
+        width: 95%;
+        max-width: none;
+    }
+    
+    .qr img {
+        width: 150px; /* Reduce el tamaño del QR en pantallas medianas */
+    }
+}
+
+/* Estilos para pantallas pequeñas (Celulares) */
+@media (max-width: 480px) {
+    .tit h2 {
+        font-size: 24px;
+    }
+
+    .payment-container {
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="file"] {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+
+    label {
+        font-size: 1em;
+    }
+
+    button {
+        font-size: 1em;
+        padding: 10px;
+    }
+
+    .qr img {
+        width: 120px; /* Reduce más el QR en pantallas pequeñas */
+    }
 }

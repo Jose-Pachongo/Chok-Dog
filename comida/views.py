@@ -149,6 +149,38 @@ def perfil_view(request):
 
     return render(request, 'perfil.html')
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+from .forms import UserProfileForm, ProfileForm, ChangePasswordForm
+
+@login_required
+def profile(request):
+    user_form = UserProfileForm(instance=request.user)
+    profile_form = ProfileForm(instance=request.user.profile)
+    password_form = ChangePasswordForm(user=request.user)
+
+    if request.method == 'POST':
+        if 'update_profile' in request.POST:
+            user_form = UserProfileForm(request.POST, instance=request.user)
+            profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                return redirect('profile')
+        
+        elif 'change_password' in request.POST:
+            password_form = ChangePasswordForm(request.user, request.POST)
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)
+                return redirect('profile')
+
+    return render(request, 'profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'password_form': password_form
+    })
 
 
 #reservas
@@ -206,7 +238,6 @@ def reservas(request):
         )
         print("Reserva creada:", reserva)
 
-      
         subject = "Nueva reserva de mesa"
         message = (
             f"Se ha realizado una nueva reserva:\n\n"
@@ -218,6 +249,16 @@ def reservas(request):
             f"Mesa: {mesa.numero}\n"
             f"Número de personas: {personas}\n"
         )
+        mensaje_usuario = (
+            f"Hola {nombre},\n\n"
+            "Gracias por reservar con nosotros.\n"
+            f"Detalles de tu reserva:\n"
+            f"Fecha: {fecha}\n"
+            f"Hora: {hora}\n"
+            f"Mesa: {mesa.numero}\n"
+            f"Número de personas: {personas}\n\n"
+            "Te esperamos en nuestro local."
+        )
 
         try:
             send_mail(
@@ -225,6 +266,13 @@ def reservas(request):
                 message,
                 settings.EMAIL_HOST_USER,
                 ['chokdog77@gmail.com'],
+                fail_silently=False,
+            )
+            send_mail(
+                'Confirmación de Reserva',
+                mensaje_usuario,
+                settings.EMAIL_HOST_USER,  # Remitente
+                [email],  # Usuario registrado
                 fail_silently=False,
             )
             messages.success(request, "Reserva realizada y correo enviado con éxito.")
@@ -305,6 +353,14 @@ def procesar_reserva(request):
                 message,
                 settings.EMAIL_HOST_USER,
                 ['chokdog77@gmail.com'],
+                fail_silently=False,
+            )
+            
+            send_mail(
+                'Bienvenido a Nuestra Página',
+                mensaje_usuario,
+                'chokdog77@gmail.com',  # Remitente
+                [email],  # Usuario registrado
                 fail_silently=False,
             )
             messages.success(request, "Reserva realizada y correo enviado con éxito.")
@@ -390,7 +446,9 @@ def confirmacion_contrasena(request):
 
 def pago(request):
     return render(request, 'pago.html')
-
+def pasarela_pago(request):
+    carrito = request.session.get('carrito', [])  # Asegúrate de que el carrito está en la sesión
+    return render(request, 'pasarela_pago.html', {'carrito': carrito})
 
 
 
@@ -400,3 +458,85 @@ from .models import Producto
 def lista_productos(request):
     productos = Producto.objects.all()  # Obtener productos
     return render(request, "productos.html", {"productos": productos})
+
+import json
+from django.core.mail import send_mail
+from django.http import JsonResponse
+from django.shortcuts import render
+from .forms import PedidoForm
+
+def pagina_pago(request):
+    return render(request, 'pago.html')
+
+def procesar_pedido(request):
+    if request.method == "POST":
+        form = PedidoForm(request.POST, request.FILES)
+        if form.is_valid():
+            pedido = form.save(commit=False) 
+            if "comprobante" in request.FILES: 
+                pedido.comprobante = request.FILES["comprobante"]
+            pedido.save() 
+
+            tipo_entrega = request.POST.get("tipo_entrega", "local")
+            productos = json.loads(pedido.productos)
+
+           
+            productos_str = "\n".join([
+                f"- {p['cantidad']}x {p['nombre']} - ${p['precio']}" +
+                (f" (Sabor: {p['sabor']})" if p.get('sabor') else "") +
+                (f" [Ingredientes: {', '.join(p['ingredientes'])}]" if p.get('ingredientes') else "")
+                for p in productos
+            ])
+
+           
+            comprobante_url = request.build_absolute_uri(pedido.comprobante.url) if pedido.comprobante else "No adjunto"
+
+            asunto_usuario = "Confirmación de tu Pedido - Chokdog"
+            mensaje_usuario = f"""
+            ¡Hola {pedido.nombre}!
+
+            Gracias por tu pedido en Chokdog. Aquí están los detalles:
+
+            Método de pago: {pedido.metodo_pago}
+            Total: ${pedido.total}
+
+            Productos:
+            {productos_str}
+
+            
+
+            Estamos procesando tu pedido y nos pondremos en contacto pronto. 
+            
+            ¡Gracias por confiar en nosotros!
+
+            -- El equipo de Chokdog 🐶🍔
+            """
+            send_mail(asunto_usuario, mensaje_usuario, 'chokdog77@gmail.com', [pedido.email])
+
+            # 🔹 Correo para el administrador de Chokdog
+            asunto_admin = f"Nuevo Pedido Recibido de {pedido.nombre}"
+            mensaje_admin = f"""
+            📢 Nuevo Pedido Recibido
+
+            Cliente: {pedido.nombre}
+            Correo: {pedido.email}
+            Teléfono: {pedido.telefono}
+            Dirección: {pedido.direccion}
+
+            Método de pago: {pedido.metodo_pago}
+            Total: ${pedido.total}
+
+            Productos:
+            {productos_str}
+
+            📎 Comprobante de pago: {comprobante_url}
+
+            📌 Revisar en el panel de administración.
+            """
+            send_mail(asunto_admin, mensaje_admin, 'chokdog77@gmail.com', ['chokdog77@gmail.com'])
+
+            return JsonResponse({"mensaje": "Pedido recibido y correos enviados."}, status=200)
+        else:
+            return JsonResponse({"error": "Datos inválidos"}, status=400)
+
+    return JsonResponse({"error": "Método no permitido"}, status=405)

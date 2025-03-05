@@ -2,7 +2,7 @@
 
 .main::before {
     content: '';
-    background-image: url('/static/img/cok_4.jpg');
+    background-image: url('/static/img/font.jpg');
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;

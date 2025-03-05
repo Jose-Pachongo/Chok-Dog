@@ -2,6 +2,15 @@ document.addEventListener("DOMContentLoaded", function() {
     renderCarrito();
     actualizarContadorCarrito();
 
+    // const carritoIcono = document.getElementById("carrito-icon"); // Asegúrate de que el ícono tiene este ID
+    // const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    // if (carrito.length === 0) {
+    //     carritoIcono.style.display = "none"; // Oculta el ícono si el carrito está vacío
+    // } else {
+    //     carritoIcono.style.display = "block"; // Muestra el ícono si hay productos
+    // }
+
     document.body.addEventListener("click", function(event) {
         const target = event.target;
 
@@ -115,6 +124,7 @@ function renderCarrito() {
     carritoBody.innerHTML = ""; // 🔹 Limpia la tabla antes de renderizar
 
     let total = 0;
+    let esPaginaPago = window.location.pathname.includes("pago"); // 🔹 Detecta si estás en la página de pago
 
     carrito.forEach(item => {
         if (!item.id || !item.nombre || !item.precio) {
@@ -133,13 +143,18 @@ function renderCarrito() {
         row.innerHTML = `
             <td>${item.nombre} ${saborTexto} ${ingredientesTexto}</td>
             <td>
-                <input type="number" value="${item.cantidad}" min="1" data-id="${item.id}" class="actualizar-cantidad">
+                <input type="number" value="${item.cantidad}" min="1" data-id="${item.id}" class="actualizar-cantidad" style="width: 50px; text-align: center;" readonly>
             </td>
+
             <td>$${precioNumerico.toFixed(2)}</td>
             <td>$${subtotal.toFixed(2)}</td>
-            <td>
-                <button data-id="${item.id}" class="eliminar-item"><i class='bx bxs-trash'></i></button>
-            </td>
+            ${!esPaginaPago ? `
+                <td>
+                    <button data-id="${item.id}" class="eliminar-item">
+                        <i class='bx bxs-trash'></i>
+                    </button>
+                </td>
+            ` : ""}
         `;
         carritoBody.appendChild(row);
     });
@@ -148,6 +163,7 @@ function renderCarrito() {
 
     console.log("✅ Carrito renderizado correctamente:", carrito);
 }
+
 
 
 function actualizarContadorCarrito() {
@@ -219,4 +235,41 @@ document.body.addEventListener("click", function(event) {
 });
 
 
+
+document.getElementById("btnPagar").addEventListener("click", function () {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    if (carrito.length === 0) {
+        Swal.fire({
+            title: "Carrito vacío",
+            text: "No tienes productos en el carrito.",
+            icon: "warning",
+            confirmButtonColor: "#D4AF37",
+        });
+        return;
+    }
+
+    fetch("/procesar-pago/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken")
+        },
+        body: JSON.stringify({ productos: carrito }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "ok") {
+            localStorage.setItem("order_id", data.order_id); // Guardar ID del pedido
+            window.location.href = data.url_pago; // Redirige al pago (QR o pasarela)
+        } else {
+            Swal.fire({
+                title: "Error",
+                text: "Hubo un problema al procesar el pago.",
+                icon: "error",
+                confirmButtonColor: "#D4AF37",
+            });
+        }
+    });
+});
 

@@ -1,7 +1,8 @@
 .carrito{
   
     padding: 4rem 2rem;
-    min-height: 65vh;
+    min-height: 90vh;
+    text-align: center;
 }
 
   
@@ -63,4 +64,78 @@
     margin-bottom: 20px;
   }
   
-  
+/* Para tablets y pantallas medianas */
+@media (max-width: 768px) {
+  .carrito {
+      padding: 3rem 1rem;
+  }
+
+  table {
+      font-size: 0.9em;
+  }
+
+  th, td {
+      padding: 8px;
+  }
+
+  input[type="number"] {
+      width: 50px;
+  }
+
+  .eliminar-item {
+      width: 35px;
+      padding: 5px;
+  }
+
+  .eliminar-item i {
+      font-size: 22px;
+  }
+}
+
+/* Para móviles y pantallas pequeñas */
+@media (max-width: 480px) {
+  .carrito {
+      padding: 2rem 0.5rem;
+  }
+
+  table {
+      font-size: 0.8em;
+  }
+
+  th, td {
+      padding: 5px;
+  }
+
+  input[type="number"] {
+      width: 40px;
+  }
+
+  .eliminar-item {
+      width: 30px;
+      padding: 4px;
+  }
+
+  .eliminar-item i {
+      font-size: 20px;
+  }
+
+  #total {
+      font-size: 18px;
+      text-align: center;
+  }
+
+  /* Centramos el título y los botones */
+  .tit h2 {
+      text-align: center;
+      font-size: 24px;
+  }
+
+  .bot {
+      display: block;
+      text-align: center;
+      margin: 10px auto;
+      padding: 12px;
+      font-size: 1em;
+      max-width: 200px;
+  }
+}

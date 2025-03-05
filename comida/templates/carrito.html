@@ -23,9 +23,20 @@
   </table>
   <p id="total">Total: $0.00</p>
   <div class="bott">
-    <a  class="bot" href="{% url 'pago' %}">Proceder al Pago</a>
-    <a  class="bot" href="{% url 'productos' %}">seguir comprando</a>
+      <a id="btnPagar" class="bot pagar-btn" href="{% url 'pagina_pago' %}">Proceder al Pago</a>
+      <a class="bot seguir-comprando-btn" href="{% url 'productos' %}">Seguir comprando</a>
   </div>
+
 </div>
-  
+
+  <script>
+    document.getElementById("btnPagar").addEventListener("click", function (event) {
+    let carrito = localStorage.getItem("carrito");
+
+    if (!carrito || JSON.parse(carrito).length === 0) {
+        event.preventDefault(); // Evita la redirección si el carrito está vacío  
+    }
+});
+
+  </script>
 {% endblock %}

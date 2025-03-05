@@ -4,53 +4,61 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'pago.css' %}">
+<div class="tit">
+<h2>Pasarela de Pago</h2>
+    <div class="pago">
+        <div class="payment-container">
 
-<div class="pago-container">
-    <h2>Elige tu Método de Pago</h2>
+            <div class="resumen-pedido">
+                <h3>Resumen del Pedido</h3>
+                <table id="resumen-table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                
+                    <tbody id="carrito-body"></tbody>
 
-    <div class="metodos-pago">
-        <label>
-            <input type="radio" name="metodo_pago" value="nequi">
-            <img src="{% static 'img/qr' %}" alt="QR Nequi">
-        </label>
-        <label>
-            <input type="radio" name="metodo_pago" value="daviplata">
-            <img src="{% static 'img/qr' %}" alt="QR Daviplata">
-        </label>
-        <label>
-            <input type="radio" name="metodo_pago" value="bancolombia">
-            <img src="{% static 'img/qr' %}" alt="QR Bancolombia">
-        </label>
+                </table>
+                <p id="total-pago">Total: $0.00</p>
+            </div>
+        </div>
+            
+        <div class="payment-container">
+            <form id="payment-form" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                
+                <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+                <input type="email" id="email" name="email" placeholder="Correo Electrónico" required>
+                <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" required>
+                <input type="text" id="direccion" name="direccion" placeholder="Dirección"required>
+                
+                
+                <label class="qrl">
+                    <input type="radio" name="metodo_pago" value="nequi" required> Nequi
+                </label>
+                <label class="qrl">
+                    <input type="radio" name="metodo_pago" value="daviplata" required> Daviplata
+                </label>
+                <div class="qr" id="qr-container">
+                    <img class="neq" id="qr-nequi" src="{% static 'img/mision.jpg' %}" alt="QR Nequi" style="display: none;">
+                    <img class="dav" id="qr-daviplata" src="{% static 'img/c_2.jpg' %}" alt="QR Daviplata" style="display: none;">
+                </div>
+                <input type="file" id="comprobante" name="comprobante" accept="image/*" required>
+                
+                
+                <button type="submit">Confirmar Pedido</button>
+            </form>
+        </div>  
     </div>
-
-    <div class="subir-comprobante">
-        <label for="comprobante">Sube el comprobante de pago:</label>
-        <input type="file" id="comprobante" accept="image/*">
-    </div>
-
-    <hr>
-
-    <h2>Factura de Compra</h2>
-    <table id="factura-table">
-        <thead>
-            <tr>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Precio Unitario</th>
-                <th>Subtotal</th>
-            </tr>
-        </thead>
-        <tbody id="factura-body">
-            <!-- Aquí se cargarán los productos -->
-        </tbody>
-    </table>
-    <p id="total-pago">Total a Pagar: $0.00</p>
+</div>
+<script>
     
 
-    <p id="total-pago">Total a Pagar: $0.00</p>
+</script>
 
-    <button id="btn-confirmar-pago">Confirmar Pago</button>
-</div>
-
-<script src="{% static 'pago.js' %}"></script>
 {% endblock %}

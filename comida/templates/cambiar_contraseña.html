@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Cambiar Contraseña {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'perfil.css' %}">
+
+<div class="modal-container" id="passwordModal">
+    <div class="modal">
+        <h2>Cambiar Contraseña</h2>
+        <form method="POST" action="{% url 'password_change' %}">
+            {% csrf_token %}
+            <div class="input-group">
+                <label>Nueva Contraseña</label>
+                {{ form.new_password1 }}
+            </div>
+            <div class="input-group">
+                <label>Confirmar Contraseña</label>
+                {{ form.new_password2 }}
+            </div>
+            <div class="buttons">
+                <button type="submit" class="btn">Guardar</button>
+                <button type="button" class="btn close-btn" onclick="cerrarModal()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function abrirModal() {
+        document.getElementById("passwordModal").style.display = "flex";
+    }
+
+    function cerrarModal() {
+        document.getElementById("passwordModal").style.display = "none";
+    }
+</script>
+
+{% endblock %}

@@ -63,6 +63,11 @@ class Reserva(models.Model):
     def __str__(self):
         return f"{self.nombre} - {self.fecha} {self.hora}"
 
+class Sabor(models.Model):
+    nombre = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.nombre
 
 from django.db import models
 
@@ -71,6 +76,13 @@ class Ingrediente(models.Model):
 
     def __str__(self):
         return self.nombre
+
+class Sabor(models.Model):
+    nombre = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre
+
 
 class Producto(models.Model):
     TIPOS_PRODUCTO = [
@@ -83,24 +95,39 @@ class Producto(models.Model):
     imagen = models.ImageField(upload_to='productos')
     nombre = models.CharField(max_length=200)
     descripcion = models.TextField()
+    imagen_descripcion = models.ImageField(upload_to='productos/', blank=True, null=True)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     fecha_creacion = models.DateField(auto_now_add=True)
     tipo = models.CharField(max_length=20, choices=TIPOS_PRODUCTO)
+    
 
     # Relación con ingredientes (solo para personalizables)
     ingredientes = models.ManyToManyField(Ingrediente, related_name="productos", blank=True)
 
     # Relación con sabores (solo para productos con sabores)
-    sabores = models.ManyToManyField("Sabor", related_name="productos", blank=True)
+    sabores = models.ManyToManyField(Sabor, blank=True)
 
     def __str__(self):
         return self.nombre
 
-class Sabor(models.Model):
-    nombre = models.CharField(max_length=100)
+
+
+
+class Pedido(models.Model):
+    nombre = models.CharField(max_length=255)
+    email = models.EmailField()
+    telefono = models.CharField(max_length=15)
+    metodo_pago = models.CharField(max_length=50, choices=[('nequi', 'Nequi'), ('daviplata', 'Daviplata')])
+    comprobante = models.ImageField(upload_to="comprobantes/", null=True, blank=True)
+    productos = models.TextField()  # Se almacenará como JSON con los productos y cantidades
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+    fecha = models.DateTimeField(auto_now_add=True)
+    direccion = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.nombre
+        return f"Pedido de {self.nombre} - {self.metodo_pago}"
+
+
 
 
 
