@@ -143,12 +143,15 @@ function renderCarrito() {
         row.innerHTML = `
             <td>${item.nombre} ${saborTexto} ${ingredientesTexto}</td>
             <td>
-                <input type="number" value="${item.cantidad}" min="1" data-id="${item.id}" class="actualizar-cantidad" style="width: 50px; text-align: center;" readonly>
+                ${esPaginaPago 
+                    ? `<span>${item.cantidad}</span>`  // 🔹 En pago, solo se muestra la cantidad
+                    : `<input type="number" value="${item.cantidad}" min="1" data-id="${item.id}" class="actualizar-cantidad" style="width: 50px; text-align: center;">`
+                }
             </td>
-
             <td>$${precioNumerico.toFixed(2)}</td>
             <td>$${subtotal.toFixed(2)}</td>
             ${!esPaginaPago ? `
+            
                 <td>
                     <button data-id="${item.id}" class="eliminar-item">
                         <i class='bx bxs-trash'></i>
@@ -175,11 +178,21 @@ function actualizarContadorCarrito() {
 
 function actualizarCantidad(productId, nuevaCantidad) {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    carrito.forEach(item => { if (item.id === productId) item.cantidad = nuevaCantidad; });
+    
+    carrito = carrito.map(item => {
+        if (item.id === productId) {
+            return { ...item, cantidad: nuevaCantidad };
+        }
+        return item;
+    });
+
     localStorage.setItem('carrito', JSON.stringify(carrito));
     renderCarrito();
     actualizarContadorCarrito();
 }
+
+
+
 
 function eliminarItem(productId) {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
