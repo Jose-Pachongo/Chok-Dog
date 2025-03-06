@@ -491,7 +491,9 @@ def procesar_pedido(request):
             asunto_usuario = "Confirmación de tu Pedido - Chokdog"
             mensaje_usuario = f"""
             ¡Hola {pedido.nombre}!
+
             Gracias por tu pedido en Chokdog. Aquí están los detalles:
+
 
             Método de pago: {pedido.metodo_pago}
             Total: ${pedido.total}
@@ -499,9 +501,13 @@ def procesar_pedido(request):
             Productos:
             {productos_str}
 
+
             Estamos procesando tu pedido y nos pondremos en contacto pronto. 
             
+
             ¡Gracias por confiar en nosotros!
+
+
 
             -- El equipo de Chokdog 🐶🍔
             """
