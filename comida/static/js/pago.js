@@ -78,7 +78,12 @@ document.addEventListener("DOMContentLoaded", function () {
                         title: "¡Éxito!",
                         text: data.mensaje,
                         confirmButtonColor: "#6c5ce7"
+                        
+                    }).then(() => {
+                        localStorage.removeItem("carrito");
+                        window.location.href = "/productos/"; // Reemplaza con la URL real de tus productos
                     });
+                    
                 } else {
                     Swal.fire({
                         icon: "error",

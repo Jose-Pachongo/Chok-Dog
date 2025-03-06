@@ -54,7 +54,7 @@ class ProductoAdminForm(forms.ModelForm):
             'ingredientes': forms.CheckboxSelectMultiple()  # Permite seleccionar varios ingredientes
         }
 
-
+@admin.register(Sabor)
 class SaborAdmin(admin.ModelAdmin):
     list_display = ["nombre"]
 
@@ -68,5 +68,38 @@ class ProductoAdmin(admin.ModelAdmin):
 
 admin.site.register(Producto, ProductoAdmin)
 admin.site.register(Ingrediente)
+
+
+
+
+from .models import Pedido
+
+
+from django.utils.safestring import mark_safe
+import json
+from django.contrib import admin
+from comida.models import Pedido
+
+class PedidoAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'email', 'telefono', 'metodo_pago', 'get_productos', 'total', 'direccion', 'fecha_pedido')
+
+    def get_productos(self, obj):
+        try:
+            productos = json.loads(obj.productos) if isinstance(obj.productos, str) else obj.productos
+            productos_html = "<ul>"
+            for producto in productos:
+                productos_html += f"<li><strong>{producto['nombre']}</strong> - Cantidad: {producto['cantidad']} - Precio: {producto['precio']}<br>"
+                if producto['ingredientes']:
+                    productos_html += f"<em>Ingredientes:</em> {', '.join(producto['ingredientes'])}<br>"
+                productos_html += "</li><hr>"
+            productos_html += "</ul>"
+            return mark_safe(productos_html)
+        except Exception as e:
+            return f"Error al mostrar productos: {e}"
+
+    get_productos.short_description = "Productos"
+
+admin.site.register(Pedido, PedidoAdmin)
+
 
 

@@ -110,6 +110,7 @@ class Producto(models.Model):
 
 
 
+from django.utils.timezone import now
 
 class Pedido(models.Model):
     nombre = models.CharField(max_length=255)
@@ -117,10 +118,13 @@ class Pedido(models.Model):
     telefono = models.CharField(max_length=15)
     metodo_pago = models.CharField(max_length=50, choices=[('nequi', 'Nequi'), ('daviplata', 'Daviplata')])
     comprobante = models.ImageField(upload_to="comprobantes/", null=True, blank=True)
-    productos = models.TextField()  # Se almacenará como JSON con los productos y cantidades
+    productos = models.JSONField()  # Se almacenará como JSON con los productos y cantidades
     total = models.DecimalField(max_digits=10, decimal_places=2)
     fecha = models.DateTimeField(auto_now_add=True)
     direccion = models.CharField(max_length=255)
+    fecha_pedido = models.DateTimeField(default=now)
+
+
 
     def __str__(self):
         return f"Pedido de {self.nombre} - {self.metodo_pago}"

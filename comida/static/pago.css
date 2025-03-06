@@ -12,7 +12,7 @@ main {
     text-align: center;
     margin: 20px;
     font-size: 30px ;
-    color: white;
+    color: var(--dorado);
 }
 .pago{
     display: flex;
@@ -125,7 +125,7 @@ input[type="radio"] {
 }
 
 .pedido:hover {
-    background-color: #acacac;
+    background-color: #b8952d;
 }
 
 .opcion-entrega {
