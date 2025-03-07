@@ -22,7 +22,8 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from comida.views import lista_productos
 from comida.views import pagina_pago, procesar_pedido
-
+from comida.views import profile_view 
+from comida.views import eliminar_foto
 
 
 
@@ -37,17 +38,17 @@ urlpatterns = [
     path('pagina', views.pagina, name='pagina'),
     path('productos', views.productos, name='productos'),
     path('carrito', views.carrito, name='carrito'),
-    path('perfil', views.perfil, name='perfil'),
+    path("perfil/", profile_view, name="perfil"),
+    path("eliminar-foto/", eliminar_foto, name="eliminar_foto"),
     path('logout', views.logout_request, name='logout'),
     path('reservas/', views.reservas, name='reservas'),
-    path('reservar/', views.procesar_reserva, name='procesar_reserva'),
     path('obtener_mesas_disponibles/', views.obtener_mesas_disponibles, name='obtener_mesas_disponibles'),
-    path('reservar/', views.procesar_reserva, name='procesar_reserva'),
     path('restablecer/', views.restablecer, name='restablecer'),
     path('cambiar_contrasena/<uidb64>/<token>/', views.cambiar_contrasena, name='cambiar_contrasena'),
     path('pago', views.pagina_pago, name='pagina_pago'),
     path("productos/", lista_productos, name="productos"),
     path('procesar_pedido/', procesar_pedido, name='procesar_pedido'),
+    path('manual', views.manual, name='manual'),
     
     # path('confirmacion_contrasena/', views.confirmacion_contrasena, name='confirmacion_contrasena'),
     

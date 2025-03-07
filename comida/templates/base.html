@@ -47,7 +47,7 @@
                     <div id="profileDropdown" class="profile-dropdown">
                         <a href="{% url 'perfil' %}">Mi Perfil</a>
                         <a href="{% url 'logout' %}" onclick="localStorage.removeItem('carrito');">Cerrar sesión</a>
-                        
+                        <a href="{% url 'manual' %}">Manual de Usuario</a>
                     </div>
                 </div>
             
@@ -108,7 +108,7 @@
     <script src="{% static 'js/carrito.js' %}"></script>
     <script src="{% static 'js/perfil.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="{% static 'js/reservas.js' %}"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {% if messages %}
         {% for m in messages %}

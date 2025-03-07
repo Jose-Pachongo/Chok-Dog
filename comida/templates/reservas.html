@@ -28,6 +28,7 @@
                 <div class="form-group">
                     <label for="hora">Hora:</label>
                     <input type="time" id="hora" name="hora" required>
+                    
                 </div>
             </div>
 
@@ -51,8 +52,6 @@
     </div>
 </section>
 
-
-
 {% if messages %}
     <script id="django-messages" type="application/json">
     [
@@ -63,5 +62,6 @@
     </script>
 {% endif %}
 
+<script src="{% static 'js/reservas.js' %}"></script>   
 
 {% endblock %}

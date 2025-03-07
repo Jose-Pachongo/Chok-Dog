@@ -136,39 +136,52 @@ def logout_request(request):
 
     return render(request, 'perfil.html')
 
-
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import update_session_auth_hash
-from .forms import UserProfileForm, ProfileForm, ChangePasswordForm
+from django.contrib import messages
+from .models import Profile  # Asegúrate de importar tu modelo de perfil
+from django.contrib.auth.models import User
 
 @login_required
-def profile(request):
-    user_form = UserProfileForm(instance=request.user)
-    profile_form = ProfileForm(instance=request.user.profile)
-    password_form = ChangePasswordForm(user=request.user)
-
-    if request.method == 'POST':
-        if 'update_profile' in request.POST:
-            user_form = UserProfileForm(request.POST, instance=request.user)
-            profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
-            if user_form.is_valid() and profile_form.is_valid():
-                user_form.save()
-                profile_form.save()
-                return redirect('profile')
+def profile_view(request):
+    if request.method == "POST":
+        user = request.user
+        user.first_name = request.POST.get("first_name", user.first_name)
+        user.last_name = request.POST.get("last_name", user.last_name)
+        user.username = request.POST.get("username", user.username)
+        user.email = request.POST.get("email", user.email)
         
-        elif 'change_password' in request.POST:
-            password_form = ChangePasswordForm(request.user, request.POST)
-            if password_form.is_valid():
-                user = password_form.save()
-                update_session_auth_hash(request, user)
-                return redirect('profile')
+        profile, created = Profile.objects.get_or_create(user=user)
+        profile.phone_number = request.POST.get("phone_number", profile.phone_number)
+        profile.address = request.POST.get("address", profile.address)
+        
+        if request.FILES.get("profile_picture"):
+            profile.profile_picture = request.FILES["profile_picture"]
 
-    return render(request, 'profile.html', {
-        'user_form': user_form,
-        'profile_form': profile_form,
-        'password_form': password_form
-    })
 
+        user.save()
+        profile.save()
+
+        messages.success(request, "Perfil actualizado correctamente")
+        return redirect("perfil")  # Ajusta esto si tu URL de perfil tiene otro nombre
+
+    return render(request, "perfil.html")
+
+
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def eliminar_foto(request):
+    if request.method == "POST":
+        user = request.user
+        if user.profile.profile_picture:
+            user.profile.profile_picture.delete()
+            user.profile.profile_picture = None
+            user.profile.save()
+            return JsonResponse({"success": True})
+        return JsonResponse({"success": False, "error": "No hay foto para eliminar."})
+    return JsonResponse({"success": False, "error": "Método no permitido."})
 
 #reservas
 
@@ -176,209 +189,116 @@ def profile(request):
 from datetime import datetime, timedelta
 
 from datetime import datetime, timedelta
+from datetime import datetime, timedelta
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
+from .models import Mesa, Reserva
+
+def enviar_correo(destinatario, asunto, mensaje):
+    try:
+        send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, [destinatario])
+    except Exception as e:
+        messages.error(request, f"Error al enviar el correo: {e}")
 
 def reservas(request):
-    mesas = Mesa.objects.all()
-
+    mesas_disponibles = Mesa.objects.all()
+    
     if request.method == "POST":
-        nombre = request.POST["nombre"]
-        email = request.POST["email"]
-        telefono = request.POST["telefono"]
-        fecha = request.POST["fecha"]
-        hora = request.POST["hora"]
-        mesa_id = request.POST["mesa"]
-        personas = int(request.POST["personas"])
-
+        nombre = request.POST.get("nombre")
+        email = request.POST.get("email")
+        telefono = request.POST.get("telefono")
+        fecha = request.POST.get("fecha")
+        hora = request.POST.get("hora")
+        mesa_id = request.POST.get("mesa")
+        personas = request.POST.get("personas")
+        
         try:
-            fecha_reserva = datetime.strptime(fecha, '%Y-%m-%d').date()
-            hora_reserva = datetime.strptime(hora, '%H:%M').time()
+            fecha_reserva = datetime.strptime(fecha, "%Y-%m-%d").date()
+            hora_reserva = datetime.strptime(hora, "%H:%M").time()
         except ValueError:
             messages.error(request, "Formato incorrecto de fecha u hora.")
-            return redirect('reservas')
-
+            return redirect("reservas")
+        
         # Validar que la fecha no sea pasada
         if fecha_reserva < datetime.now().date():
             messages.error(request, "No puedes seleccionar una fecha pasada.")
-            return redirect('reservas')
+            return redirect("reservas")
         
-        if not (datetime.strptime('17:00', '%H:%M').time() <= hora_reserva <= datetime.strptime('23:00', '%H:%M').time()):
+        # Validar que la hora esté en el rango permitido
+        if not (datetime.strptime("17:00", "%H:%M").time() <= hora_reserva <= datetime.strptime("23:00", "%H:%M").time()):
             messages.error(request, "La hora debe estar entre las 17:00 y las 23:00.")
-            return redirect('reservas')
+            return redirect("reservas")
         
+        # Verificar disponibilidad de la mesa
         dt_reserva = datetime.combine(fecha_reserva, hora_reserva)
         dt_inicio = dt_reserva - timedelta(minutes=30)
         dt_fin = dt_reserva + timedelta(minutes=30)
-
-        # Verificar si la mesa ya está reservada en ese horario
-        if Reserva.objects.filter(
-            fecha=fecha,
-            mesa_id=mesa_id,
-            hora__gte=dt_inicio.time(),
-            hora__lte=dt_fin.time()
-        ).exists():
+        
+        if Reserva.objects.filter(fecha=fecha_reserva, mesa_id=mesa_id, hora__gte=dt_inicio.time(), hora__lte=dt_fin.time()).exists():
             messages.error(request, "Lo siento, esta mesa ya está reservada en ese horario.")
             return redirect("reservas")
-
-        # Guardar la reserva
-        reserva = Reserva.objects.create(
-            nombre=nombre, email=email, telefono=telefono,
-            fecha=fecha, hora=hora, mesa_id=mesa_id, personas=personas
-        )
-
         
-        subject_user = "Confirmación de Reserva - Chokdog"
-        message_user = (
-            f"Hola {nombre},\n\n"
-            f"Tu reserva ha sido confirmada:\n"
-            f"- 📅 Fecha: {fecha}\n"
-            f"- ⏰ Hora: {hora}\n"
-            f"- 🍽 Mesa: {reserva.mesa.numero}\n"
-            f"- 👥 Número de personas: {personas}\n\n"
-            f"Si necesitas cancelar o modificar tu reserva, contáctanos.\n"
-            f"¡Gracias por elegirnos!\n\n"
-            f"Atentamente,\n"
-            f"Chokdog"
-        )
-        send_mail(subject_user, message_user, settings.EMAIL_HOST_USER, [email])
-
-       
-        subject_admin = "Nueva Reserva Recibida"
-        message_admin = (
-            f"📌 Nueva reserva registrada en Chokdog:\n\n"
-            f"- Cliente: {nombre}\n"
-            f"- 📧 Correo: {email}\n"
-            f"- 📞 Teléfono: {telefono}\n"
-            f"- 📅 Fecha: {fecha}\n"
-            f"- ⏰ Hora: {hora}\n"
-            f"- 🍽 Mesa: {reserva.mesa.numero}\n"
-            f"- 👥 Número de personas: {personas}\n\n"
-            f"✅ Verificar disponibilidad y preparar el servicio.\n"
-            f"Gracias."
-        )
-        send_mail(subject_admin, message_admin, settings.EMAIL_HOST_USER, ["chokdog77@gmail.com"])
-
-        messages.success(request, "¡Tu reserva fue realizada con éxito! Se ha enviado un correo con los detalles.")
-        return redirect("reservas")
-
-    return render(request, "reservas.html", {"mesas": mesas})
-
-
-def procesar_reserva(request):
-    mesas = Mesa.objects.all()
-    if request.method == 'POST':
-        nombre = request.POST.get('nombre')
-        email = request.POST.get('email')
-        telefono = request.POST.get('telefono')
-        fecha = request.POST.get('fecha')
-        hora = request.POST.get('hora')
-        personas = request.POST.get('personas')
-        mesa_id = request.POST.get('mesa')
-
-        try:
-            fecha_reserva = datetime.strptime(fecha, '%Y-%m-%d').date()
-        except ValueError:
-            messages.error(request, "Formato de fecha incorrecto.")
-            return redirect('procesar_reserva')
-
-        if fecha_reserva < datetime.now().date():
-            messages.error(request, "No puedes seleccionar una fecha pasada.")
-            return redirect('procesar_reserva')
-
-        try:
-            hora_reserva = datetime.strptime(hora, '%H:%M').time()
-        except ValueError:
-            messages.error(request, "Formato de hora incorrecto.")
-            return redirect('procesar_reserva')
-
-        if not (datetime.strptime('17:00', '%H:%M').time() <= hora_reserva <= datetime.strptime('23:00', '%H:%M').time()):
-            messages.error(request, "La hora debe estar entre las 17:00 y las 23:00.")
-            return redirect('procesar_reserva')
-
-        
-
-        if Reserva.objects.filter(fecha=fecha, hora=hora, mesa_id=mesa_id).exists():
-            messages.error(request, "La mesa seleccionada ya está reservada para esa fecha y hora.")
-            return redirect('procesar_reserva')
-
+        # Crear la reserva
         try:
             mesa = Mesa.objects.get(id=mesa_id)
         except Mesa.DoesNotExist:
             messages.error(request, "La mesa seleccionada no existe.")
-            return redirect('procesar_reserva')
-
+            return redirect("reservas")
+        
         reserva = Reserva.objects.create(
-            nombre=nombre,
-            email=email,
-            telefono=telefono,
-            fecha=fecha_reserva,
-            hora=hora_reserva,
-            personas=personas,
-            mesa=mesa
+            nombre=nombre, email=email, telefono=telefono,
+            fecha=fecha_reserva, hora=hora_reserva, mesa=mesa, personas=personas
         )
-
-        subject = "Nueva reserva de mesa"
-        message = (
-            f"Se ha realizado una nueva reserva:\n\n"
-            f"Nombre: {nombre}\n"
-            f"Correo: {email}\n"
-            f"Teléfono: {telefono}\n"
-            f"Fecha: {fecha}\n"
-            f"Hora: {hora}\n"
-            f"Mesa: {mesa.numero}\n"
-            f"Número de personas: {personas}\n"
-        )
-
-        try:
-            send_mail(
-                subject,
-                message,
-                settings.EMAIL_HOST_USER,
-                ['chokdog77@gmail.com'],
-                fail_silently=False,
-            )
-            
-            send_mail(
-                'Bienvenido a Nuestra Página',
-                mensaje_usuario,
-                'chokdog77@gmail.com',  # Remitente
-                [email],  # Usuario registrado
-                fail_silently=False,
-            )
-            messages.success(request, "Reserva realizada y correo enviado con éxito.")
-        except Exception as e:
-            messages.error(request, f"Reserva realizada, pero hubo un error al enviar el correo: {e}")
-
-        return redirect('procesar_reserva')  # O redirigir a 'reservas'
-
-    return render(request, 'reservas.html', {'mesas': mesas})
-
+        
+        # Enviar correos
+        mensaje_usuario = f"""
+        Hola {nombre},
+        
+        Tu reserva ha sido confirmada:
+        📅 Fecha: {fecha}
+        ⏰ Hora: {hora}
+        🍽 Mesa: {mesa.numero}
+        👥 Número de personas: {personas}
+        
+        Si necesitas cancelar o modificar tu reserva, contáctanos.
+        ¡Gracias por elegirnos!
+        """
+        enviar_correo(email, "Confirmación de Reserva - Chokdog", mensaje_usuario)
+        
+        mensaje_admin = f"""
+        📌 Nueva reserva recibida:
+        
+        Cliente: {nombre}
+        📧 Correo: {email}
+        📞 Teléfono: {telefono}
+        📅 Fecha: {fecha}
+        ⏰ Hora: {hora}
+        🍽 Mesa: {mesa.numero}
+        👥 Número de personas: {personas}
+        """
+        enviar_correo("chokdog77@gmail.com", "Nueva Reserva Recibida", mensaje_admin)
+        
+        messages.success(request, "¡Tu reserva fue realizada con éxito! Se ha enviado un correo con los detalles.")
+        return redirect("reservas")
+    
+    return render(request, "reservas.html", {"mesas": mesas_disponibles})
 
 def obtener_mesas_disponibles(request):
     fecha = request.GET.get('fecha')
     hora = request.GET.get('hora')
-
-    try:
-        fecha_reserva = datetime.strptime(fecha, '%Y-%m-%d').date()
-        hora_reserva = datetime.strptime(hora, '%H:%M').time()
-    except ValueError:
-        return JsonResponse({'error': 'Formato de fecha u hora incorrecto'}, status=400)
-
-    dt_reserva = datetime.combine(fecha_reserva, hora_reserva)
-    dt_inicio = dt_reserva - timedelta(minutes=30)
-    dt_fin = dt_reserva + timedelta(minutes=30)
-
-    reservas = Reserva.objects.filter(
-        fecha=fecha,
-        hora__gte=dt_inicio.time(),
-        hora__lte=dt_fin.time()
-    )
+    reservas = Reserva.objects.filter(fecha=fecha, hora=hora)
     mesas_reservadas = reservas.values_list('mesa_id', flat=True)
-
     mesas = Mesa.objects.all()
-    mesas_disponibles = [
-        {'id': mesa.id, 'numero': mesa.numero, 'disponible': mesa.id not in mesas_reservadas}
-        for mesa in mesas
-    ]
+    mesas_disponibles = []
+    for mesa in mesas:
+        mesas_disponibles.append({
+            'id': mesa.id,
+            'numero': mesa.numero,
+            'capacidad': mesa.capacidad,
+            'disponible': mesa.id not in mesas_reservadas
+        })
 
     return JsonResponse({'mesas_disponibles': mesas_disponibles})
 
@@ -542,3 +462,7 @@ def procesar_pedido(request):
     return JsonResponse({"error": "Método no permitido"}, status=405)
     return render(request, 'pago.html')
 
+
+
+def manual(request):
+    return render(request, 'manual.html')

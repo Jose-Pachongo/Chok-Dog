@@ -2,39 +2,74 @@
 {% load static %}
 {% block title %} Perfil {% endblock %}
 
-
 {% block content %}
 <link rel="stylesheet" href="{% static 'perfil.css' %}">
+
 <div class="profile">
     <div class="profile-container">
         <div class="profile-header">
-            <img src="{% static 'img/perfil.webp' %}" alt="Foto de perfil" class="profile-pic">
-            <h2>{{ user.first_name }} {{ user.last_name }}</h2>
-            <p class="username">@{{ user.username }}</p>
-            <p class="location">📍 {{ user.profile.address|default:"None" }}</p>
-        </div>
+            <form id="profile-form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <!-- Imagen de Perfil -->
+                <div class="profile-pic-container">
+                    {% if user.profile.profile_picture %}
+                        <img src="{{ user.profile.profile_picture.url }}" alt="Foto de perfil" class="profile-pic" id="profile-pic">
+                    {% else %}
+                        <img src="{% static 'img/perfil.webp' %}" alt="Foto de perfil" class="profile-pic" id="profile-pic">
+                    {% endif %}
+                    
+                    <label for="profile-pic-input" class="edit-icon"><i class='bx bx-camera'></i></label>
+                    <input type="file" name="profile_picture" id="profile-pic-input" accept="image/*" hidden>
+                </div>
+                <div id="modal-profile" class="modal">
+                    <span class="close">&times;</span>
+                    <img class="modal-content" id="modal-img">
+                </div>
 
-        <div class="profile-info">
-            <div class="input">
-                <label>Nombre completo:</label>
-                <p>{{ user.first_name }} {{ user.last_name }}</p>
-            </div>
-            <div class="input">
-                <label>Nombre de usuario:</label>
-                <p>@{{ user.usernamer }}</p>
-            </div>
-            <div class="input">
-                <label>Correo electrónico:</label>
-                <p>{{ user.email }}</p>
-            </div>
-            <div class="input">
-                <label>Teléfono:</label>
-                <p>{{ user.profile.phone_number|default:"None" }}</p>
-            </div>
-            <div class="input">
-                <label>Dirección:</label>
-                <p>{{ user.profile.address|default:"None" }}</p>
-            </div>
+                <h2 id="name-display">{{ user.first_name }} {{ user.last_name }}</h2>
+                <p class="username">@{{ user.username }}</p>
+                <p class="location">📍 {{ user.profile.address|default:"None" }}</p>
+
+                <!-- Campos del perfil -->
+                <div class="profile-info">
+                    <div class="nombre">
+                        <div class="input">
+                            <label>Nombre:</label>
+                            <input type="text" name="first_name" value="{{ user.first_name }}" disabled>
+                        </div>
+                        <div class="input">
+                            <label>Apellido:</label>
+                            <input type="text" name="last_name" value="{{ user.last_name }}" disabled>
+                        </div>
+                    </div>
+                    <div class="input">
+                        <label>Nombre de usuario:</label>
+                        <input type="text" name="username" value="{{ user.username }}" disabled>
+                    </div>
+                    <div class="input">
+                        <label>Correo electrónico:</label>
+                        <input type="email" name="email" value="{{ user.email }}" disabled>
+                    </div>
+                    <div class="input">
+                        <label>Teléfono:</label>
+                        <input type="text" name="phone_number" value="{{ user.profile.phone_number|default:'' }}" disabled>
+                    </div>
+                    <div class="input">
+                        <label>Dirección:</label>
+                        <input type="text" name="address" value="{{ user.profile.address|default:'' }}" disabled>
+                    </div>
+                </div>
+
+                <!-- Botones -->
+                <p><button type="button" id="edit-profile-btn">Editar perfil</button></p>
+                <button type="submit" id="save-profile-btn" style="display: none;">Guardar cambios</button>
+                
+
+                <button type="button" id="delete-photo-btn" class="delete-btn" >Eliminar Foto</button>
+
+                
+            </form>
         </div>
     </div>
 </div>

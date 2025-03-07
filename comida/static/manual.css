@@ -1,0 +1,69 @@
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.step {
+    margin-bottom: 40px;
+    padding: 15px;
+    border-left: 5px solid gold;
+    background: #f9f9f9;
+    border-radius: 5px;
+}
+
+h2 {
+    color: var(--dorado);
+    margin-bottom: 10px;
+}
+
+p {
+    color: #3b3b3b;
+    line-height: 1.6;
+    font-size: 20px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    font-size: 18px;
+    color: black;
+}
+
+ul li {
+    background: url("ruta-a-icono/check.png") no-repeat left center;
+    background-size: 18px;
+    padding-left: 30px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+img {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    margin: 10px auto;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+
+    img {
+        width: 100%;
+    }
+}

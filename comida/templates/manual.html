@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Manual {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'manual.css' %}">
+<div class="container">
+    <h1>Manual de Usuario</h1>
+    
+    <div class="step">
+        <h2>Paso 1: Inicio de Sesión y Registro</h2>
+        <p>Para acceder a la plataforma, puede registrarse como nuevo usuario o iniciar sesión con su cuenta existente.</p>
+        <ul>
+            <li>🎗️ Haga clic en "Registrarse" para crear una nueva cuenta.</li>
+            <img src="{% static 'img/home.png' %}" alt="Registro e Inicio de Sesión">
+            <li>🎗️  Ingrese sus datos personales como nombre, correo, teléfono y dirección.</li>
+            <img src="{% static 'img/regis.png' %}" alt="Registro e Inicio de Sesión">
+            <li>Si ya tiene una cuenta, haga clic en "Iniciar sesión" e ingrese sus datos, en caso tal que haya olvidado su contraseña.</li>
+            <img src="{% static 'img/inicio.png' %}" alt="Registro e Inicio de Sesión">
+            <li>🎗️ Si ya tiene una cuenta, haga clic en "Iniciar sesión" e ingrese sus datos, en caso tal que haya olvidado su contraseña.</li>
+            <img src="{% static 'img/correo.png' %}" alt="Registro e Inicio de Sesión">
+            <li>🎗️ Si ya tiene una cuenta, haga clic en "Iniciar sesión" e ingrese sus datos, en caso tal que haya olvidado su contraseña.</li>
+            <img src="{% static 'img/contraseña.png' %}" alt="Registro e Inicio de Sesión">
+        </ul>
+        <p>luego de iniciar sesion lo mandara al inicio</p>
+        <img src="{% static 'img/pagina.png' %}" alt="Registro e Inicio de Sesión">
+    </div>
+
+    <div class="step">
+        <h2>Paso 2: Reserva de Mesas</h2>
+        <p>Para reservar una mesa, siga los siguientes pasos:</p>
+        <ul>
+            <li>Acceda a la sección de reservas y selecione el boton de reservar ahora.</li>
+            <img src="{% static 'img/servicios.png' %}" alt="Reserva de Mesas">
+            <li>🎗️ Ingrese los datos neceesarios para la reserva.</li>
+            <li>🎗️ Seleccione una mesa disponible.</li>
+            <li>🎗️ Elija la fecha y el horario permitido (5 PM a 11 PM).</li> 
+            <li>🎗️ dar clik al boton reservar y espere hasta que salga el mensaje de exito</li> 
+            <img src="{% static 'img/reservas.png' %}" alt="Reserva de Mesas">
+        
+        </ul>
+        
+        <img src="{% static 'img/reservas.png' %}" alt="Reserva de Mesas">
+    </div>
+
+    <div class="step">
+        <h2>Paso 3: Proceso de Compra</h2>
+        <p>Seleccione los productos que desea comprar y agréguelos al carrito.</p>
+        <img src="{% static 'img/productos.png' %}" alt="Proceso de Compra">
+        <ul>
+            <li>🎗️ Acceda a la sección de compra.</li>
+            <li>🎗️ Verifique los productos seleccionados.</li>
+            <li>🎗️ Haga clic en "Proceder al pago".</li>
+        </ul>
+        <img src="{% static 'img/carrito.png' %}" alt="Proceso de Compra">
+        <ul>
+            <li>Acceda a la sección de compra.</li>
+            <li>Verifique los productos seleccionados.</li>
+            <li>Haga clic en "Proceder al pago".</li>
+        </ul>
+        <img src="{% static 'img/pago.png' %}" alt="Proceso de Compra">
+    </div>
+
+    <div class="step">
+        <h2>Paso 4: Métodos de Pago</h2>
+        <p>El sistema permite pagos mediante Nequi o Daviplata. Siga estos pasos:</p>
+        <ul>
+            <li>🎗️ Seleccione el método de pago.</li>
+            <li>🎗️ Escanee el código QR correspondiente.</li>
+            <li>🎗️ Suba el comprobante de pago.</li>
+            <li>🎗️ Confirme el pedido.</li>
+        </ul>
+        <img src="{% static 'img/pago.png' %}" alt="Métodos de Pago">
+    </div>
+    <div class="step">
+        <h2>Paso 5: Contactenos</h2>
+        <p>Al ingresar a este apartado tendras un formulario para que puedas comunicarte o darnos tu opinion.</p>
+        <ul>
+            <li>🎗️ ingrese los datos necesarios y el mensaje.</li>
+            <li>🎗️ despues de dar clik en reservar se envia el menaje.</li>
+        </ul>
+        <img src="{% static 'img/contactenos.png' %}" alt="Métodos de Pago">
+    </div>
+    <div class="step">
+        <h2>Paso 6: Perfil</h2>
+        <p>Podras ver tus datos ingresados</p>
+        <ul>
+            <li>🎗️ al dar clic en editar perfil, podras editar tu informacion y agregar una foto de perfil </li>
+            
+        </ul>
+        <img src="{% static 'img/perfil.png' %}" alt="Métodos de Pago">
+    </div>
+
+    
+</div>
+{% endblock %}
