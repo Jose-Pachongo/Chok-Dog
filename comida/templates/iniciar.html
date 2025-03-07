@@ -64,6 +64,21 @@
         }
     }
 </script>
+{% if messages %}
+{% for m in messages %}
+    <script>
+        Swal.fire({
+            title: "Felicitaciones",
+            text: "{{ m }}",
+            icon: "success",
+            confirmButtonText: "OK",
+            customClass: {
+                confirmButton: "btn-custom"
+            }
+        })
+    </script>
+{% endfor %}
+{% endif %}
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
