@@ -99,7 +99,7 @@
 @media (max-width: 768px) {
     .contact-container {
         grid-template-columns: 1fr;
-        margin: 20px 0 40px 0;
+        margin: 20px 0 20px 0;
     }
     
     .map-container {
