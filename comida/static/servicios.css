@@ -9,13 +9,13 @@
 }
 
 .services-container {
-    
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     min-height: 25em;
+    
 }
 
 .service-card {
@@ -73,5 +73,7 @@
 @media (max-width: 768px) {
     .services-container {
         grid-template-columns: 1fr;
+        margin-bottom: 20px;
     }
+    
 }

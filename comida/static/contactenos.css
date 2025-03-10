@@ -17,7 +17,7 @@
 }
 
 .contact-section {
-    padding: 1rem  2rem 4rem 2rem;
+    padding: 3rem  2rem 4rem 2rem;
 
 }
 
@@ -34,7 +34,7 @@
 }
 
 .contact-form {
-    padding: 2rem;
+    padding: 4rem;
     background: var(--negro-profundo, #222);
 }
 
@@ -99,7 +99,7 @@
 @media (max-width: 768px) {
     .contact-container {
         grid-template-columns: 1fr;
-        margin-top: 100px;
+        margin: 20px 0 20px 0;
     }
     
     .map-container {

@@ -101,4 +101,8 @@
         height: 350px;
         order: 1;
     }
+    
+.about-item {
+    margin-bottom: 20px;
+}
 }

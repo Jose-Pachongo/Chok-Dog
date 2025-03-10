@@ -44,7 +44,7 @@
                         <button class="btn-per" onclick="openModal('modal{{ product.id }}')">Armalo a tu Gusto</button>
 
                         <div id="modal{{ product.id }}" class="modal">
-                            <div class="modal-content">
+                            <div class="modal-content" id="ingred">
                                 <span class="close" onclick="closeModal('modal{{ product.id }}')">&times;</span>
                                 <h2>Personaliza tu {{ product.nombre }}</h2>
                                 <p>Selecciona los ingredientes:</p>

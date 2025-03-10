@@ -129,6 +129,7 @@ select {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
+
 }
 
 .modal-content {
@@ -141,6 +142,7 @@ select {
     width: 50%;
     box-shadow: 0 4px 10px rgb(212, 175, 55);
     text-align: center;
+    
     
 }
 .modal-content h2{
@@ -173,7 +175,8 @@ select {
     font-size: 18px;
     gap: 30px;
     justify-content: center;
-   color: var(--dorado);
+    color: var(--dorado);
+    
 }
 
 .ingredient-grid label {
@@ -240,11 +243,21 @@ select {
         flex-direction: column; /* Imagen arriba, texto abajo */
         text-align: center;
         padding: 20px;
-        min-width: 400px;
+        min-width: 300px;
     }
     .desc{
         
         width: 80%;
     }
+    #ingred{
+        margin-top: 150px;
+
+    }
+    .modal-content {
+        min-width: 350px;
+    }
+    
+
+    
     
 }

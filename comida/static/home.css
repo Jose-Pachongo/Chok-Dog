@@ -68,6 +68,7 @@ main::before {
     margin: 1rem 0;
     color: white;
     border-radius: 8px;
+    
 }
 
 .cont-ini .botones {
@@ -89,6 +90,7 @@ main::before {
     transition: .3s all;
     background-color: var(--fondo);
     color: white;
+    border: solid 2px var(--dorado);
 }
 
 .boton:hover {
@@ -136,10 +138,7 @@ main::before {
     }
     .cont-ini h2 {
         font-size: 3rem;
-        background-color: brown;
-        
-        
-        
+    
         
     }
     .cont-ini .descripcion {
