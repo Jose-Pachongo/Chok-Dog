@@ -73,7 +73,7 @@
 @media (max-width: 768px) {
     .services-container {
         grid-template-columns: 1fr;
-        margin-bottom: 20px;
+        margin-bottom: 40px;
     }
     
 }
