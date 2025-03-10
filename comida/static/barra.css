@@ -50,6 +50,7 @@ body{
     display: flex;
     align-items: center;
     font-size: 25px;
+    
 }
 
 .logo a{
@@ -166,7 +167,7 @@ body{
 }
 
 .profile-dropdown {
-    width: 100px;
+    width: 120px;
     display: none;
     position: absolute;
     right: 0;
@@ -178,7 +179,7 @@ body{
 }
 
 .profile-dropdown a {
-    font-size: 10px;
+    font-size: 13px;
     display: block;
     color: white;
     text-decoration: none;
@@ -347,7 +348,7 @@ ul{
     
     .logo {
       
-        margin-left: -65%;
+        margin-left: -50%;
     }
     .menu-icons {
         margin-right: -80%;

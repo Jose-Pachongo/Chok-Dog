@@ -5,6 +5,8 @@
     justify-content: flex-start;
     position: relative; 
     padding-bottom: 50px;
+    overflow-x: hidden; /* Oculta el desplazamiento lateral */
+    max-width: 100vw;
     
 }
 
@@ -48,6 +50,10 @@ main::before {
     text-align: center;
     font-size: 6.5em;
     font-weight: 900;
+    max-width: 100%;
+    /* word-wrap: break-word; */
+    /* overflow-wrap: break-word;
+    white-space: normal; */
     margin: 0;
     color: white;
     text-shadow: var(--text_sha);
@@ -129,9 +135,18 @@ main::before {
         padding: 0;
     }
     .cont-ini h2 {
-        font-size: 4rem; 
+        font-size: 3rem;
+        
+        
+        
+        
     }
-    
+    .cont-ini .descripcion {
+        max-width: 350px;
+        
+        padding: 5%;
+        
+    }
 }
 
 
