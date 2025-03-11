@@ -130,6 +130,31 @@ body{
    
 }
 
+.menu a {
+    text-decoration: none;
+    
+    transition: 0.3s;
+    font-style: italic;
+}
+
+.menu a.active {
+    font-weight: bold;
+    position: relative;
+    color: var(--dorado);
+}
+
+.menu a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px; 
+    width: 100%;
+    height: 3px;
+    
+    background-color: var(--dorado); 
+    border-radius: 5px;
+}
+
 
 .menu-icons {
     display: flex;
@@ -348,7 +373,7 @@ ul{
     
     .logo {
       
-        margin-left: -50%;
+        margin-left: -70%;
     }
     .menu-icons {
         margin-right: -80%;
@@ -358,6 +383,10 @@ ul{
 }
 
 @media (max-width: 568px) {
+    .logo {
+      
+        margin-left: -55%;
+    }
     .footer-col{
         width: 50%;
     }

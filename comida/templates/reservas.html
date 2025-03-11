@@ -16,9 +16,14 @@
         <form action="{% url 'reservas' %}" method="POST">
             {% csrf_token %}
             
-            <input type="text" placeholder="Nombre" id="nombre" name="nombre" required>
-            <input type="email" placeholder="Correo Electrónico" id="email" name="email" required>
-            <input type="text" placeholder="Teléfono" id="telefono" name="telefono" required>
+            <input type="text" placeholder="Nombre" id="nombre" name="nombre" 
+                value="{% if request.user.is_authenticated %}{{ request.user.first_name }} {{ user.last_name }}{% endif %}" required>
+
+            <input type="email" placeholder="Correo Electrónico" id="email" name="email" 
+                value="{% if request.user.is_authenticated %}{{ request.user.email }}{% endif %}" required>
+
+            <input type="text" placeholder="Teléfono" id="telefono" name="telefono" 
+                value="{% if request.user.is_authenticated %}{{ user.profile.phone_number|default:'' }}{% endif %}" required>
 
             <div class="form-row">
                 <div class="form-group">

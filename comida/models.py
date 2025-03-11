@@ -57,7 +57,7 @@ class Reserva(models.Model):
     personas = models.IntegerField()
     mesa = models.ForeignKey('Mesa', on_delete=models.CASCADE, null=True, blank=True)
 
-  # Referencia a Mesa
+
 
     def __str__(self):
         return f"{self.nombre} - {self.fecha} {self.hora}"

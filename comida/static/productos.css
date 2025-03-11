@@ -218,6 +218,7 @@ select {
 }
 
 
+
 /* Ajuste responsive para móviles */
 @media (max-width: 1008px) {
     .menu-con {
@@ -251,6 +252,7 @@ select {
     }
     #ingred{
         margin-top: 150px;
+
 
     }
     .modal-content {

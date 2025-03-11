@@ -185,10 +185,17 @@ def eliminar_foto(request):
 
 #reservas
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
-from datetime import datetime, timedelta
+@login_required(login_url='/homee/')  # Redirige a la página de inicio de sesión
+def reservas(request):
+    return render(request, 'reservas.html')
 
-from datetime import datetime, timedelta
+
+
+
+
 from datetime import datetime, timedelta
 from django.shortcuts import render, redirect
 from django.contrib import messages

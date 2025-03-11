@@ -15,9 +15,13 @@
             <h3 class="service-title">Reservas</h3>
             <p class="service-description">Reserva tu mesa y disfruta de una experiencia única en nuestro restaurante. 
                 Elige la fecha, hora y el tipo de mesa que prefieras.</p>
-            <div class="bton">
-                <a href="{% url 'reservas' %}" class="service-button">Reservar Ahora</a>
-            </div>
+                <div class="bton">
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'reservas' %}" class="service-button">Reservar Ahora</a>
+                    {% else %}
+                        <a href="#" class="service-button" onclick="mostrarMensaje()">Reservar Ahora</a>
+                    {% endif %}
+                </div>
         </div>
 
         <div class="service-card">
@@ -40,6 +44,16 @@
         </div>
     </div>
 </section>
+<script>
+    function mostrarMensaje() {
+        Swal.fire({
+            title: "¡Inicia sesión!",
+            text: "Debes iniciar sesión para hacer una reserva.",
+            icon: "warning",
+            confirmButtonText: "Ok"
+        });
+    }
+</script>
 
 
 {% endblock %}

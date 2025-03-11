@@ -148,8 +148,8 @@ function renderCarrito() {
                     : `<input type="number" value="${item.cantidad}" min="1" data-id="${item.id}" class="actualizar-cantidad" style="width: 50px; text-align: center;">`
                 }
             </td>
-            <td>$${precioNumerico.toFixed(2)}</td>
-            <td>$${subtotal.toFixed(2)}</td>
+            <td>$${precioNumerico.toLocaleString("es-CO")}</td>
+            <td>$${subtotal.toLocaleString("es-CO")}</td>
             ${!esPaginaPago ? `
             
                 <td>
@@ -162,7 +162,7 @@ function renderCarrito() {
         carritoBody.appendChild(row);
     });
 
-    document.getElementById("total").textContent = "Total: $" + total.toFixed(2);
+    document.getElementById("total").textContent = "Total: $" + total.toLocaleString("es-CO");
 
     console.log("✅ Carrito renderizado correctamente:", carrito);
 }

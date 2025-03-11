@@ -105,18 +105,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
     const metodoPagoRadios = document.querySelectorAll("input[name='metodo_pago']");
-    const qrNequi = document.getElementById("qr-nequi");
-    const qrDaviplata = document.getElementById("qr-daviplata");
+    const nequiContainer = document.getElementById("nequi-container");
+    const daviplataContainer = document.getElementById("daviplata-container");
 
     metodoPagoRadios.forEach(radio => {
         radio.addEventListener("change", function () {
             if (this.value === "nequi") {
-                qrNequi.style.display = "block";
-                qrDaviplata.style.display = "none";
+                nequiContainer.style.display = "block";
+                daviplataContainer.style.display = "none";
             } else if (this.value === "daviplata") {
-                qrNequi.style.display = "none";
-                qrDaviplata.style.display = "block";
+                nequiContainer.style.display = "none";
+                daviplataContainer.style.display = "block";
             }
         });
     });
 });
+
