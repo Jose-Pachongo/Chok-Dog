@@ -426,7 +426,7 @@ def procesar_pedido(request):
             Total: ${pedido.total}
 
             Productos:
-            {productos_str}
+            🛒{productos_str}
 
 
             Estamos procesando tu pedido y nos pondremos en contacto pronto. 

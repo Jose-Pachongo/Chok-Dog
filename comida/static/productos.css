@@ -20,7 +20,7 @@
     justify-content: center;
     text-align: center;
     flex-direction: column;
-    padding: 50px 0 10 0;
+    padding: 50px 0 50px 0;
     margin-top: 80px;
     padding: 50 0 0 0;
 }
@@ -205,8 +205,6 @@ select {
     
 }
 
-
-
 .agregar-carrito{
     margin-top: 20px; 
 }
@@ -217,16 +215,10 @@ select {
     object-fit: cover;
 }
 
-
-
-/* Ajuste responsive para móviles */
 @media (max-width: 1008px) {
-    .menu-con {
-        
+    .menu-con {  
         grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
     }
-    
-
 
     .details {
         padding: 10px;
@@ -257,6 +249,7 @@ select {
     }
     .modal-content {
         min-width: 350px;
+        
     }
     
 
