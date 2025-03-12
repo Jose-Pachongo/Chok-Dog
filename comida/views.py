@@ -473,3 +473,8 @@ def procesar_pedido(request):
 
 def manual(request):
     return render(request, 'manual.html')
+
+def historial(request):
+    return render(request, 'historial.html')
+
+    

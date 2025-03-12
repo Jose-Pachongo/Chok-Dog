@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .tab-container { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab { padding: 10px; cursor: pointer; background: #ddd; border-radius: 5px; }
+        .tab.active { background: #aaa; }
+        .content { display: none; }
+        .content.active { display: block; }
+        .item { padding: 10px; border: 1px solid #ccc; margin: 5px 0; border-radius: 5px; }
+        .btn { padding: 5px 10px; margin-left: 10px; cursor: pointer; }
+        .btn.cancel { background: red; color: white; }
+        .btn.confirm { background: green; color: white; }
+    </style>
+</head>
+<body>
+    <h2>Historial</h2>
+    <div class="tab-container">
+        <div class="tab active" onclick="showTab('compras')">Compras</div>
+        <div class="tab" onclick="showTab('reservas')">Reservas</div>
+    </div>
+    
+    <div id="compras" class="content active">
+        {% for compra in compras %}
+        <div class="item">
+            <strong>Producto:</strong> {{ compra.producto }} <br>
+            <strong>Cantidad:</strong> {{ compra.cantidad }} <br>
+            <strong>Precio:</strong> ${{ compra.precio }} <br>
+            <strong>Total:</strong> ${{ compra.total }} <br>
+            <strong>Estado:</strong> <span id="estado-compra-{{ compra.id }}">{{ compra.estado }}</span>
+            <button class="btn confirm" onclick="cambiarEstado('estado-compra-{{ compra.id }}', 'Completado')">Confirmar</button>
+            <button class="btn cancel" onclick="cambiarEstado('estado-compra-{{ compra.id }}', 'Cancelado')">Cancelar</button>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div id="reservas" class="content">
+        {% for reserva in reservas %}
+        <div class="item">
+            <strong>Mesa:</strong> {{ reserva.mesa }} <br>
+            <strong>Capacidad:</strong> {{ reserva.capacidad }} <br>
+            <strong>Fecha:</strong> {{ reserva.fecha|date:"d \d\e F \d\e Y" }} <br>
+            <strong>Hora:</strong> {{ reserva.hora }} <br>
+            <strong>Estado:</strong> <span id="estado-reserva-{{ reserva.id }}">{{ reserva.estado }}</span>
+            <button class="btn confirm" onclick="cambiarEstado('estado-reserva-{{ reserva.id }}', 'Confirmada')">Confirmar</button>
+            <button class="btn cancel" onclick="cambiarEstado('estado-reserva-{{ reserva.id }}', 'Cancelada')">Cancelar</button>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <script>
+        function showTab(tab) {
+            document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            document.querySelector(`.tab-container .tab[onclick="showTab('${tab}')"]`).classList.add('active');
+        }
+        
+        function cambiarEstado(id, nuevoEstado) {
+            document.getElementById(id).textContent = nuevoEstado;
+        }
+    </script>
+</body>
+</html>

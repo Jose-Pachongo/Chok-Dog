@@ -1,0 +1,30 @@
+
+
+.container {
+    max-width: 900px;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.card-header {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.table th {
+    background-color: #f8f9fa;
+}
+
+.btn-danger {
+    transition: 0.3s;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.text-muted {
+    font-style: italic;
+}

@@ -48,25 +48,7 @@ class Mesa(models.Model):
         return f"Mesa {self.numero} - Capacidad: {self.capacidad}"
 
 
-class Reserva(models.Model):
-    nombre = models.CharField(max_length=100)
-    email = models.EmailField()
-    telefono = models.CharField(max_length=15)
-    fecha = models.DateField()
-    hora = models.TimeField()
-    personas = models.IntegerField()
-    mesa = models.ForeignKey('Mesa', on_delete=models.CASCADE, null=True, blank=True)
 
-
-
-    def __str__(self):
-        return f"{self.nombre} - {self.fecha} {self.hora}"
-
-class Sabor(models.Model):
-    nombre = models.CharField(max_length=50, unique=True)
-
-    def __str__(self):
-        return self.nombre
 
 from django.db import models
 
@@ -112,6 +94,22 @@ class Producto(models.Model):
 
 
 from django.utils.timezone import now
+
+
+class Reserva(models.Model):
+    nombre = models.CharField(max_length=100)
+    email = models.EmailField()
+    telefono = models.CharField(max_length=15)
+    fecha = models.DateField()
+    hora = models.TimeField()
+    personas = models.IntegerField()
+    mesa = models.ForeignKey('Mesa', on_delete=models.CASCADE, null=True, blank=True)
+
+
+
+    def __str__(self):
+        return f"{self.nombre} - {self.fecha} {self.hora}"
+
 
 class Pedido(models.Model):
     nombre = models.CharField(max_length=255)

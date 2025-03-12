@@ -49,6 +49,7 @@ urlpatterns = [
     path("productos/", lista_productos, name="productos"),
     path('procesar_pedido/', procesar_pedido, name='procesar_pedido'),
     path('manual', views.manual, name='manual'),
+    path('historial', views.historial, name='historial'),
     
     # path('confirmacion_contrasena/', views.confirmacion_contrasena, name='confirmacion_contrasena'),
     
