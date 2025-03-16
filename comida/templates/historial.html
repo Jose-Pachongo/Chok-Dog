@@ -1,68 +1,123 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historial</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .tab-container { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tab { padding: 10px; cursor: pointer; background: #ddd; border-radius: 5px; }
-        .tab.active { background: #aaa; }
-        .content { display: none; }
-        .content.active { display: block; }
-        .item { padding: 10px; border: 1px solid #ccc; margin: 5px 0; border-radius: 5px; }
-        .btn { padding: 5px 10px; margin-left: 10px; cursor: pointer; }
-        .btn.cancel { background: red; color: white; }
-        .btn.confirm { background: green; color: white; }
-    </style>
-</head>
-<body>
-    <h2>Historial</h2>
-    <div class="tab-container">
-        <div class="tab active" onclick="showTab('compras')">Compras</div>
-        <div class="tab" onclick="showTab('reservas')">Reservas</div>
-    </div>
-    
-    <div id="compras" class="content active">
-        {% for compra in compras %}
-        <div class="item">
-            <strong>Producto:</strong> {{ compra.producto }} <br>
-            <strong>Cantidad:</strong> {{ compra.cantidad }} <br>
-            <strong>Precio:</strong> ${{ compra.precio }} <br>
-            <strong>Total:</strong> ${{ compra.total }} <br>
-            <strong>Estado:</strong> <span id="estado-compra-{{ compra.id }}">{{ compra.estado }}</span>
-            <button class="btn confirm" onclick="cambiarEstado('estado-compra-{{ compra.id }}', 'Completado')">Confirmar</button>
-            <button class="btn cancel" onclick="cambiarEstado('estado-compra-{{ compra.id }}', 'Cancelado')">Cancelar</button>
-        </div>
-        {% endfor %}
-    </div>
-    
-    <div id="reservas" class="content">
-        {% for reserva in reservas %}
-        <div class="item">
-            <strong>Mesa:</strong> {{ reserva.mesa }} <br>
-            <strong>Capacidad:</strong> {{ reserva.capacidad }} <br>
-            <strong>Fecha:</strong> {{ reserva.fecha|date:"d \d\e F \d\e Y" }} <br>
-            <strong>Hora:</strong> {{ reserva.hora }} <br>
-            <strong>Estado:</strong> <span id="estado-reserva-{{ reserva.id }}">{{ reserva.estado }}</span>
-            <button class="btn confirm" onclick="cambiarEstado('estado-reserva-{{ reserva.id }}', 'Confirmada')">Confirmar</button>
-            <button class="btn cancel" onclick="cambiarEstado('estado-reserva-{{ reserva.id }}', 'Cancelada')">Cancelar</button>
-        </div>
-        {% endfor %}
-    </div>
-    
-    <script>
-        function showTab(tab) {
-            document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
-            document.getElementById(tab).classList.add('active');
-            document.querySelector(`.tab-container .tab[onclick="showTab('${tab}')"]`).classList.add('active');
-        }
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %} contactenos {% endblock %}
+
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'historial.css' %}"> 
+    <div class="historial">
+        <h2>Historial</h2>
         
-        function cambiarEstado(id, nuevoEstado) {
-            document.getElementById(id).textContent = nuevoEstado;
-        }
-    </script>
-</body>
-</html>
+        <div class="tab-container">
+            <button class="tab" onclick="showTab('reservas')">Reservas</button>
+            <button class="tab active" onclick="showTab('compras')">Pedidos</button>
+            
+        </div>
+        
+        
+        
+        <div id="compras" class="content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pedido</th>
+                        <th>Fecha y Hora</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pedido in pedidos %}
+                    <tr id="pedido-{{ pedido.id }}">
+                        <td>
+                            <ul>
+                                {% for producto in pedido.productos %}
+                                <li>
+                                    <strong>{{ producto.nombre }}</strong>  
+                                    {% if producto.ingredientes and producto.ingredientes|length > 0 %}
+                                    : {{ producto.ingredientes|join:", " }}
+                                    {% endif %}
+                                    x {{ producto.cantidad }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>{{ pedido.fecha|date:"d/m/y - g:i A" }}</td>
+                        <td><strong>${{ pedido.total|intcomma }}</strong></td>
+
+                        <td class="estado-{{ pedido.estado }}">{{ pedido.get_estado_display }}</td>
+                        <td>
+                            <!-- Eliminar siempre disponible -->
+                            <button class="btn delete" onclick="confirmarEliminacionPedido('{{ pedido.id }}')">Eliminar</button>
+                            <!-- Cancelar solo si el pedido está Pendiente -->
+                            {% if pedido.estado == "pendiente" %}
+                                <a href="{% url 'cancelar_pedido' pedido.id %}" class="btn cancelar" onclick="return confirm('¿Estás seguro de que quieres cancelar este pedido?');">Cancelar</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6">No tienes pedidos registradas.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button onclick="restaurarPedidos()">Restaurar Pedidos</button>
+        </div>
+        <div id="reservas" class="content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Fecha y Hora</th>
+                        <th>Mesa</th>
+                        <th>Personas</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="reservas-lista">
+                    {% for reserva in reservas %}
+                    <tr id="reserva-{{ reserva.id }}">
+                        <td>{{ reserva.nombre }}</td>
+                        <td>{{ reserva.fecha|date:"d/m/y" }} - {{ reserva.hora|time:"h:i A" }}</td>  <!-- Formato de 12 horas con AM/PM -->
+                        <td>Mesa {{ reserva.mesa.numero }}</td>
+                        <td>{{ reserva.personas }}</td>
+                        <td class="estado-{{ reserva.estado }}">{{ reserva.estado }}</td>
+                        <td>
+                            <button class="btn delete" onclick="eliminarReserva('{{ reserva.id }}')">Eliminar</button>
+                            {% if reserva.estado == "pendiente" %}
+                                <a href="{% url 'cancelar_reserva' reserva.id %}" class="btn cancelar" onclick="return confirm('¿Estás seguro de que quieres cancelar esta reserva?');">Cancelar</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6">No tienes reservas registradas.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+                
+            </table>
+            <button onclick="restaurarReservas()">Restaurar Reservas</button>
+        </div>
+        
+        
+        
+        
+    </div>
+    
+
+        
+    
+    
+
+    <script src="{% static 'js/historial.js' %}"></script>
+    
+    
+    
+{% endblock %}

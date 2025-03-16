@@ -33,3 +33,4 @@ document.addEventListener("DOMContentLoaded", function () {
     fechaInput.addEventListener("change", validarFecha);
     horaInput.addEventListener("change", validarHora); // Usa 'change' para evitar errores
 });
+

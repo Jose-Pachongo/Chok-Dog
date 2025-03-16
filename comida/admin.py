@@ -8,7 +8,7 @@ from .models import Mesa
 
 admin.site.register(Mesa)
 
-admin.site.register(Reserva)
+
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'phone_number', 'address')
@@ -75,31 +75,48 @@ admin.site.register(Ingrediente)
 from .models import Pedido
 
 
-from django.utils.safestring import mark_safe
 import json
 from django.contrib import admin
-from comida.models import Pedido
+from django.utils.safestring import mark_safe
+from .models import Pedido
 
 class PedidoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'email', 'telefono', 'metodo_pago', 'get_productos', 'total', 'direccion', 'fecha_pedido')
+    list_display = ('nombre', 'metodo_pago', 'total', 'fecha_pedido', 'estado')
+    list_editable = ('estado',)  # Permite editar el estado desde el panel de admin
+    actions = ['marcar_como_cancelado']  # Agregamos la acción para cancelar pedidos
+    readonly_fields = ('productos_formateados',)  # Mostramos los productos formateados
 
-    def get_productos(self, obj):
+    def productos_formateados(self, obj):
+        """Devuelve los productos en formato HTML legible."""
+        if not obj.productos:
+            return "No hay productos"
+        
         try:
-            productos = json.loads(obj.productos) if isinstance(obj.productos, str) else obj.productos
-            productos_html = "<ul>"
+            productos = json.loads(json.dumps(obj.productos))  # Asegurar formato JSON
+            html = "<ul>"
             for producto in productos:
-                productos_html += f"<li><strong>{producto['nombre']}</strong> - Cantidad: {producto['cantidad']} - Precio: {producto['precio']}<br>"
-                if producto['ingredientes']:
-                    productos_html += f"<em>Ingredientes:</em> {', '.join(producto['ingredientes'])}<br>"
-                productos_html += "</li><hr>"
-            productos_html += "</ul>"
-            return mark_safe(productos_html)
+                html += f"<li><strong>{producto['nombre']}</strong> - {producto['cantidad']}x ${producto['precio']:,} <br>"
+                html += f"Ingredientes: {', '.join(producto['ingredientes']) if producto['ingredientes'] else 'Ninguno'}</li>"
+            html += "</ul>"
+            return mark_safe(html)  # Permite mostrar HTML en el admin
         except Exception as e:
-            return f"Error al mostrar productos: {e}"
+            return f"Error al formatear productos: {e}"
 
-    get_productos.short_description = "Productos"
+    productos_formateados.short_description = "Productos (Formateado)"
+
 
 admin.site.register(Pedido, PedidoAdmin)
+
+from django.contrib import admin
+from .models import Reserva
+
+class ReservaAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'fecha', 'hora', 'estado')  # Agregamos 'estado'
+    list_filter = ('estado',)  # Permite filtrar por estado en el panel
+    search_fields = ('nombre', 'fecha', 'hora')  # Agrega búsqueda por estos campos
+
+admin.site.register(Reserva, ReservaAdmin)
+
 
 
 

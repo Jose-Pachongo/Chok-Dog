@@ -1,30 +1,177 @@
-
-
-.container {
-    max-width: 900px;
+.historial{
+    background-color: var(--negro-profundo);
+    min-height: 90vh;
+    padding: 30px 0 50px 0;
+}
+.content { display: none; }
+.content.active { display: block; }
+h2 { 
+    text-align: center;
+    color: var(--dorado);
 }
 
-.card {
-    border-radius: 10px;
+.tab-container { 
+    display: flex; 
+    justify-content: center;
+    gap: 10px; 
+    margin-bottom: 20px; 
 }
 
-.card-header {
+.tab { 
+    padding: 10px 20px; 
+    cursor: pointer; 
+    background: #ddd; 
+    border-radius: 5px; 
+    border: none;
     font-weight: bold;
-    text-transform: uppercase;
 }
 
-.table th {
+.tab.active { background: var(--dorado); color: white; }
+
+table { 
+    width: 90%; 
+    margin: auto; 
+    border-collapse: collapse; 
+    background: white; 
+    border-radius: 10px; 
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td { 
+    padding: 15px; 
+    text-align: left; 
+    border-bottom: 1px solid #ddd; 
+}
+
+th { background: var(--dorado); color: white; }
+
+tr:hover { background: #f1f1f1; }
+
+ul { padding-left: 15px; margin: 0; }
+
+.btn { 
+    padding: 8px 12px; 
+    cursor: pointer; 
+    border: none; 
+    border-radius: 5px; 
+    font-size: 14px;
+}
+
+.btn.delete { background: red; color: white; }
+
+.estado-pendiente { color: orange; font-weight: bold; }
+.estado-confirmado { color: green; font-weight: bold; }
+.estado-enviado { color: blue; font-weight: bold; }
+.estado-entregado { color: var(--dorado); font-weight: bold; }
+.estado-cancelado{ color: red; font-weight: bold; }
+
+.tab-btn {
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.tab-btn.activo {
+    background-color: var(--dorado);
+    color: white;
+    font-weight: bold;
+}
+
+/* Resaltar pedidos cuando estamos en "Compras" */
+.resaltado {
     background-color: #f8f9fa;
+    border-left: 4px solid #007bff;
 }
 
-.btn-danger {
-    transition: 0.3s;
+@media screen and (max-width: 768px) {
+    /* Ajustar el padding y el tamaño de la tabla para pantallas más pequeñas */
+    .historial {
+        padding: 20px 10px;
+    }
+
+    .tab-container {
+        flex-direction: column; /* Las pestañas se apilan en lugar de estar en fila */
+        align-items: center;
+    }
+
+    .tab {
+        width: 100%; /* Las pestañas ocupan el 100% del ancho */
+        margin: 5px 0;
+    }
+
+    table {
+        width: 100%; /* La tabla ocupa todo el ancho de la pantalla */
+    }
+
+    th, td {
+        padding: 12px 10px; /* Reducir el padding para más espacio */
+    }
+
+    h2 {
+        font-size: 1.5em; /* Reducir el tamaño del título en pantallas pequeñas */
+    }
+
+    .btn {
+        width: 100%; /* Los botones ocupan todo el ancho */
+        padding: 12px;
+        font-size: 16px;
+    }
 }
 
-.btn-danger:hover {
-    background-color: #c82333;
-}
+/* Media Queries para dispositivos extra pequeños */
+@media screen and (max-width: 420px) {
+    /* Ajuste en el contenedor principal */
+    .historial {
+        padding: 10px 5px;  /* Reducir el padding para pantallas pequeñas */
+    }
 
-.text-muted {
-    font-style: italic;
+    /* Ajuste en el contenedor de las pestañas */
+    .tab-container {
+        gap: 3px;  /* Reducir aún más el espacio entre las pestañas */
+        flex-direction: column;  /* Apilar las pestañas verticalmente */
+        align-items: stretch;  /* Asegurar que las pestañas ocupen todo el ancho */
+    }
+
+    /* Estilo de las pestañas */
+    .tab {
+        font-size: 12px;  /* Reducir el tamaño de la fuente */
+        padding: 8px;  /* Reducir el padding para no ocupar tanto espacio */
+        text-align: center;  /* Centrar el texto en las pestañas */
+    }
+
+    /* Botones generales */
+    .btn {
+        width: 100%;  /* Hacer los botones de ancho completo */
+        padding: 8px;  /* Reducir el padding */
+        font-size: 14px;  /* Tamaño de fuente más pequeño */
+        text-align: center;  /* Centrar el texto en los botones */
+    }
+
+    /* Título de la sección */
+    h2 {
+        font-size: 1.2em;  /* Reducir el tamaño del título */
+        margin-bottom: 15px;  /* Agregar espacio debajo del título */
+    }
+
+    /* Ajustes en las celdas de la tabla */
+    table {
+        width: 100%;  /* Asegurarse que la tabla ocupe el 100% del ancho */
+    }
+
+    th, td {
+        font-size: 12px;  /* Reducir el tamaño de la fuente en las celdas */
+        padding: 10px;  /* Reducir padding */
+    }
+
+    /* Espaciado de la lista de productos */
+    ul {
+        padding-left: 10px;  /* Reducir el padding izquierdo */
+    }
+
+    /* Botón de eliminar (ajuste visual) */
+    .btn.delete {
+        font-size: 12px;  /* Reducir el tamaño del texto */
+        padding: 8px 15px;  /* Reducir padding */
+    }
 }

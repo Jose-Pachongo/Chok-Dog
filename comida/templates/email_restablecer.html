@@ -6,18 +6,6 @@
 <link rel="stylesheet" href="{% static 'contraseña.css' %}">
 <div class="section">
     <div class="container">
-        {% if messages %} <!--Solo se usa si hay mensajes de parte del views-->
-        <div class="messages-container"
-            style="position: fixed; top: 20px; right: 20px; z-index: 1000; width: 300px;">
-            {% for message in messages %} <!--Bucle de django que recorre los mensajes-->
-            <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show"
-                role="alert" style="margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-                {{ message }} <!--Muestra el error-->
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
         <div class="wrapper restablecer-wrapper">
             <div class="form-header">
                 <div class="titles">
@@ -38,5 +26,40 @@
         </div>
     </div>
 </div>
+{% if messages %}
+    <script id="django-messages" type="application/json">
+        [
+            {% for message in messages %}
+                {"tags": "{{ message.tags|escapejs }}", "message": "{{ message|escapejs }}"}{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ]
+    </script>
+{% endif %}
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    let scriptTag = document.getElementById("django-messages");
+
+    if (scriptTag) {
+        let mensajes = JSON.parse(scriptTag.textContent);
+
+        mensajes.forEach(msg => {
+            let icono = msg.tags.includes("error") ? "error" : "success";
+            let titulo = msg.tags.includes("error") ? "Error" : "Éxito";
+            let colorBoton = msg.tags.includes("error") ? "#d33" : "#3085d6";
+
+            Swal.fire({
+                icon: icono,
+                title: titulo,
+                text: msg.message,
+                confirmButtonText: "OK",
+                confirmButtonColor: colorBoton
+            });
+        });
+    }
+});
+
+</script>
 
 {% endblock %}

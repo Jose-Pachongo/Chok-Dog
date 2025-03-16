@@ -38,22 +38,35 @@ document.addEventListener("DOMContentLoaded", function () {
             const nombre = document.getElementById("nombre").value.trim();
             const email = document.getElementById("email").value.trim();
             const telefono = document.getElementById("telefono").value.trim();
-            const direccion = document.getElementById("direccion").value.trim(); // ✅ Captura la dirección
-            const metodoPago = document.querySelector("input[name='metodo_pago']:checked");
+            const direccion = document.getElementById("direccion").value.trim();
+            const metodoPago = document.querySelector("input[name='metodo_pago']:checked") || { value: "no seleccionado" };
             const comprobante = document.getElementById("comprobante").files[0];
 
-            if (!nombre || !email || !telefono || !direccion || !metodoPago || !comprobante) {
+            // Referencia al botón de envío
+            let submitButton = document.getElementById("submit-button");
+
+            // Validaciones
+            if (!nombre || !email || !telefono || !direccion || !metodoPago) {
                 Swal.fire("Error", "Todos los campos son obligatorios", "error");
                 return;
             }
+
+            if (metodoPago.value !== "contra_entrega" && !comprobante) {
+                Swal.fire("Error", "Debes subir un comprobante de pago", "error");
+                return;
+            }
+
+            // Deshabilitar el botón para evitar múltiples envíos
+            submitButton.disabled = true;
+            submitButton.innerText = "Procesando...";
 
             const formData = new FormData();
             formData.append("nombre", nombre);
             formData.append("email", email);
             formData.append("telefono", telefono);
-            formData.append("direccion", direccion); // ✅ Agrega la dirección
+            formData.append("direccion", direccion);
             formData.append("metodo_pago", metodoPago.value);
-            formData.append("comprobante", comprobante);
+            if (comprobante) formData.append("comprobante", comprobante);
             formData.append("productos", JSON.stringify(carrito));
             formData.append("total", total);
 
@@ -78,12 +91,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         title: "¡Éxito!",
                         text: data.mensaje,
                         confirmButtonColor: "#6c5ce7"
-                        
                     }).then(() => {
                         localStorage.removeItem("carrito");
-                        window.location.href = "/productos/"; // Reemplaza con la URL real de tus productos
+                        window.location.href = "/productos/"; // Redirige a productos
                     });
-                    
+
                 } else {
                     Swal.fire({
                         icon: "error",
@@ -91,11 +103,17 @@ document.addEventListener("DOMContentLoaded", function () {
                         text: data.error || "Ocurrió un error inesperado.",
                         confirmButtonColor: "#6c5ce7"
                     });
+                    // Reactivar el botón en caso de error
+                    submitButton.disabled = false;
+                    submitButton.innerText = "Confirmar Pedido";
                 }
             })
             .catch(error => {
                 console.error("Error en el pago:", error);
                 Swal.fire("Error", "Hubo un problema al procesar el pedido", "error");
+                // Reactivar el botón en caso de error
+                submitButton.disabled = false;
+                submitButton.innerText = "Confirmar Pedido";
             });
         });
     } else {
@@ -103,21 +121,60 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const metodoPagoRadios = document.querySelectorAll("input[name='metodo_pago']");
-    const nequiContainer = document.getElementById("nequi-container");
-    const daviplataContainer = document.getElementById("daviplata-container");
+// Manejo de selección de método de pago
+document.querySelectorAll('input[name="metodo_pago"]').forEach((input) => {
+    input.addEventListener("change", function () {
+        // Verificar si el usuario está seleccionando la misma opción para desmarcarla
+        if (this.dataset.selected === "true") {
+            this.checked = false;
+            this.dataset.selected = "false";
+            resetPago();
+            return;
+        }
 
-    metodoPagoRadios.forEach(radio => {
-        radio.addEventListener("change", function () {
-            if (this.value === "nequi") {
-                nequiContainer.style.display = "block";
-                daviplataContainer.style.display = "none";
-            } else if (this.value === "daviplata") {
-                nequiContainer.style.display = "none";
-                daviplataContainer.style.display = "block";
-            }
+        // Marcar la opción actual como seleccionada y resetear las demás
+        document.querySelectorAll('input[name="metodo_pago"]').forEach((otherInput) => {
+            otherInput.dataset.selected = "false";
         });
+        this.dataset.selected = "true";
+
+        // Mostrar QR según el método de pago seleccionado
+        document.getElementById("nequi-container").style.display = this.value === "nequi" ? "block" : "none";
+        document.getElementById("daviplata-container").style.display = this.value === "daviplata" ? "block" : "none";
+
+        // Ocultar comprobante si es pago contra entrega
+        let comprobanteSection = document.getElementById("comprobante-section");
+        if (this.value === "contra_entrega") {
+            comprobanteSection.style.display = "none";
+            document.getElementById("comprobante").removeAttribute("required");
+        } else {
+            comprobanteSection.style.display = "block";
+            document.getElementById("comprobante").setAttribute("required", "true");
+        }
     });
 });
 
+// Función para resetear la selección de pago
+function resetPago() {
+    document.querySelectorAll('input[name="metodo_pago"]').forEach((input) => {
+        input.checked = false;
+    });
+
+    document.getElementById("nequi-container").style.display = "none";
+    document.getElementById("daviplata-container").style.display = "none";
+    document.getElementById("comprobante-section").style.display = "block";
+    document.getElementById("comprobante").setAttribute("required", "true");
+}
+
+// Función para manejar la navegación entre pasos de la pasarela de pago
+function mostrarPaso(paso) {
+    // Ocultar todos los pasos
+    document.querySelectorAll('.paso').forEach(el => el.style.display = 'none');
+    
+    // Mostrar solo el paso actual
+    document.getElementById('paso-' + paso).style.display = 'block';
+
+    // Actualizar barra de progreso
+    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+    document.getElementById('step-' + paso).classList.add('active');
+}

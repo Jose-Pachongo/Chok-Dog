@@ -134,6 +134,30 @@
             </script>
         {% endfor %}
     {% endif %}
+    <script>
+        ddocument.addEventListener("DOMContentLoaded", function () {
+            let scriptTag = document.getElementById("django-messages");
+
+            if (scriptTag) {
+                let mensajes = JSON.parse(scriptTag.textContent);
+
+                mensajes.forEach(msg => {
+                    let icono = msg.tags.includes("error") ? "error" : "success";
+                    let titulo = msg.tags.includes("error") ? "Error" : "Éxito";
+                    let colorBoton = msg.tags.includes("error") ? "#d33" : "#3085d6";
+
+                    Swal.fire({
+                        icon: icono,
+                        title: titulo,
+                        text: msg.message,
+                        confirmButtonText: "OK",
+                        confirmButtonColor: colorBoton
+                    });
+                });
+            }
+        });
+
+    </script>
     
     
     

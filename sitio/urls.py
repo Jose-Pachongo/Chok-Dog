@@ -24,7 +24,10 @@ from comida.views import lista_productos
 from comida.views import pagina_pago, procesar_pedido
 from comida.views import profile_view 
 from comida.views import eliminar_foto
-
+from comida.views import  eliminar_reserva
+from comida.views import cancelar_pedido
+from comida.views import historial
+from comida.views import cancelar_reserva
 
 
 urlpatterns = [
@@ -53,7 +56,11 @@ urlpatterns = [
     
     # path('confirmacion_contrasena/', views.confirmacion_contrasena, name='confirmacion_contrasena'),
     
-
+    path('eliminar_reserva/<int:reserva_id>/', eliminar_reserva, name='eliminar_reserva'),  
+    path('cancelar_pedido/<int:pedido_id>/', cancelar_pedido, name='cancelar_pedido'), 
+   
+    path("cancelar_reserva/<int:reserva_id>/", cancelar_reserva, name="cancelar_reserva"), 
+    
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

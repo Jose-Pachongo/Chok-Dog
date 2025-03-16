@@ -333,7 +333,7 @@ def restablecer(request):
             messages.success(request, "Se ah enviado un enlace de restablecimiento de contraseña a su correo")
             return redirect('iniciar')
         else:
-            messages.success(request, "No se encontro algun usuario registrado con ese correo")
+            messages.error(request, "No se encontro algun usuario registrado con ese correo")
         return redirect('restablecer')
     return render(request, 'email_restablecer.html')
 
@@ -395,16 +395,21 @@ def procesar_pedido(request):
         form = PedidoForm(request.POST, request.FILES)
         if form.is_valid():
             pedido = form.save(commit=False) 
-            if "comprobante" in request.FILES: 
-                pedido.comprobante = request.FILES["comprobante"]
+            
+            # 🔹 Si el pago es contra entrega, no se requiere comprobante
+            if request.POST.get("metodo_pago") == "contra_entrega":
+                pedido.comprobante = None
+            else:
+                pedido.comprobante = request.FILES.get("comprobante")
+
             pedido.save() 
 
+            # Manejar productos correctamente
             if isinstance(pedido.productos, str):  
                 productos = json.loads(pedido.productos)  
             else:  
-                productos = pedido.productos 
+                productos = pedido.productos  
 
-           
             productos_str = "\n".join([
                 f"- {p['cantidad']}x {p['nombre']} - ${p['precio']}" +
                 (f" (Sabor: {p['sabor']})" if p.get('sabor') else "") +
@@ -412,61 +417,37 @@ def procesar_pedido(request):
                 for p in productos
             ])
 
-           
             comprobante_url = request.build_absolute_uri(pedido.comprobante.url) if pedido.comprobante else "No adjunto"
 
-            asunto_usuario = "Confirmación de tu Pedido - Chokdog"
-            mensaje_usuario = f"""
-            ¡Hola {pedido.nombre}!
+            # 🔹 Enviar correo al usuario
+            send_mail(
+                "Confirmación de tu Pedido - Chokdog",
+                f"Hola {pedido.nombre},\n\nGracias por tu pedido en Chokdog.\n\n"
+                f"Método de pago: {pedido.metodo_pago}\n"
+                f"Total: ${pedido.total}\n\n"
+                f"Productos:\n{productos_str}\n\nEstamos procesando tu pedido.\n\n¡Gracias por confiar en nosotros!",
+                "chokdog77@gmail.com",
+                [pedido.email]
+            )
 
-            Gracias por tu pedido en Chokdog. Aquí están los detalles:
+            # 🔹 Enviar correo al administrador
+            send_mail(
+                f"Nuevo Pedido Recibido de {pedido.nombre}",
+                f"📢 Nuevo Pedido Recibido\n\n"
+                f"Cliente: {pedido.nombre}\nCorreo: {pedido.email}\nTeléfono: {pedido.telefono}\nDirección: {pedido.direccion}\n"
+                f"Método de pago: {pedido.metodo_pago}\nTotal: ${pedido.total}\n\nProductos:\n{productos_str}\n\n"
+                f"📎 Comprobante: {comprobante_url}\n\n📌 Revisar en el panel de administración.",
+                "chokdog77@gmail.com",
+                ["chokdog77@gmail.com"]
+            )
 
+            return JsonResponse({"mensaje": "Pedido realizado con éxito. Revisa tu correo para más detalles."}, status=200)
 
-            Método de pago: {pedido.metodo_pago}
-            Total: ${pedido.total}
-
-            Productos:
-            🛒{productos_str}
-
-
-            Estamos procesando tu pedido y nos pondremos en contacto pronto. 
-            
-
-            ¡Gracias por confiar en nosotros!
-
-
-
-            -- El equipo de Chokdog 🐶🍔
-            """
-            send_mail(asunto_usuario, mensaje_usuario, 'chokdog77@gmail.com', [pedido.email])
-
-            # 🔹 Correo para el administrador de Chokdog
-            asunto_admin = f"Nuevo Pedido Recibido de {pedido.nombre}"
-            mensaje_admin = f"""
-            📢 Nuevo Pedido Recibido
-
-            Cliente: {pedido.nombre}
-            Correo: {pedido.email}
-            Teléfono: {pedido.telefono}
-            Dirección: {pedido.direccion}
-
-            Método de pago: {pedido.metodo_pago}
-            Total: ${pedido.total}
-
-            Productos:
-            {productos_str}
-
-            📎 Comprobante de pago: {comprobante_url}
-
-            📌 Revisar en el panel de administración.
-            """
-            send_mail(asunto_admin, mensaje_admin, 'chokdog77@gmail.com', ['chokdog77@gmail.com'])
-
-            return JsonResponse({"mensaje": "Pedido realizado con exito, en su correo podra ver los detalles."}, status=200)
         else:
             return JsonResponse({"error": "Datos inválidos"}, status=400)
 
     return JsonResponse({"error": "Método no permitido"}, status=405)
+
     return render(request, 'pago.html')
 
 
@@ -474,7 +455,103 @@ def procesar_pedido(request):
 def manual(request):
     return render(request, 'manual.html')
 
-def historial(request):
-    return render(request, 'historial.html')
+from django.shortcuts import render
+from .models import Pedido, Reserva  # Importa el modelo
 
+import json
+from django.shortcuts import render
+from .models import Pedido, Reserva
+
+def historial(request):
+    pedidos = []
+    reservas = []
+
+    if request.user.is_authenticated:
+        pedidos = Pedido.objects.filter(email__iexact=request.user.email).order_by('-fecha')
+        reservas = Reserva.objects.filter(email__iexact=request.user.email)
+
+        for pedido in pedidos:
+            pedido.estado_display = pedido.get_estado_display()
+            pedido.productos = json.loads(pedido.productos) if isinstance(pedido.productos, str) else pedido.productos
+
+    # Asegurar que siempre se retorne una respuesta
+    return render(request, "historial.html", {"pedidos": pedidos, "reservas": reservas})
+
+
+
+
+
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required, user_passes_test
+from comida.models import Reserva
+
+@login_required
+@user_passes_test(lambda u: u.is_staff)
+def eliminar_reserva(request, reserva_id):
+    reserva = get_object_or_404(Reserva, id=reserva_id)
+    reserva.delete()
+    return JsonResponse({"mensaje": "Reserva eliminada correctamente"})
+
+
+
+from django.core.mail import send_mail
+from django.conf import settings
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
+from comida.models import Pedido, Reserva
+
+def cancelar_pedido(request, pedido_id):
+    pedido = get_object_or_404(Pedido, id=pedido_id)
     
+    if pedido.estado == "pendiente":  # Solo cancelar si está pendiente
+        pedido.estado = "cancelado"
+        pedido.save()
+
+        # Obtener datos del usuario
+        usuario_nombre = f"{request.user.first_name} {request.user.last_name}".strip()
+        usuario_email = request.user.email
+
+        # Enviar correo al administrador
+        send_mail(
+            subject="Pedido Cancelado",
+            message=f"El usuario {usuario_nombre} ({usuario_email}) ha cancelado su pedido con ID {pedido.id}.",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=['chokdog77@gmail.com'],  # Cambia esto si el correo es otro
+            fail_silently=False,
+        )
+
+        messages.success(request, "El pedido ha sido cancelado correctamente.")
+    else:
+        messages.error(request, "No se puede cancelar este pedido.")
+
+    return redirect('historial')
+
+def cancelar_reserva(request, reserva_id):
+    reserva = get_object_or_404(Reserva, id=reserva_id)
+
+    if reserva.estado == "pendiente":  # Solo cancelar si está pendiente
+        reserva.estado = "cancelado"
+        reserva.save()
+
+        # Obtener datos del usuario
+        usuario_nombre = f"{request.user.first_name} {request.user.last_name}".strip()
+        usuario_email = request.user.email
+
+        # Enviar correo al administrador
+        send_mail(
+            subject="Reserva Cancelada",
+            message=f"El usuario {usuario_nombre} ({usuario_email}) ha cancelado su reserva con ID {reserva.id}.",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=['chokdog77@gmail.com'],  # Cambia esto si el correo es otro
+            fail_silently=False,
+        )
+
+        messages.success(request, "La reserva ha sido cancelada correctamente.")
+    else:
+        messages.error(request, "No se puede cancelar esta reserva.")
+
+    return redirect('historial')
+
+
+

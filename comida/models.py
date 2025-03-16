@@ -95,6 +95,24 @@ class Producto(models.Model):
 
 from django.utils.timezone import now
 
+from django.db import models
+from django.contrib.auth.models import User
+
+class Reserva(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+   
+    estado = models.CharField(
+        max_length=20,
+        choices=[
+            ("pendiente", "Pendiente"),
+            ("confirmado", "Confirmado"),
+            ("cancelado", "Cancelado")
+        ],
+        default="pendiente"
+    )
+
+    def __str__(self):
+        return f"Reserva de {self.usuario} - Mesa {self.mesa}"
 
 class Reserva(models.Model):
     nombre = models.CharField(max_length=100)
@@ -104,7 +122,15 @@ class Reserva(models.Model):
     hora = models.TimeField()
     personas = models.IntegerField()
     mesa = models.ForeignKey('Mesa', on_delete=models.CASCADE, null=True, blank=True)
-
+    estado = models.CharField(
+        max_length=20,
+        choices=[
+            ("pendiente", "Pendiente"),
+            ("confirmado", "Confirmado"),
+            ("cancelado", "Cancelado")
+        ],
+        default="pendiente"
+    )
 
 
     def __str__(self):
@@ -112,17 +138,31 @@ class Reserva(models.Model):
 
 
 class Pedido(models.Model):
+    ESTADOS = [
+        ('pendiente', 'Pendiente'),
+        ('confirmado', 'Confirmado'),
+        ("enviado", "Enviado"),
+        ("entregado", "Entregado"),
+        ("cancelado", "Cancelado"),
+    ]
+    METODOS_PAGO = [
+        ('nequi', 'Nequi'),
+        ('daviplata', 'Daviplata'),
+        ('contra_entrega', 'Contra Entrega'),  # 🔹 Agregado correctamente
+    ]
     nombre = models.CharField(max_length=255)
     email = models.EmailField()
     telefono = models.CharField(max_length=15)
-    metodo_pago = models.CharField(max_length=50, choices=[('nequi', 'Nequi'), ('daviplata', 'Daviplata')])
+    metodo_pago = models.CharField(max_length=50, choices=METODOS_PAGO)
     comprobante = models.ImageField(upload_to="comprobantes/", null=True, blank=True)
     productos = models.JSONField()  # Se almacenará como JSON con los productos y cantidades
-    total = models.DecimalField(max_digits=10, decimal_places=2)
+    total = models.DecimalField(max_digits=10, decimal_places=0)
     fecha = models.DateTimeField(auto_now_add=True)
     direccion = models.CharField(max_length=255)
     fecha_pedido = models.DateTimeField(default=now)
-
+    estado = models.CharField(max_length=20, choices=ESTADOS, default='pendiente')
+  # Relación con el usuario
+    
 
 
     def __str__(self):

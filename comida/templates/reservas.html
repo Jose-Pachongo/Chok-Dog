@@ -13,7 +13,8 @@
 
     
 
-        <form action="{% url 'reservas' %}" method="POST">
+        <form id="reservas-form" action="{% url 'reservas' %}" method="POST">
+
             {% csrf_token %}
             
             <input type="text" placeholder="Nombre" id="nombre" name="nombre" 
@@ -52,7 +53,7 @@
                 </div>
             </div>
 
-            <button class="res" type="submit">Reservar</button>
+            <button class="res" type="submit" id="submit-button">Reservar</button>
         </form>
     </div>
 </section>
@@ -66,6 +67,42 @@
     ]
     </script>
 {% endif %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let scriptTag = document.getElementById("django-messages");
+
+        if (scriptTag) {
+            let mensajes = JSON.parse(scriptTag.textContent);
+
+            mensajes.forEach(msg => {
+                let icono = msg.tags.includes("error") ? "error" : "success";
+                let titulo = msg.tags.includes("error") ? "Error" : "Éxito";
+                let colorBoton = msg.tags.includes("error") ? "#d33" : "#3085d6";
+
+                Swal.fire({
+                    icon: icono,
+                    title: titulo,
+                    text: msg.message,
+                    confirmButtonText: "OK",
+                    confirmButtonColor: colorBoton
+                });
+            });
+        }
+    });
+
+    document.getElementById("reservas-form").addEventListener("submit", function(event) {
+        // Deshabilitar el botón para evitar envíos múltiples
+        let boton = document.getElementById("submit-button");
+        boton.disabled = true;
+        boton.innerText = "Procesando...";
+    });
+</script>
+
+
+
+
+
+
 
 <script src="{% static 'js/reservas.js' %}"></script>   
 

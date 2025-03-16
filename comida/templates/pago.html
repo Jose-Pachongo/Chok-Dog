@@ -4,11 +4,13 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'pago.css' %}">
-<div class="tit">
-<h2>Pasarela de Pago</h2>
-    <div class="pago">
-        <div class="payment-container">
 
+<div class="tit">
+    <h2>Pasarela de Pago</h2>
+    <div class="pago">
+        
+        <!-- Resumen del Pedido -->
+        <div class="payment-container">
             <div class="resumen-pedido">
                 <h3>Resumen del Pedido</h3>
                 <table id="resumen-table">
@@ -20,63 +22,97 @@
                             <th>Subtotal</th>
                         </tr>
                     </thead>
-                
                     <tbody id="carrito-body"></tbody>
-
                 </table>
                 <p id="total-pago">Total: $0.00</p>
             </div>
         </div>
-            
+
+        <!-- Formulario de Pago en 3 Pasos -->
         <div class="payment-container">
             <form id="payment-form" enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
-                
-                <input type="text" id="nombre" name="nombre" placeholder="Nombre"
-                    value="{% if request.user.is_authenticated %}{{ request.user.first_name }} {{ user.last_name }}{% endif %}" required>
-
-                <input type="email" id="email" name="email" placeholder="Correo Electrónico" 
-                    value="{% if request.user.is_authenticated %}{{ request.user.email }}{% endif %}" required>
-
-                <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" 
-                    value="{% if request.user.is_authenticated %}{{ user.profile.phone_number|default:'' }}{% endif %}" required>
-                    
-
-                <input type="text" id="direccion" name="direccion" placeholder="Dirección" 
-                    value="{% if request.user.is_authenticated  %}{{ user.profile.address|default:'' }}{% endif %}" required>
-
-                
-                
-                <label class="qrl">
-                    <input type="radio" name="metodo_pago" value="nequi" required> Nequi
-                </label>
-                <label class="qrl">
-                    <input type="radio" name="metodo_pago" value="daviplata" required> Daviplata
-                </label>
-                <div class="qr" id="qr-container">
-                    <div id="nequi-container" style="display: none;">
-                        <img class="neq" id="qr-nequi" src="{% static 'img/qr.jpg' %}" alt="QR Nequi">
-                        <p>Numero de Nequi: <span>3126186801</span></p>
-                    </div>
-                    
-                    <div id="daviplata-container" style="display: none;">
-                        <img class="dav" id="qr-daviplata" src="{% static 'img/qr.jpg' %}" alt="QR Daviplata">
-                        <p>Numero de DaviPlata: <span>3126186801</span></p>
-                    </div>
+                <div class="progress-bar">
+                    <div class="step active" id="step-1">1</div>
+                    <div class="step" id="step-2">2</div>
+                    <div class="step" id="step-3">3</div>
                 </div>
-                
-                <h4>👇Ingresar el comprobante de pago👇</h4>
-                <input type="file" id="comprobante" name="comprobante" accept="image/*" required>
-                
-                
-                <button class="pedido" type="submit">Confirmar Pedido</button>
+                <!-- Paso 1: Datos del Usuario -->
+                <div class="paso" id="paso-1">
+                    <h3>Ingresa tus Datos</h3>
+                    
+                    <input type="text" id="nombre" name="nombre" placeholder="Nombre"
+                        value="{% if request.user.is_authenticated %}{{ request.user.first_name }} {{ request.user.last_name }}{% endif %}" required>
+
+                    <input type="email" id="email" name="email" placeholder="Correo Electrónico" 
+                        value="{% if request.user.is_authenticated %}{{ request.user.email }}{% endif %}" required>
+
+                    <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" 
+                        value="{% if request.user.is_authenticated %}{{ user.profile.phone_number|default:'' }}{% endif %}" required>
+
+                    <input type="text" id="direccion" name="direccion" placeholder="Dirección" 
+                        value="{% if request.user.is_authenticated %}{{ user.profile.address|default:'' }}{% endif %}" required>
+
+                    <button type="button" class="siguiente" onclick="mostrarPaso(2)">Siguiente</button>
+                </div>
+
+                <!-- Paso 2: Selección de Método de Pago -->
+                <div class="paso" id="paso-2" style="display: none;">
+                    <h3>Seleccionar Método de Pago</h3>
+
+                    <label class="qrl">
+                        <input type="radio" name="metodo_pago" value="nequi" required> Nequi
+                    </label>
+                    <label class="qrl">
+                        <input type="radio" name="metodo_pago" value="daviplata" required> Daviplata
+                    </label>
+                    <label class="qrl">
+                        <input type="radio" name="metodo_pago" value="contra_entrega" required> Pago Contra Entrega
+                    </label>
+
+                    <div class="qr" id="qr-container">
+                        <div id="nequi-container" style="display: none;">
+                            <p>Entra a la aplicacion de nequi, escanea el codigo o ingresa el numero que esta debajo, paga y tomale captura </p>
+                            <img class="neq" id="qr-nequi" src="{% static 'img/qr.jpg' %}" alt="QR Nequi">
+                            <p>Número de Nequi: <span>3126186801</span></p>
+                        </div>
+                        <div id="daviplata-container" style="display: none;">
+                            <img class="dav" id="qr-daviplata" src="" alt="QR Daviplata">
+                            <p>Número de DaviPlata: <span>3126186801</span></p>
+                        </div>
+                    </div>
+
+                    <button type="button" class="anterior" onclick="mostrarPaso(1)">Anterior</button>
+                    <button type="button" class="siguiente" onclick="mostrarPaso(3)">Siguiente</button>
+                </div>
+
+                <!-- Paso 3: Confirmación y Comprobante -->
+                <div class="paso" id="paso-3" style="display: none;">
+                    <h3>Estás a un paso de finalizar tu compra</h3>
+                    <div id="comprobante-section">
+                        <h4>👇 Ingresar el comprobante de pago 👇</h4>
+                        <input type="file" id="comprobante" name="comprobante" accept="image/*">
+                    </div>
+
+                    <button type="button" class="anterior" onclick="mostrarPaso(2)">Anterior</button>
+                    <button class="pedido" type="submit" id="submit-button">Confirmar Pedido</button>
+                </div>
             </form>
         </div>  
     </div>
 </div>
+
 <script>
+    function mostrarPaso(paso) {
+        // Ocultar todos los pasos
+        document.querySelectorAll('.paso').forEach(el => el.style.display = 'none');
+        // Mostrar solo el paso actual
+        document.getElementById('paso-' + paso).style.display = 'block';
+    }
+
     
 
+    
 </script>
 
 {% endblock %}

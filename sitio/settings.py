@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'comida',
-    'jazzmin'
+    'jazzmin',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -115,13 +116,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+LANGUAGE_CODE = 'es'  # Mantén solo uno
+TIME_ZONE = 'America/Bogota'  # Ajusta según tu zona horaria
+USE_TZ = True  # Mantén esto en True para que Django maneje zonas horarias correctamente
+USE_L10N = True
 USE_I18N = True
 
-USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -154,3 +154,4 @@ import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'http://localhost']

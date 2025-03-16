@@ -5,8 +5,10 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'servicios.css' %}"> 
-
 <section class="services-section" id="servicios">
+    <h2 class="section-title">Nuestros Servicios</h2>
+    <p class="section-description">Descubre lo que ofrecemos para hacer tu experiencia inolvidable.</p>
+    
     <div class="services-container">
         <div class="service-card">
             <div class="service-icon">
@@ -15,33 +17,58 @@
             <h3 class="service-title">Reservas</h3>
             <p class="service-description">Reserva tu mesa y disfruta de una experiencia única en nuestro restaurante. 
                 Elige la fecha, hora y el tipo de mesa que prefieras.</p>
-                <div class="bton">
-                    {% if request.user.is_authenticated %}
-                        <a href="{% url 'reservas' %}" class="service-button">Reservar Ahora</a>
-                    {% else %}
-                        <a href="#" class="service-button" onclick="mostrarMensaje()">Reservar Ahora</a>
-                    {% endif %}
-                </div>
+            <div class="bton">
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'reservas' %}" class="service-button">Reservar Ahora</a>
+                {% else %}
+                    <a href="#" class="service-button" onclick="mostrarMensaje()">Reservar Ahora</a>
+                {% endif %}
+            </div>
         </div>
 
+        <div class="service-separator"></div>
+        
         <div class="service-card">
             <div class="service-icon">
                 <i class="fas fa-truck"></i>
             </div>
             <h3 class="service-title">Servicio a Domicilio</h3>
             <p class="service-description">Disfruta de nuestros platos en la comodidad de tu hogar. Haz tu pedido y te lo llevamos rápido y caliente.</p>
+            
+            <div class="delivery-info">
+                
+                <p><strong>Métodos de pago:</strong> <br>💰 Efectivo | 📲 Nequi | 💳 Daviplata</p>
+            </div>
+        
             <div class="bton">
-                <a href="https://wa.link/x8yhmt" class="service-button" target="_blank">Pedir por WhatsApp</a>
+                <a href="{% url 'productos' %}" class="service-button">Ver Menú</a>
+                
             </div>
         </div>
+        
+
+        <div class="service-separator"></div>
 
         <div class="service-card">
-            <div class="service-icon">
-                <i class="fas fa-glass-cheers"></i>
-            </div>
             <h3 class="service-title">Eventos</h3>
             <p class="service-description">Organiza tu evento especial en nuestras instalaciones y disfruta de una velada inolvidable.</p>
+            <button onclick="toggleInfo('eventos-info')" class="service-button">Más información</button>
+            <div id="eventos-info" class="service-info">
+                <h4>Eventos que ofrecemos:</h4>
+                <ul>
+                    <li>🎂 Cumpleaños</li>
+                    <li>💼 Eventos corporativos</li>
+                    <li>❤️ Cenas románticas</li>
+                    <li>🎊 Fiestas privadas</li>
+                </ul>
+                <p>Además de otros eventos</p>
+                <p>Contáctanos para más información y reserva tu fecha especial.</p>
+                <a href="https://wa.link/x8yhmt" class="service-button" target="_blank">Contactar por WhatsApp</a>
+            </div>
         </div>
+        
+
+        <div class="service-separator"></div>
     </div>
 </section>
 <script>
@@ -53,7 +80,10 @@
             confirmButtonText: "Ok"
         });
     }
+    function toggleInfo(id) {
+        var element = document.getElementById(id);
+        element.classList.toggle("show");
+    }
+
 </script>
-
-
 {% endblock %}
