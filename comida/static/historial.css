@@ -26,7 +26,11 @@ h2 {
     font-weight: bold;
 }
 
-.tab.active { background: var(--dorado); color: white; }
+.tab.active { 
+    background: var(--dorado); 
+    color: white; 
+}
+
 
 table { 
     width: 90%; 
@@ -40,11 +44,15 @@ table {
 
 th, td { 
     padding: 15px; 
-    text-align: left; 
+    text-align: center; 
     border-bottom: 1px solid #ddd; 
 }
 
-th { background: var(--dorado); color: white; }
+th { 
+    background: var(--dorado); 
+    color: white;
+    
+}
 
 tr:hover { background: #f1f1f1; }
 
@@ -57,7 +65,18 @@ ul { padding-left: 15px; margin: 0; }
     border-radius: 5px; 
     font-size: 14px;
 }
-
+.rest{
+    background-color: var(--dorado);
+    color: #ffffff;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 8px 12px; 
+    cursor: pointer;
+    border-radius: 5px; 
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+}
 .btn.delete { background: red; color: white; }
 
 .estado-pendiente { color: orange; font-weight: bold; }
@@ -87,7 +106,7 @@ ul { padding-left: 15px; margin: 0; }
 @media screen and (max-width: 768px) {
     /* Ajustar el padding y el tamaño de la tabla para pantallas más pequeñas */
     .historial {
-        padding: 20px 10px;
+        padding: 50px 20px 100px 20px;
     }
 
     .tab-container {
@@ -119,12 +138,10 @@ ul { padding-left: 15px; margin: 0; }
     }
 }
 
-/* Media Queries para dispositivos extra pequeños */
+
 @media screen and (max-width: 420px) {
     /* Ajuste en el contenedor principal */
-    .historial {
-        padding: 10px 5px;  /* Reducir el padding para pantallas pequeñas */
-    }
+    
 
     /* Ajuste en el contenedor de las pestañas */
     .tab-container {

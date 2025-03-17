@@ -203,7 +203,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .models import Mesa, Reserva
 
-def enviar_correo(destinatario, asunto, mensaje):
+def enviar_correo(request, destinatario, asunto, mensaje):
     try:
         send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, [destinatario])
     except Exception as e:

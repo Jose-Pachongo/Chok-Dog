@@ -172,6 +172,17 @@ function resetCheckboxes(modal) {
         checkbox.parentElement.classList.remove("selected"); // Remueve la clase visual
     });
 }
+document.querySelectorAll(".agregar-carrito").forEach(boton => {
+    boton.addEventListener("click", function () {
+        let modal = this.closest(".modal"); // Encuentra el modal más cercano
+        if (modal) {
+            modal.style.display = "none"; // Solo cierra el modal, sin resetear checkboxes
+        }
+    });
+});
+
+
+
 
 
 

@@ -345,6 +345,9 @@ ul{
     border-radius: 10px;
     padding: 10px 20px;
     font-size: 16px;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 .btn-custom:hover {
     background-color: #b28e2c !important; /* Color más oscuro al pasar el mouse */

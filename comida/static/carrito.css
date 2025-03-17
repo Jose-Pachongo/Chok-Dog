@@ -29,12 +29,9 @@
   
   .eliminar-item{
     width: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 5px 10px;
     background: #d4af37;
-    color: #222;
+
     border: none;
     cursor: pointer;
     border-radius: 4px;
@@ -43,7 +40,7 @@
   .eliminar-item i{
     font-size: 25px;
     text-decoration: none;
-    color: #222;
+    color: #ffffff;
     
   }
 
@@ -53,10 +50,21 @@
   }
   .bot{
     background-color: var(--dorado);
+    border: none;
+    padding: 12px;
+    font-size: 1.1em;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
     padding: 15px;
-    border-radius: 20px;
     text-decoration: none;
-    color: black;
+    color: rgb(255, 255, 255);
+  }
+
+  .bot:hover {
+      background-color: #b8952d;
+      transform: scale(1.05);
   }
   
   

@@ -2,7 +2,7 @@
 {% load static %}
 {% load humanize %}
 
-{% block title %} contactenos {% endblock %}
+{% block title %} Historial {% endblock %}
 
 
 {% block content %}
@@ -15,9 +15,7 @@
             <button class="tab active" onclick="showTab('compras')">Pedidos</button>
             
         </div>
-        
-        
-        
+
         <div id="compras" class="content">
             <table>
                 <thead>
@@ -65,13 +63,13 @@
                     {% endfor %}
                 </tbody>
             </table>
-            <button onclick="restaurarPedidos()">Restaurar Pedidos</button>
+            <button class="rest" onclick="restaurarPedidos()">Restaurar Pedidos</button>
         </div>
         <div id="reservas" class="content">
             <table>
                 <thead>
                     <tr>
-                        <th>Nombre</th>
+    
                         <th>Fecha y Hora</th>
                         <th>Mesa</th>
                         <th>Personas</th>
@@ -82,7 +80,7 @@
                 <tbody id="reservas-lista">
                     {% for reserva in reservas %}
                     <tr id="reserva-{{ reserva.id }}">
-                        <td>{{ reserva.nombre }}</td>
+                        
                         <td>{{ reserva.fecha|date:"d/m/y" }} - {{ reserva.hora|time:"h:i A" }}</td>  <!-- Formato de 12 horas con AM/PM -->
                         <td>Mesa {{ reserva.mesa.numero }}</td>
                         <td>{{ reserva.personas }}</td>
@@ -103,7 +101,7 @@
                 
                 
             </table>
-            <button onclick="restaurarReservas()">Restaurar Reservas</button>
+            <button class="rest" onclick="restaurarReservas()">Restaurar Reservas</button>
         </div>
         
         
