@@ -14,7 +14,8 @@ h2 {
     display: flex; 
     justify-content: center;
     gap: 10px; 
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
+    
 }
 
 .tab { 
@@ -24,6 +25,7 @@ h2 {
     border-radius: 5px; 
     border: none;
     font-weight: bold;
+    
 }
 
 .tab.active { 
@@ -40,7 +42,9 @@ table {
     border-radius: 10px; 
     overflow: hidden;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    
 }
+ 
 
 th, td { 
     padding: 15px; 
@@ -100,13 +104,29 @@ ul { padding-left: 15px; margin: 0; }
 /* Resaltar pedidos cuando estamos en "Compras" */
 .resaltado {
     background-color: #f8f9fa;
-    border-left: 4px solid #007bff;
+    
 }
+.bton{
+    background-color: #000000;
+    color: #ffffff;
+    margin: 10px 0;
+    padding: 8px 12px; 
+    cursor: pointer;
+    border-radius: 5px; 
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+}
+.bton a{
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
 
 @media screen and (max-width: 768px) {
     /* Ajustar el padding y el tamaño de la tabla para pantallas más pequeñas */
     .historial {
-        padding: 50px 20px 100px 20px;
+        padding: 50px 10px 100px 10px;
     }
 
     .tab-container {
@@ -135,6 +155,9 @@ ul { padding-left: 15px; margin: 0; }
         width: 100%; /* Los botones ocupan todo el ancho */
         padding: 12px;
         font-size: 16px;
+    }
+    .bton{
+        width: 100%;
     }
 }
 

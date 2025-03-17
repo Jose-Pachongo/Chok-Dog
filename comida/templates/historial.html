@@ -52,7 +52,7 @@
                             <button class="btn delete" onclick="confirmarEliminacionPedido('{{ pedido.id }}')">Eliminar</button>
                             <!-- Cancelar solo si el pedido está Pendiente -->
                             {% if pedido.estado == "pendiente" %}
-                                <a href="{% url 'cancelar_pedido' pedido.id %}" class="btn cancelar" onclick="return confirm('¿Estás seguro de que quieres cancelar este pedido?');">Cancelar</a>
+                                <button class="bton"><a href="{% url 'cancelar_pedido' pedido.id %}"  onclick="return confirm('¿Estás seguro de que quieres cancelar este pedido?');">Cancelar</a></button>
                             {% endif %}
                         </td>
                     </tr>
@@ -88,7 +88,7 @@
                         <td>
                             <button class="btn delete" onclick="eliminarReserva('{{ reserva.id }}')">Eliminar</button>
                             {% if reserva.estado == "pendiente" %}
-                                <a href="{% url 'cancelar_reserva' reserva.id %}" class="btn cancelar" onclick="return confirm('¿Estás seguro de que quieres cancelar esta reserva?');">Cancelar</a>
+                                <button class="bton"><a href="{% url 'cancelar_reserva' reserva.id %}" onclick="return confirm('¿Estás seguro de que quieres cancelar esta reserva?');">Cancelar</a></button>
                             {% endif %}
                         </td>
                     </tr>
