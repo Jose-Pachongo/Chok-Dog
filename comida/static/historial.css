@@ -117,10 +117,7 @@ ul { padding-left: 15px; margin: 0; }
     border: none;
     cursor: pointer;
 }
-.bton a{
-    text-decoration: none;
-    color: rgb(255, 255, 255);
-}
+
 
 
 @media screen and (max-width: 768px) {

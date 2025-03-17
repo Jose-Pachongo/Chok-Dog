@@ -49,10 +49,11 @@
                         <td class="estado-{{ pedido.estado }}">{{ pedido.get_estado_display }}</td>
                         <td>
                             <!-- Eliminar siempre disponible -->
-                            <button class="btn delete" onclick="confirmarEliminacionPedido('{{ pedido.id }}')">Eliminar</button>
+                            <button class="btn delete" onclick="confirmarEliminacionPedido('{{ pedido.id }}')"><i class='bx bxs-trash-alt'></i></button>
                             <!-- Cancelar solo si el pedido está Pendiente -->
                             {% if pedido.estado == "pendiente" %}
-                                <button class="bton"><a href="{% url 'cancelar_pedido' pedido.id %}"  onclick="return confirm('¿Estás seguro de que quieres cancelar este pedido?');">Cancelar</a></button>
+                                <button class="bton" title="cancelar"><a href="{% url 'cancelar_pedido' pedido.id %}"  onclick="return confirm('¿Estás seguro de que quieres cancelar este pedido?');"><i title="cancelar" class='bx bxs-x-circle' style="color: red;"></i></a></button>
+                                
                             {% endif %}
                         </td>
                     </tr>
@@ -86,9 +87,9 @@
                         <td>{{ reserva.personas }}</td>
                         <td class="estado-{{ reserva.estado }}">{{ reserva.estado }}</td>
                         <td>
-                            <button class="btn delete" onclick="eliminarReserva('{{ reserva.id }}')">Eliminar</button>
+                            <button class="btn delete" onclick="eliminarReserva('{{ reserva.id }}')"><i class='bx bxs-trash-alt'></i></button>
                             {% if reserva.estado == "pendiente" %}
-                                <button class="bton"><a href="{% url 'cancelar_reserva' reserva.id %}" onclick="return confirm('¿Estás seguro de que quieres cancelar esta reserva?');">Cancelar</a></button>
+                                <button class="bton" title="cancelar"><a href="{% url 'cancelar_reserva' reserva.id %}" onclick="return confirm('¿Estás seguro de que quieres cancelar esta reserva?');"><i title="cancelar" class='bx bxs-x-circle' style="color: red;"></i></a></button>
                             {% endif %}
                         </td>
                     </tr>
