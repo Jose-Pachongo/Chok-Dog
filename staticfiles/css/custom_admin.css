@@ -1,0 +1,23 @@
+/* 🔹 Cambiar color del fondo del panel */
+body {
+    background-color: #121212 !important; /* Negro oscuro */
+}
+
+/* 🔹 Cambiar color de la barra lateral */
+.sidebar {
+    background-color: #1E1E2F !important; /* Azul oscuro */
+}
+
+/* 🔹 Cambiar color de los botones */
+.btn-success {
+    background-color: #28a745 !important; /* Verde */
+}
+
+.btn-danger {
+    background-color: #dc3545 !important; /* Rojo */
+}
+
+/* 🔹 Cambiar el color de los enlaces */
+a {
+    color: #ffcc00 !important; /* Amarillo */
+}

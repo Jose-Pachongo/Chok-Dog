@@ -38,6 +38,7 @@ MESSAGE_STOGRACE ="django.contrib.messages.storage.cookie.CookieStorage"
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,9 +46,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'comida',
-    'jazzmin',
     'django.contrib.humanize',
 ]
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Mi Panel Admin",
+    "site_header": "Gestión Chokdog",
+    "site_brand": "Chokdog",
+    "welcome_sign": "Bienvenido al Panel de Administración",
+    "site_logo": "img/logo.png",  # Si tienes un logo en static/img/
+    "copyright": "© 2025 Chokdog",
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

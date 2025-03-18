@@ -84,6 +84,7 @@ class PedidoAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'metodo_pago', 'total', 'fecha_pedido', 'estado')
     list_editable = ('estado',)  # Permite editar el estado desde el panel de admin
     actions = ['marcar_como_cancelado']  # Agregamos la acción para cancelar pedidos
+    exclude = ('productos',)
     readonly_fields = ('productos_formateados',)  # Mostramos los productos formateados
 
     def productos_formateados(self, obj):
@@ -102,13 +103,13 @@ class PedidoAdmin(admin.ModelAdmin):
         except Exception as e:
             return f"Error al formatear productos: {e}"
 
-    productos_formateados.short_description = "Productos (Formateado)"
+    productos_formateados.short_description = "Productos: "
 
 
 admin.site.register(Pedido, PedidoAdmin)
 
 from django.contrib import admin
-from .models import Reserva
+
 
 class ReservaAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'fecha', 'hora', 'estado')  # Agregamos 'estado'
