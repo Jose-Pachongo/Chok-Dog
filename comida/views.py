@@ -255,6 +255,7 @@ def reservas(request):
             return redirect("reservas")
         
         reserva = Reserva.objects.create(
+            usuario=request.user if request.user.is_authenticated else None,
             nombre=nombre, email=email, telefono=telefono,
             fecha=fecha_reserva, hora=hora_reserva, mesa=mesa, personas=personas
         )
@@ -291,6 +292,23 @@ def reservas(request):
         return redirect("reservas")
     
     return render(request, "reservas.html", {"mesas": mesas_disponibles})
+
+from django.core.mail import send_mail
+from django.conf import settings
+from datetime import datetime, timedelta
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Mesa, Reserva  # Asegúrate de importar los modelos correctos
+
+def enviar_correo(destinatario, asunto, mensaje):
+    send_mail(
+        subject=asunto,
+        message=mensaje,
+        from_email=settings.DEFAULT_FROM_EMAIL,  # Asegúrate de configurar esto en settings.py
+        recipient_list=[destinatario],
+        fail_silently=False,
+    )
+
 
 def obtener_mesas_disponibles(request):
     fecha = request.GET.get('fecha')
@@ -395,6 +413,8 @@ def procesar_pedido(request):
         form = PedidoForm(request.POST, request.FILES)
         if form.is_valid():
             pedido = form.save(commit=False) 
+            pedido.usuario = request.user if request.user.is_authenticated else None  # Asigna el usuario autenticado
+            pedido.save()
             
             # 🔹 Si el pago es contra entrega, no se requiere comprobante
             if request.POST.get("metodo_pago") == "contra_entrega":
@@ -467,16 +487,15 @@ def historial(request):
     reservas = []
 
     if request.user.is_authenticated:
-        pedidos = Pedido.objects.filter(email__iexact=request.user.email).order_by('-fecha')
-        reservas = Reserva.objects.filter(email__iexact=request.user.email)
+        # Buscar por usuario en lugar de solo email
+        pedidos = Pedido.objects.filter(usuario=request.user).order_by('-fecha')
+        reservas = Reserva.objects.filter(usuario=request.user)
 
         for pedido in pedidos:
             pedido.estado_display = pedido.get_estado_display()
             pedido.productos = json.loads(pedido.productos) if isinstance(pedido.productos, str) else pedido.productos
 
-    # Asegurar que siempre se retorne una respuesta
     return render(request, "historial.html", {"pedidos": pedidos, "reservas": reservas})
-
 
 
 

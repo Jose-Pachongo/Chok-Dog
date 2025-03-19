@@ -114,7 +114,9 @@ class Reserva(models.Model):
     def __str__(self):
         return f"Reserva de {self.usuario} - Mesa {self.mesa}"
 
+
 class Reserva(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     nombre = models.CharField(max_length=100)
     email = models.EmailField()
     telefono = models.CharField(max_length=15)
@@ -150,6 +152,7 @@ class Pedido(models.Model):
         ('daviplata', 'Daviplata'),
         ('contra_entrega', 'Contra Entrega'),  # 🔹 Agregado correctamente
     ]
+    usuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     nombre = models.CharField(max_length=255)
     email = models.EmailField()
     telefono = models.CharField(max_length=15)
