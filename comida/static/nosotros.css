@@ -43,7 +43,7 @@
 
 .about-title {
     font-size: 1.8rem;
-    color: #e4a853;
+    color: var(--dorado);
     margin-bottom: 1rem;
     font-weight: bold;
 }

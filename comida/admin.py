@@ -113,7 +113,7 @@ from django.contrib import admin
 
 class ReservaAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'fecha', 'hora', 'estado')  # Agregamos 'estado'
-    list_filter = ('estado',)  # Permite filtrar por estado en el panel
+    list_editable = ('estado',)  # Permite filtrar por estado en el panel
     search_fields = ('nombre', 'fecha', 'hora')  # Agrega búsqueda por estos campos
 
 admin.site.register(Reserva, ReservaAdmin)

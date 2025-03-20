@@ -348,7 +348,7 @@ def restablecer(request):
                 [email], 
                 fail_silently=False
             )
-            messages.success(request, "Se ah enviado un enlace de restablecimiento de contraseña a su correo")
+            messages.success(request, "Se ha enviado un enlace de restablecimiento de contraseña a su correo")
             return redirect('iniciar')
         else:
             messages.error(request, "No se encontro algun usuario registrado con ese correo")
@@ -489,7 +489,7 @@ def historial(request):
     if request.user.is_authenticated:
         # Buscar por usuario en lugar de solo email
         pedidos = Pedido.objects.filter(usuario=request.user).order_by('-fecha')
-        reservas = Reserva.objects.filter(usuario=request.user)
+        reservas = Reserva.objects.filter(usuario=request.user).order_by('-fecha')
 
         for pedido in pedidos:
             pedido.estado_display = pedido.get_estado_display()

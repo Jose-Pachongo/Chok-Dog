@@ -1,30 +1,34 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let pestañaActiva = localStorage.getItem("pestañaActiva");
+    // Recuperar la pestaña guardada en localStorage
+    let activeTab = localStorage.getItem("activeTab") || "compras"; // "compras" por defecto
+    showTab(activeTab);
 
-    // Si no hay pestaña activa guardada, se selecciona la de compras por defecto
-    if (!pestañaActiva) {
-        pestañaActiva = 'compras';  // Por defecto es 'compras'
-    }
-
-    // Mostrar la pestaña activa
-    showTab(pestañaActiva);
+    // Agregar eventos a los botones para cambiar y guardar la pestaña
+    document.querySelectorAll(".tab").forEach(button => {
+        button.addEventListener("click", function () {
+            let tabId = this.getAttribute("onclick").match(/'([^']+)'/)[1]; // Extraer ID de la pestaña
+            localStorage.setItem("activeTab", tabId); // Guardar en localStorage
+        });
+    });
 });
 
-function showTab(tab) {
-    // Primero, desactivar todas las pestañas y contenidos
-    document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+function showTab(tabId) {
+    // Ocultar todas las pestañas
+    document.querySelectorAll(".content").forEach(tab => {
+        tab.style.display = "none";
+    });
 
-    // Activar la pestaña correspondiente
-    document.getElementById(tab).classList.add('active');
-    document.querySelector(`.tab-container .tab[onclick="showTab('${tab}')"]`).classList.add('active');
+    // Quitar la clase "active" de todos los botones
+    document.querySelectorAll(".tab").forEach(button => {
+        button.classList.remove("active");
+    });
 
-    // Guardar la pestaña activa en localStorage
-    localStorage.setItem("pestañaActiva", tab);
+    // Mostrar la pestaña activa
+    document.getElementById(tabId).style.display = "block";
+
+    // Agregar la clase "active" al botón correspondiente
+    document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add("active");
 }
-
-
-
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -167,3 +171,4 @@ fetch('/historial/reservas/')
         console.log("Reservas obtenidas:", data);  // Verificar los datos recibidos
     })
     .catch(error => console.error("Error al obtener reservas:", error));
+

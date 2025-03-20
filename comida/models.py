@@ -38,7 +38,7 @@ class MensajeContacto(models.Model):
     def __str__(self):
         return f"Mensaje de {self.nombre} ({self.correo})"
 
-from django.db import models
+
 
 class Mesa(models.Model):
     numero = models.IntegerField(unique=True)
@@ -50,7 +50,6 @@ class Mesa(models.Model):
 
 
 
-from django.db import models
 
 class Ingrediente(models.Model):
     nombre = models.CharField(max_length=100)
@@ -95,7 +94,7 @@ class Producto(models.Model):
 
 from django.utils.timezone import now
 
-from django.db import models
+
 from django.contrib.auth.models import User
 
 class Reserva(models.Model):
