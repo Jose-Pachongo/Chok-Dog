@@ -6,6 +6,9 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'home.css' %}">
+<link rel="stylesheet" href="{% static 'nosotros.css' %}">
+<link rel="stylesheet" href="{% static 'servicios.css' %}">
+<link rel="stylesheet" href="{% static 'contactenos.css' %}"> 
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 <main class="main">
@@ -27,6 +30,263 @@
         </div>
     </section>
 </main>
+
+<div class="contenido_id" id="nosotros">
+    <section class="about-section" id="sobre-nosotros">
+        <h2 class="section-title" data-aos="fade-up" data-aos-duration="1500">Nosotros</h2>
+        <div class="about-container">
+            <div class="about-grid">
+    
+                <div class="about-item" data-aos="fade-right" data-aos-duration="1500">
+                    <div class="about-overlay">
+                        <img src="{% static 'img/mision.jpg' %}" alt="Nuestra cocina" class="about-image">
+                    </div>
+                    <div class="about-content">
+                        <h2 class="about-title">Nuestra Misión</h2>
+                        <p class="about-description">
+                            Brindar a nuestros clientes una oferta deliciosa variada en comidas rápidas, bebidas y granizados, elaborados con ingredientes frescos y locales. Nos comprometemos a ofrecer un excelente servicio, creando un espacio acogedor que fomente momentos inolvidables que fortalezcan el vínculo con nuestra comunidad en El Pital-Huila.
+                        </p>
+                    </div>
+                </div>
+    
+                <div class="about-item" data-aos="fade-left" data-aos-duration="1500">
+                    <div class="about-content">
+                        <h2 class="about-title">Nuestra Visión</h2>
+                        <p class="about-description">
+                            Ser el restaurante líder en comidas rápidas, bebidas y granizados en El Municipio del Pital-Huila, reconocido por ofrecer experiencias únicas a nuestros clientes a través de sabores innovadores, calidad excepcional, un servicio cálido, contribuyendo al desarrollo gastronómico y turístico de nuestra región.
+                        </p>
+                    </div>
+                    <div class="about-overlay">
+                        <img src="{% static 'img/vision.jpg' %}" alt="Historia del restaurante" class="about-image">
+                    </div>
+                </div>
+    
+                <div class="about-item" data-aos="fade-right" data-aos-duration="1500">
+                    <div class="about-overlay">
+                        <img src="{% static 'img/local.jpg' %}" alt="Nuestro local" class="about-image">
+                    </div>
+                    <div class="about-content">
+                        <h2 class="about-title">Nuestro Local</h2>
+                        <p class="about-description">
+                            En Chok Dog hemos diseñado nuestro local para que sea un lugar donde disfrutar más allá de solo comer; Un ambiente en el que cada detalle ha sido pensado para ofrecer un espacio acogedor y elegante, para crear la atmósfera perfecta donde podrás disfrutar de una experiencia gastronómica única.
+                        </p>
+                    </div>
+                </div>
+    
+                <div class="about-item" data-aos="fade-left" data-aos-duration="1500">
+                    <div class="about-content">
+                        <h2 class="about-title">Equipo de Trabajo</h2>
+                        <p class="about-description">
+                            Detrás de cada plato en Chok Dog hay un equipo comprometido con la excelencia, apasionado y profesional, dedicado a crear experiencias memorables para nuestros clientes en cada visita.
+                        </p>
+                    </div>
+                    <div class="about-overlay">
+                        <img src="{% static 'img/equipo.jpg' %}" alt="Nuestro equipo" class="about-image">
+                    </div>
+                </div>
+    
+                <div class="about-item" data-aos="fade-right" data-aos-duration="1500">
+                    <div class="about-overlay">
+                        <img src="{% static 'img/puerta.jpg' %}" alt="Nuestra puerta" class="about-image">
+                    </div>
+                    <div class="about-content">
+                        <h2 class="about-title">Nuestra Puerta está abierta</h2>
+                        <p class="about-description">
+                            Te invitamos a ser parte de nuestra historia y disfrutar de una experiencia gastronómica excepcional, nos ubicamos en la calle 6 #9-10 en el Municipio del Pital-Huila, ¡te esperamos!
+                        </p>
+                    </div>
+                </div>
+    
+                <div class="about-item" data-aos="zoom-in" data-aos-duration="2000">
+                    <div class="about-content">
+                        <h2 class="about-title">Presentación del video</h2>
+                        <p class="about-description">
+                            Te invitamos a venir y disfrutar de todos nuestros platos con la mejor calidad y servicio.
+                        </p>
+                    </div>
+                    <div class="about-overlay">
+                        <video class="video" src="{% static 'videos/AQNbyHxm7jGaafsAKsWIwSYmkywKtDtF-KSWTOr690nH0bfI3IVoqyNWBrRdI4rasdpcHyHVGRZr66XBJNLVCo_V.mp4' %}" controls autoplay muted></video>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </section>
+    
+</div>
+<div class="contenido_id" id="servicios">
+    
+    <section class="services-section" id="servicios">
+        <h2 class="section-title" data-aos="fade-up" data-aos-duration="1500">Nuestros Servicios</h2>
+        <p class="section-description" data-aos="fade-up" data-aos-duration="1500">Descubre lo que ofrecemos para hacer tu experiencia inolvidable.</p>
+        
+        <div class="services-container">
+            <div class="service-card" data-aos="fade-right" data-aos-duration="1500">
+                <div class="service-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h3 class="service-title">Reservas</h3>
+                <p class="service-description">Reserva tu mesa y disfruta de una experiencia única en nuestro restaurante. 
+                    Elige la fecha, hora y el tipo de mesa que prefieras.</p>
+                <div class="bton">
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'reservas' %}" class="service-button">Reservar Ahora</a>
+                    {% else %}
+                        <a href="#" class="service-button" onclick="mostrarMensaje('Debes iniciar sesión para hacer una reserva.')">Reservar Ahora</a>
+                    {% endif %}
+                </div>
+            </div>
+    
+            <div class="service-separator" data-aos="zoom-in" data-aos-duration="1500"></div>
+            
+            <div class="service-card" data-aos="fade-left" data-aos-duration="1500">
+                <div class="service-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <h3 class="service-title">Servicio a Domicilio</h3>
+                <p class="service-description">Disfruta de nuestros platos en la comodidad de tu hogar. Haz tu pedido y te lo llevamos rápido y caliente.</p>
+                
+                <div class="delivery-info">
+                    <p><strong>Métodos de pago:</strong> <br>💰 Efectivo | 📲 Nequi | 💳 Daviplata</p>
+                </div>
+            
+                <div class="bton">
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'productos' %}" class="service-button">Ver Menú</a>
+                    {% else %}
+                        <a href="#" class="service-button" onclick="mostrarMensaje('Debes iniciar sesión para poder ver los productos.')">Ver productos</a>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="service-separator" data-aos="zoom-in" data-aos-duration="1500"></div>
+    
+            <div class="service-card" data-aos="fade-up" data-aos-duration="1500">
+                <h3 class="service-title">Eventos</h3>
+                <p class="service-description">Organiza tu evento especial en nuestras instalaciones y disfruta de una velada inolvidable.</p>
+                <button onclick="toggleInfo('eventos-info')" class="service-button">Más información</button>
+                <div id="eventos-info" class="service-info">
+                    <h4>Eventos que ofrecemos:</h4>
+                    <ul>
+                        <li>🎂 Cumpleaños</li>
+                        <li>💼 Eventos corporativos</li>
+                        <li>❤️ Cenas románticas</li>
+                        <li>🎊 Fiestas privadas</li>
+                    </ul>
+                    <p>Además de otros eventos</p>
+                    <p>Contáctanos para más información y reserva tu fecha especial.</p>
+                    <a href="https://wa.link/x8yhmt" class="service-button" target="_blank">Contactar por WhatsApp</a>
+                </div>
+            </div>
+            
+            <div class="service-separator" data-aos="zoom-in" data-aos-duration="1500"></div>
+        </div>
+    </section>
+    
+    <style>
+      /* Personalizar el color del icono de advertencia */
+    .swal2-icon.swal2-warning {
+        border-color: #D4AF37 !important; /* Cambia el color del borde del círculo */
+        color: #D4AF37 !important; /* Cambia el color del ícono */
+    }
+    
+    
+    /* Estilos del botón */
+    .btn-custom {
+        background-color: #D4AF37 !important;
+        color: white !important;
+        border-radius: 10px;
+        padding: 10px 15px;
+        font-size: 16px;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+    }
+    .btn-custom:hover {
+        background-color: #b28e2c !important;
+    }
+    
+    </style>
+    
+    <script>
+        function mostrarMensaje(mensaje) {
+            Swal.fire({
+                title: "¡Inicia sesión!",
+                text: mensaje,
+                icon: "warning",
+                confirmButtonText: "Ok",
+                customClass: {
+                    
+                    confirmButton: "btn-custom"
+                }
+            });
+        }
+    
+    
+        function toggleInfo(id) {
+            var element = document.getElementById(id);
+            element.classList.toggle("show");
+        }
+    </script>
+</div>
+<div class="contenido_id" id="contactenos">
+    
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+    
+    <section class="contact-section" id="contacto">
+        <h2 class="section-title" data-aos="fade-up" data-aos-duration="1500">Contáctenos</h2>
+        
+        <div class="contact-container" data-aos="fade-up" data-aos-delay="300" data-aos-duration="1500">
+            {% if error %}
+                <script type="text/javascript">
+                    alert("{{ error }}");
+                </script>
+            {% endif %}
+            
+            <div class="contact-form" data-aos="fade-right" data-aos-duration="1500">
+                <h2 class="form-title">Contáctanos</h2>
+                <form method="POST" action="{% url 'contactenos' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" placeholder="Nombre Completo" id="nombre" name="nombre" 
+                        value="{% if request.user.is_authenticated %}{{ request.user.first_name }} {{ user.last_name }}{% endif %}" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Correo" id="correo" name="correo"
+                        value="{% if request.user.is_authenticated %}{{ request.user.email }}{% endif %}" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" placeholder="Telefono" id="telefono" name="telefono"
+                        value="{% if request.user.is_authenticated %}{{ user.profile.phone_number|default:'' }}{% endif %}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mensaje">Mensaje</label>
+                        <textarea id="mensaje" name="mensaje" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" data-aos="zoom-in" data-aos-delay="200">Enviar</button>
+                </form>
+            </div>
+    
+            <div class="map-container" data-aos="fade-left" data-aos-duration="1500">
+                <iframe src="https://www.google.com/maps/d/embed?mid=1R_OQ9ozCLAXFPL07Th384_TGCCPiMm4&hl=es-419&ehbc=2E312F" width="640" height="480"></iframe>
+            </div>
+        </div>
+    </section>
+    
+    {% if messages %}
+        {% for m in messages %}
+            <script>
+                Swal.fire({
+                    title: "Felicitaciones",
+                    text: "{{ m }}",
+                    icon: "success"
+                })
+            </script>
+        {% endfor %}
+    {% endif %}
+    
+</div>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>

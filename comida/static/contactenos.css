@@ -18,7 +18,14 @@
 
 .contact-section {
     padding: 3rem  2rem 3rem 2rem;
+    text-align: center;
+    
 
+}
+.section-title{
+    margin: 20px;
+    text-align: center;
+    text-shadow: var(--text_sha);
 }
 
 .contact-container {

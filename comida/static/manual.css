@@ -1,6 +1,24 @@
+.manual{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.cont_manual{
+    max-width: 800px;
+    text-align: center;
+}
+.tit_man{
+    margin-top: 50px;
+    max-width: 800px;
+    color: #333;
+    font-size: 50px;
+    
+    
+}
 .container {
     max-width: 800px;
-    margin: 20px auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
@@ -8,11 +26,7 @@
     font-family: Arial, sans-serif;
 }
 
-h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
+
 
 .step {
     margin-bottom: 40px;
@@ -22,25 +36,25 @@ h1 {
     border-radius: 5px;
 }
 
-h2 {
+.container h2 {
     color: var(--dorado);
     margin-bottom: 10px;
 }
 
-p {
+.container p {
     color: #3b3b3b;
     line-height: 1.6;
     font-size: 20px;
 }
 
-ul {
+.container ul {
     list-style: none;
     padding: 0;
     font-size: 18px;
     color: black;
 }
 
-ul li {
+.container ul li {
     background: url("ruta-a-icono/check.png") no-repeat left center;
     background-size: 18px;
     padding-left: 30px;
@@ -48,7 +62,7 @@ ul li {
     color: #333;
 }
 
-img {
+.container img {
     display: block;
     width: 100%;
     max-width: 500px;
@@ -57,6 +71,28 @@ img {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
+.bonotes_manual{
+    max-width: 800px;
+    text-align: center;
+    display:flex ;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    gap: 20px;
+    flex-wrap: wrap;
+
+}
+.bonotes_manual a{
+    text-decoration: none;
+    width: 180px;
+    color: white;
+    background-color: var(--dorado);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 10px 16px #888888;
+    
+    
+}
 
 @media (max-width: 600px) {
     .container {
