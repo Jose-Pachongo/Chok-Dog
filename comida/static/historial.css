@@ -83,11 +83,11 @@ ul { padding-left: 15px; margin: 0; }
 }
 .btn.delete { background: red; color: white; }
 
-.estado-pendiente { color: orange; font-weight: bold; }
-.estado-confirmado { color: green; font-weight: bold; }
-.estado-enviado { color: blue; font-weight: bold; }
-.estado-entregado { color: var(--dorado); font-weight: bold; }
-.estado-cancelado{ color: red; font-weight: bold; }
+.estado-Pendiente { color: orange; font-weight: bold; }
+.estado-Confirmado { color: green; font-weight: bold; }
+.estado-Enviado { color: blue; font-weight: bold; }
+.estado-Entregado { color: var(--dorado); font-weight: bold; }
+.estado-Cancelado{ color: red; font-weight: bold; }
 
 .tab-btn {
     padding: 10px;
@@ -109,7 +109,7 @@ ul { padding-left: 15px; margin: 0; }
 
 
 .bton{
-    background-color: #000000;
+    background-color: #ff0000;
     color: #ffffff;
     margin: 10px 0;
     padding: 8px 12px; 

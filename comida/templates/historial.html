@@ -48,11 +48,11 @@
 
                         <td class="estado-{{ pedido.estado }}">{{ pedido.get_estado_display }}</td>
                         <td>
-                            <!-- Eliminar siempre disponible -->
-                            <button class="btn delete" onclick="confirmarEliminacionPedido('{{ pedido.id }}')"><i class='bx bxs-trash-alt'></i></button>
-                            <!-- Cancelar solo si el pedido está Pendiente -->
-                            {% if pedido.estado == "pendiente" %}
-                            <a href="{% url 'cancelar_pedido' pedido.id %}"  onclick="return confirm('¿Estás seguro de que quieres cancelar este pedido?');"><button class="bton" title="cancelar"><i title="cancelar" class='bx bxs-x-circle' style="color: red;"></i></button></a>
+                           
+                            <!-- <button class="btn delete" onclick="confirmarEliminacionPedido('{{ pedido.id }}')"><i class='bx bxs-trash-alt'></i></button>
+                             -->
+                            {% if pedido.estado == "Pendiente" %}
+                            <a href="{% url 'cancelar_pedido' pedido.id %}"  onclick="return confirm('¿Estás seguro de que quieres cancelar este pedido?');"><button class="bton" title="cancelar"><i title="cancelar" class='bx bxs-x-circle' ></i></button></a>
                                 
                             {% endif %}
                         </td>
@@ -64,7 +64,7 @@
                     {% endfor %}
                 </tbody>
             </table>
-            <button class="rest" onclick="restaurarPedidos()">Restaurar Pedidos</button>
+            <!-- <button class="rest" onclick="restaurarPedidos()">Restaurar Pedidos</button> -->
         </div>
         <div id="reservas" class="content">
             <table>
@@ -87,9 +87,9 @@
                         <td>{{ reserva.personas }}</td>
                         <td class="estado-{{ reserva.estado }}">{{ reserva.estado }}</td>
                         <td>
-                            <button class="btn delete" onclick="eliminarReserva('{{ reserva.id }}')"><i class='bx bxs-trash-alt'></i></button>
-                            {% if reserva.estado == "pendiente" %}
-                            <a href="{% url 'cancelar_reserva' reserva.id %}" onclick="return confirm('¿Estás seguro de que quieres cancelar esta reserva?');"><button class="bton" title="cancelar"><i title="cancelar" class='bx bxs-x-circle' style="color: red;"></i></button></a>
+                            <!-- <button class="btn delete" onclick="eliminarReserva('{{ reserva.id }}')"><i class='bx bxs-trash-alt'></i></button> -->
+                            {% if reserva.estado == "Pendiente" %}
+                            <a href="{% url 'cancelar_reserva' reserva.id %}" onclick="return confirm('¿Estás seguro de que quieres cancelar esta reserva?');"><button class="bton" title="cancelar"><i title="cancelar" class='bx bxs-x-circle' ></i></button></a>
                             {% endif %}
                         </td>
                     </tr>
@@ -102,7 +102,7 @@
                 
                 
             </table>
-            <button class="rest" onclick="restaurarReservas()">Restaurar Reservas</button>
+            <!-- <button class="rest" onclick="restaurarReservas()">Restaurar Reservas</button> -->
         </div>
 
     </div>

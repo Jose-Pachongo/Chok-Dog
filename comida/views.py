@@ -523,8 +523,8 @@ from comida.models import Pedido, Reserva
 def cancelar_pedido(request, pedido_id):
     pedido = get_object_or_404(Pedido, id=pedido_id)
     
-    if pedido.estado == "pendiente":  # Solo cancelar si está pendiente
-        pedido.estado = "cancelado"
+    if pedido.estado == "Pendiente":  # Solo cancelar si está pendiente
+        pedido.estado = "Cancelado"
         pedido.save()
 
         # Obtener datos del usuario
@@ -549,8 +549,8 @@ def cancelar_pedido(request, pedido_id):
 def cancelar_reserva(request, reserva_id):
     reserva = get_object_or_404(Reserva, id=reserva_id)
 
-    if reserva.estado == "pendiente":  # Solo cancelar si está pendiente
-        reserva.estado = "cancelado"
+    if reserva.estado == "Pendiente":  # Solo cancelar si está pendiente
+        reserva.estado = "Pancelado"
         reserva.save()
 
         # Obtener datos del usuario

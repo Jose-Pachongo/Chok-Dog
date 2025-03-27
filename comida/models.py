@@ -103,9 +103,9 @@ class Reserva(models.Model):
     estado = models.CharField(
         max_length=20,
         choices=[
-            ("pendiente", "Pendiente"),
-            ("confirmado", "Confirmado"),
-            ("cancelado", "Cancelado")
+            ("Pendiente", "Pendiente"),
+            ("Confirmado", "Confirmado"),
+            ("Cancelado", "Cancelado")
         ],
         default="pendiente"
     )
@@ -126,9 +126,9 @@ class Reserva(models.Model):
     estado = models.CharField(
         max_length=20,
         choices=[
-            ("pendiente", "Pendiente"),
-            ("confirmado", "Confirmado"),
-            ("cancelado", "Cancelado")
+            ("Pendiente", "Pendiente"),
+            ("Confirmado", "Confirmado"),
+            ("Cancelado", "Cancelado")
         ],
         default="pendiente"
     )
@@ -140,11 +140,11 @@ class Reserva(models.Model):
 
 class Pedido(models.Model):
     ESTADOS = [
-        ('pendiente', 'Pendiente'),
-        ('confirmado', 'Confirmado'),
-        ("enviado", "Enviado"),
-        ("entregado", "Entregado"),
-        ("cancelado", "Cancelado"),
+        ('Pendiente', 'Pendiente'),
+        ('Confirmado', 'Confirmado'),
+        ("Enviado", "Enviado"),
+        ("Entregado", "Entregado"),
+        ("Cancelado", "Cancelado"),
     ]
     METODOS_PAGO = [
         ('nequi', 'Nequi'),
