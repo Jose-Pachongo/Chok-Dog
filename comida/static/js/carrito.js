@@ -72,11 +72,34 @@ document.addEventListener("DOMContentLoaded", function() {
 function agregarAlCarrito(productId, productName, productPrice, ingredientes = [], sabor = null) {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     let uniqueId = `${productId}-${sabor ? sabor : "sinSabor"}-${ingredientes.length ? ingredientes.join(",") : "sinIngredientes"}`;
-    let item = carrito.find(i => i.id === uniqueId);
-
-    if (item) {
-        item.cantidad += 1;
+    
+    // Buscar todos los ítems que coincidan con el mismo producto (pueden haber varios si ya se superó el límite antes)
+    let items = carrito.filter(i => i.id === uniqueId || i.id.startsWith(`${uniqueId}-copia`));
+    
+    if (items.length > 0) {
+        // Buscar el último ítem que no haya alcanzado el límite de 20
+        let itemDisponible = items.find(i => i.cantidad < 20);
+        
+        if (itemDisponible) {
+            // Si hay un ítem que no ha alcanzado el límite, incrementamos su cantidad
+            itemDisponible.cantidad += 1;
+        } else {
+            // Si todos los ítems existentes están en el límite, creamos uno nuevo
+            let copiaNum = items.length;
+            let nuevoUniqueId = `${uniqueId}-copia${copiaNum}`;
+            
+            carrito.push({
+                id: nuevoUniqueId,
+                nombre: productName,
+                precio: productPrice,
+                cantidad: 1,
+                ingredientes,
+                sabor,
+                esCopiaDe: uniqueId // Marcamos que es copia del producto original
+            });
+        }
     } else {
+        // Si no existe el producto en el carrito, lo añadimos normalmente
         carrito.push({
             id: uniqueId,
             nombre: productName,
@@ -90,7 +113,15 @@ function agregarAlCarrito(productId, productName, productPrice, ingredientes = [
     localStorage.setItem('carrito', JSON.stringify(carrito));
     renderCarrito();
     actualizarContadorCarrito();
-    Swal.fire({ title: "¡Producto agregado!", text: `${productName}${sabor ? ` (${sabor})` : ""} ha sido añadido al carrito.`, icon: "success", showConfirmButton: false, timer: 1000, toast: true, position: "top-end" });
+    Swal.fire({ 
+        title: "¡Producto agregado!", 
+        text: `${productName}${sabor ? ` (${sabor})` : ""} ha sido añadido al carrito.`, 
+        icon: "success", 
+        showConfirmButton: false, 
+        timer: 1000, 
+        toast: true, 
+        position: "top-end" 
+    });
 }
 
 function agregarBebidaAlCarrito(productId, productName, productPrice, tipoBebida) {
@@ -178,13 +209,84 @@ function actualizarContadorCarrito() {
 
 function actualizarCantidad(productId, nuevaCantidad) {
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    let itemOriginal = carrito.find(item => item.id === productId);
     
-    carrito = carrito.map(item => {
-        if (item.id === productId) {
-            return { ...item, cantidad: nuevaCantidad };
+    // Si la nueva cantidad es menor o igual a 20, simplemente actualizamos
+    if (nuevaCantidad <= 20) {
+        carrito = carrito.map(item => {
+            if (item.id === productId) {
+                return { ...item, cantidad: nuevaCantidad };
+            }
+            return item;
+        });
+    } else {
+        // Si es mayor a 20, necesitamos manejar la división en múltiples ítems
+        
+        // Primero establecemos el ítem actual en 20
+        carrito = carrito.map(item => {
+            if (item.id === productId) {
+                return { ...item, cantidad: 20 };
+            }
+            return item;
+        });
+        
+        // Calculamos cuántas unidades quedan por distribuir
+        let cantidadRestante = nuevaCantidad - 20;
+        
+        // Buscamos si hay copias existentes de este producto
+        let baseId = productId;
+        if (itemOriginal.esCopiaDe) {
+            // Si el ítem ya es una copia, usamos el ID original
+            baseId = itemOriginal.esCopiaDe;
         }
-        return item;
-    });
+        
+        let todasLasCopias = carrito.filter(i => 
+            i.id.startsWith(`${baseId}-copia`) || 
+            i.id === baseId
+        ).sort((a, b) => {
+            // Ordenamos para procesar las copias en orden
+            if (a.id === baseId) return -1;
+            if (b.id === baseId) return 1;
+            return a.id.localeCompare(b.id);
+        });
+        
+        // Intentamos distribuir la cantidad restante en las copias existentes
+        for (let i = 0; i < todasLasCopias.length && cantidadRestante > 0; i++) {
+            let copia = todasLasCopias[i];
+            if (copia.id !== productId && copia.cantidad < 20) {
+                let espacioDisponible = 20 - copia.cantidad;
+                let cantidadAAgregar = Math.min(espacioDisponible, cantidadRestante);
+                
+                carrito = carrito.map(item => {
+                    if (item.id === copia.id) {
+                        return { ...item, cantidad: item.cantidad + cantidadAAgregar };
+                    }
+                    return item;
+                });
+                
+                cantidadRestante -= cantidadAAgregar;
+            }
+        }
+        
+        // Si aún queda cantidad por distribuir, creamos nuevos ítems
+        while (cantidadRestante > 0) {
+            let copiaNum = todasLasCopias.length;
+            let nuevoUniqueId = `${baseId}-copia${copiaNum}`;
+            
+            let cantidadItem = Math.min(cantidadRestante, 20);
+            
+            // Creamos una copia del ítem original con la nueva cantidad
+            carrito.push({
+                ...itemOriginal,
+                id: nuevoUniqueId,
+                cantidad: cantidadItem,
+                esCopiaDe: baseId
+            });
+            
+            cantidadRestante -= cantidadItem;
+            todasLasCopias.length++; // Incrementamos para el siguiente ID
+        }
+    }
 
     localStorage.setItem('carrito', JSON.stringify(carrito));
     renderCarrito();
