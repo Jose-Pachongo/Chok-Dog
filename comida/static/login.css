@@ -45,14 +45,10 @@
 .enl a {
     color: var(--dorado);
     text-decoration: none;
-    transition: font-size 0.3s ease, color 0.3s ease;
+    font-size: 18px;
 }
 
-.enl a:hover {
-    font-size: 19px;
-    color: #b8860b; 
-    
-}
+
 label {
     display: block;
     margin-bottom: 8px;

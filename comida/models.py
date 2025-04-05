@@ -107,7 +107,7 @@ class Reserva(models.Model):
             ("Confirmado", "Confirmado"),
             ("Cancelado", "Cancelado")
         ],
-        default="pendiente"
+        default="Pendiente"
     )
 
     def __str__(self):
@@ -130,7 +130,7 @@ class Reserva(models.Model):
             ("Confirmado", "Confirmado"),
             ("Cancelado", "Cancelado")
         ],
-        default="pendiente"
+        default="Pendiente"
     )
 
 
@@ -162,7 +162,7 @@ class Pedido(models.Model):
     fecha = models.DateTimeField(auto_now_add=True)
     direccion = models.CharField(max_length=255)
     fecha_pedido = models.DateTimeField(default=now)
-    estado = models.CharField(max_length=20, choices=ESTADOS, default='pendiente')
+    estado = models.CharField(max_length=20, choices=ESTADOS, default='Pendiente')
   # Relación con el usuario
     
 
@@ -170,10 +170,3 @@ class Pedido(models.Model):
     def __str__(self):
         return f"Pedido de {self.nombre} - {self.metodo_pago}"
 
-
-
-
-
-
-
- 

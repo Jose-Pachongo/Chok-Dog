@@ -35,26 +35,48 @@
                                 {% for producto in pedido.productos %}
                                 <li>
                                     <strong>{{ producto.nombre }}</strong>  
+                            
                                     {% if producto.ingredientes and producto.ingredientes|length > 0 %}
-                                    : {{ producto.ingredientes|join:", " }}
+                                        |  {{ producto.ingredientes|join:", " }}
                                     {% endif %}
+                            
+                                    {% if producto.sabor %}  
+                                        |  {{ producto.sabor }}
+                                    {% endif %}
+                            
+                                    {% if producto.alcohol is not None %}  
+                                        |  {% if producto.alcohol %}Con alcohol{% else %}Sin alcohol{% endif %}
+                                    {% endif %}
+                            
                                     x {{ producto.cantidad }}
                                 </li>
                                 {% endfor %}
                             </ul>
+
                         </td>
-                        <td>{{ pedido.fecha|date:"d/m/y - g:i A" }}</td>
+                        <td class="fecha">{{ pedido.fecha|date:"d/m/y - g:i A" }}</td>
                         <td><strong>${{ pedido.total|intcomma }}</strong></td>
 
                         <td class="estado-{{ pedido.estado }}">{{ pedido.get_estado_display }}</td>
                         <td>
-                           
                             <!-- <button class="btn delete" onclick="confirmarEliminacionPedido('{{ pedido.id }}')"><i class='bx bxs-trash-alt'></i></button>
                              -->
                             {% if pedido.estado == "Pendiente" %}
                             <a href="{% url 'cancelar_pedido' pedido.id %}"  onclick="return confirm('¿Estás seguro de que quieres cancelar este pedido?');"><button class="bton" title="cancelar"><i title="cancelar" class='bx bxs-x-circle' ></i></button></a>
-                                
+                            
+                            {% elif pedido.estado == "Confirmado" %}
+                                <i class='bx bxs-badge-check' style="color: blue; font-size: 22px;" title="Confirmado"></i>
+
+                            {% elif pedido.estado == "Enviado" %}
+                                <i class='bx bxs-truck' style="color: #ff9900; font-size: 22px;" title="Enviado"></i>
+
+                            {% elif pedido.estado == "Entregado" %}
+                                <i class='bx bxs-box' style="color: green; font-size: 22px;" title="Entregado"></i>
+
+                            {% elif pedido.estado == "Cancelado" %}
+                                <i class='bx bxs-x-circle' style="color: red; font-size: 22px;" title="Cancelado"></i>
                             {% endif %}
+                            
                         </td>
                     </tr>
                     {% empty %}
@@ -90,7 +112,14 @@
                             <!-- <button class="btn delete" onclick="eliminarReserva('{{ reserva.id }}')"><i class='bx bxs-trash-alt'></i></button> -->
                             {% if reserva.estado == "Pendiente" %}
                             <a href="{% url 'cancelar_reserva' reserva.id %}" onclick="return confirm('¿Estás seguro de que quieres cancelar esta reserva?');"><button class="bton" title="cancelar"><i title="cancelar" class='bx bxs-x-circle' ></i></button></a>
+                            
+                            {% elif reserva.estado == "Confirmado" %}
+                                <i class='bx bxs-badge-check' style="color: blue; font-size: 22px;" title="Confirmado"></i>
+
+                            {% elif reserva.estado == "Cancelado" %}
+                                <i class='bx bxs-x-circle' style="color: red; font-size: 22px;" title="Cancelado"></i>
                             {% endif %}
+                            
                         </td>
                     </tr>
                     {% empty %}

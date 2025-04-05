@@ -36,28 +36,30 @@
                     <div class="nombre">
                         <div class="input">
                             <label>Nombre:</label>
-                            <input type="text" name="first_name" value="{{ user.first_name }}" disabled>
+                            <input type="text" name="first_name" value="{{ user.first_name }}" maxlength="20"  oninput="this.setCustomValidity(/[^A-Za-záéíóúÁÉÍÓÚÑñ \s]/.test(this.value) ? 'Solo se permiten letras y espacios' : ''); this.reportValidity()"
+                            pattern="^[A-Za-záéíóúÁÉÍÓÚÑñ \s]+$"  disabled>
                         </div>
                         <div class="input">
                             <label>Apellido:</label>
-                            <input type="text" name="last_name" value="{{ user.last_name }}" disabled>
+                            <input type="text" name="last_name" value="{{ user.last_name }}" maxlength="20"  oninput="this.setCustomValidity(/[^A-Za-záéíóúÁÉÍÓÚÑñ \s]/.test(this.value) ? 'Solo se permiten letras y espacios' : ''); this.reportValidity()"
+                            pattern="^[A-Za-záéíóúÁÉÍÓÚÑñ \s]+$"  disabled>
                         </div>
                     </div>
                     <div class="input">
                         <label>Nombre de usuario:</label>
-                        <input type="text" name="username" value="{{ user.username }}" disabled>
+                        <input type="text" name="username" value="{{ user.username }}" maxlength="15"   disabled>
                     </div>
                     <div class="input">
                         <label>Correo electrónico:</label>
-                        <input type="email" name="email" value="{{ user.email }}" disabled>
+                        <input type="email" name="email" value="{{ user.email }}" maxlength="30"   disabled>
                     </div>
                     <div class="input">
                         <label>Teléfono:</label>
-                        <input type="text" name="phone_number" value="{{ user.profile.phone_number|default:'' }}" disabled>
+                        <input type="text" name="phone_number" value="{{ user.profile.phone_number|default:'' }}" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="10" disabled>
                     </div>
                     <div class="input">
                         <label>Dirección:</label>
-                        <input type="text" name="address" value="{{ user.profile.address|default:'' }}" disabled>
+                        <input type="text" name="address" value="{{ user.profile.address|default:'' }}" maxlength="30"   disabled>
                     </div>
                 </div>
 

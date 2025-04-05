@@ -9,23 +9,46 @@
         <div class="wrapper restablecer-wrapper">
             <div class="form-header">
                 <div class="titles">
-                    <div class="title-login">Restablecer contraseña</div>
+                    <div class="title-login">Restablecer contraseña</div>
+                    <p class="subtitle">Ingresa tu correo electrónico para recibir un enlace de recuperación</p>
                 </div>
             </div>
+            
+            
             <form method="POST" action="{% url 'restablecer' %}">
                 {% csrf_token %}
                 <div class="input-box">
                     <i class='bx bx-envelope icon'></i>
                     <input type="email" placeholder="Correo Registrado" class="input-field" id="password" name="email" required>
-                    
                 </div>
+                
                 <div class="env">
-                    <button type="submit" class="btn-submit" id="SignInBtn">Enviar enlace </button>
+                    <button type="submit" class="btn-submit" id="SignInBtn">
+                        <i class='bx bx-mail-send'></i> Enviar enlace
+                    </button>
                 </div>
             </form>
+            
+            <div class="help-section">
+                <div class="divider">
+                    <span>¿Necesitas ayuda?</span>
+                </div>
+                
+                <div class="help-options">
+                    <a href="{% url 'contactenos' %}" class="help-link">
+                        <i class='bx bx-support'></i> Contactaenos
+                    </a>
+                    <a href="{% url 'iniciar' %}" class="help-link">
+                        <i class='bx bx-log-in'></i> Volver a iniciar sesión
+                    </a>
+                </div>
+                
+                
+            </div>
         </div>
-    </div>
+        
 </div>
+
 {% if messages %}
     <script id="django-messages" type="application/json">
         [
@@ -36,30 +59,27 @@
     </script>
 {% endif %}
 
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-    let scriptTag = document.getElementById("django-messages");
-
-    if (scriptTag) {
-        let mensajes = JSON.parse(scriptTag.textContent);
-
-        mensajes.forEach(msg => {
-            let icono = msg.tags.includes("error") ? "error" : "success";
-            let titulo = msg.tags.includes("error") ? "Error" : "Éxito";
-            let colorBoton = msg.tags.includes("error") ? "#d33" : "#3085d6";
-
-            Swal.fire({
-                icon: icono,
-                title: titulo,
-                text: msg.message,
-                confirmButtonText: "OK",
-                confirmButtonColor: colorBoton
+        let scriptTag = document.getElementById("django-messages");
+        
+        if (scriptTag) {
+            let mensajes = JSON.parse(scriptTag.textContent);
+            
+            mensajes.forEach(msg => {
+                let icono = msg.tags.includes("error") ? "error" : "success";
+                let titulo = msg.tags.includes("error") ? "Error" : "Éxito";
+                let colorBoton = msg.tags.includes("error") ? "#d33" : "#3085d6";
+                
+                Swal.fire({
+                    icon: icono,
+                    title: titulo,
+                    text: msg.message,
+                    confirmButtonText: "OK",
+                    confirmButtonColor: colorBoton
+                });
             });
-        });
-    }
-});
-
+        }
+    });
 </script>
-
 {% endblock %}

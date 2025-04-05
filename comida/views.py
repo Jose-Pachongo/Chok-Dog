@@ -16,6 +16,8 @@ from django.http import JsonResponse
 from django.contrib.auth.tokens import default_token_generator
 
 
+# Esto es correcto
+
 
 def home(request):
     if request.user.is_authenticated:
@@ -115,17 +117,20 @@ def iniciar(request):
 
     return render(request, 'iniciar.html')
 
+
+@login_required(login_url='home')
 def pagina(request):
     return render(request, 'pagina.html')
 
+@login_required(login_url='home')
 def productos(request):
     products = Product.objects.all()
     return render(request, 'productos.html', {'productos': productos})
     
-
+@login_required(login_url='home')
 def carrito(request):
     return render(request, 'carrito.html')
-
+@login_required(login_url='home')
 def perfil(request):
     return render(request, 'perfil.html')
 
@@ -142,7 +147,7 @@ from django.contrib import messages
 from .models import Profile  # Asegúrate de importar tu modelo de perfil
 from django.contrib.auth.models import User
 
-@login_required
+@login_required(login_url='home')
 def profile_view(request):
     if request.method == "POST":
         user = request.user
@@ -188,9 +193,9 @@ def eliminar_foto(request):
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-@login_required(login_url='/homee/')  # Redirige a la página de inicio de sesión
-def reservas(request):
-    return render(request, 'reservas.html')
+# @login_required(login_url='/home/')  # Redirige a la página de inicio de sesión
+# def reservas(request):
+#     return render(request, 'reservas.html')
 
 
 
@@ -209,6 +214,7 @@ def enviar_correo(request, destinatario, asunto, mensaje):
     except Exception as e:
         messages.error(request, f"Error al enviar el correo: {e}")
 
+@login_required(login_url='home')
 def reservas(request):
     mesas_disponibles = Mesa.objects.all()
     
@@ -243,7 +249,14 @@ def reservas(request):
         dt_inicio = dt_reserva - timedelta(minutes=30)
         dt_fin = dt_reserva + timedelta(minutes=30)
         
-        if Reserva.objects.filter(fecha=fecha_reserva, mesa_id=mesa_id, hora__gte=dt_inicio.time(), hora__lte=dt_fin.time()).exists():
+        if Reserva.objects.filter(
+            fecha=fecha_reserva,
+            mesa_id=mesa_id,
+            hora__gte=dt_inicio.time(),
+            hora__lte=dt_fin.time(),
+            estado__in=["Pendiente", "Confirmada"]  # solo considera reservas activas
+        ).exists():
+
             messages.error(request, "Lo siento, esta mesa ya está reservada en ese horario.")
             return redirect("reservas")
         
@@ -383,9 +396,10 @@ def cambiar_contrasena(request, uidb64, token):
 def confirmacion_contrasena(request):
     return render(request, "cambiar_contrasena.html")
 
-
+@login_required(login_url='home')
 def pago(request):
     return render(request, 'pago.html')
+
 def pasarela_pago(request):
     carrito = request.session.get('carrito', [])  # Asegúrate de que el carrito está en la sesión
     return render(request, 'pasarela_pago.html', {'carrito': carrito})
@@ -405,6 +419,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from .forms import PedidoForm
 
+@login_required(login_url='home')
 def pagina_pago(request):
     return render(request, 'pago.html')
 
@@ -471,7 +486,7 @@ def procesar_pedido(request):
     return render(request, 'pago.html')
 
 
-
+@login_required(login_url='home')
 def manual(request):
     return render(request, 'manual.html')
 
@@ -550,7 +565,7 @@ def cancelar_reserva(request, reserva_id):
     reserva = get_object_or_404(Reserva, id=reserva_id)
 
     if reserva.estado == "Pendiente":  # Solo cancelar si está pendiente
-        reserva.estado = "Pancelado"
+        reserva.estado = "Cancelado"
         reserva.save()
 
         # Obtener datos del usuario

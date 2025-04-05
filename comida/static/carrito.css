@@ -106,7 +106,7 @@
 /* Para móviles y pantallas pequeñas */
 @media (max-width: 480px) {
   .carrito {
-      padding: 2rem 0.5rem;
+      padding: 3rem 0.5rem;
   }
 
   table {
@@ -120,6 +120,7 @@
   input[type="number"] {
       width: 40px;
   }
+
 
   .eliminar-item {
       width: 30px;

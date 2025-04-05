@@ -41,16 +41,17 @@
                 <div class="paso" id="paso-1">
                     <h3>Ingresa tus Datos</h3>
                     
-                    <input type="text" id="nombre" name="nombre" placeholder="Nombre"
-                        value="{% if request.user.is_authenticated %}{{ request.user.first_name }} {{ request.user.last_name }}{% endif %}" required>
+                    <input type="text" id="nombre" name="nombre" placeholder="Nombre" maxlength="40"  
+                        value="{% if request.user.is_authenticated %}{{ request.user.first_name }} {{ request.user.last_name }}{% endif %}" oninput="this.setCustomValidity(/[^A-Za-záéíóúÁÉÍÓÚÑñ \s]/.test(this.value) ? 'Solo se permiten letras y espacios' : ''); this.reportValidity()"
+                        pattern="^[A-Za-záéíóúÁÉÍÓÚÑñ \s]+$"  required>
 
-                    <input type="email" id="email" name="email" placeholder="Correo Electrónico" 
+                    <input type="email" id="email" name="email" placeholder="Correo Electrónico" maxlength="30"  
                         value="{% if request.user.is_authenticated %}{{ request.user.email }}{% endif %}" required>
 
                     <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" 
-                        value="{% if request.user.is_authenticated %}{{ user.profile.phone_number|default:'' }}{% endif %}" required>
+                        value="{% if request.user.is_authenticated %}{{ user.profile.phone_number|default:'' }}{% endif %}"onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="10" required>
 
-                    <input type="text" id="direccion" name="direccion" placeholder="Dirección" 
+                    <input type="text" id="direccion" name="direccion" placeholder="Dirección" maxlength="30"  
                         value="{% if request.user.is_authenticated %}{{ user.profile.address|default:'' }}{% endif %}" required>
 
                     <button type="button" class="siguiente" onclick="mostrarPaso(2)">Siguiente</button>

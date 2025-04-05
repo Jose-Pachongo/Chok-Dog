@@ -120,9 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -131,7 +128,6 @@ TIME_ZONE = 'America/Bogota'  # Ajusta según tu zona horaria
 USE_TZ = True  # Mantén esto en True para que Django maneje zonas horarias correctamente
 USE_L10N = True
 USE_I18N = True
-
 
 
 # Static files (CSS, JavaScript, Images)
@@ -156,8 +152,6 @@ EMAIL_PORT = env('EMAIL_PORT')
 EMAIL_USE_TLS = env('EMAIL_USE_TLS')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-
-
 
 import os
 

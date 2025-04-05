@@ -20,16 +20,17 @@
             <form method="POST" action="{% url 'contactenos' %}">
                 {% csrf_token %}
                 <div class="form-group">
-                    <input type="text" placeholder="Nombre Completo" id="nombre" name="nombre" 
-                    value="{% if request.user.is_authenticated %}{{ request.user.first_name }} {{ user.last_name }}{% endif %}" required>
+                    <input type="text" placeholder="Nombre Completo" id="nombre" name="nombre" maxlength="40" oninput="this.setCustomValidity(/[^A-Za-záéíóúÁÉÍÓÚÑñ \s]/.test(this.value) ? 'Solo se permiten letras y espacios' : ''); this.reportValidity()"
+                    pattern="^[A-Za-záéíóúÁÉÍÓÚÑñ \s]+$" 
+                    value="{% if request.user.is_authenticated %}{{ request.user.first_name }} {{ user.last_name }}{% endif %}"  required>
                 </div>
                 <div class="form-group">
-                    <input type="email" placeholder="Correo" id="correo" name="correo"
+                    <input type="email" placeholder="Correo" id="correo" name="correo" maxlength="30"  
                     value="{% if request.user.is_authenticated %}{{ request.user.email }}{% endif %}" required>
                 </div>
                 <div class="form-group">
                     <input type="tel" placeholder="Telefono" id="telefono" name="telefono"
-                    value="{% if request.user.is_authenticated %}{{ user.profile.phone_number|default:'' }}{% endif %}" required>
+                    value="{% if request.user.is_authenticated %}{{ user.profile.phone_number|default:'' }}{% endif %}" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="10" required>
                 </div>
                 <div class="form-group">
                     <label for="mensaje">Mensaje</label>

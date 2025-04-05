@@ -257,6 +257,7 @@ input[type="file"]:focus {
 @media (max-width: 480px) {
     .tit h2 {
         font-size: 24px;
+        padding-top: 2rem;
     }
 
     .payment-container {
